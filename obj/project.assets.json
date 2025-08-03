@@ -68011,9 +68011,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\aduino\\ProjectLixil\\ESP32 pH\\ESP32 pH.csproj",
-      "projectName": "ESP32 pH",
-      "projectPath": "D:\\aduino\\ProjectLixil\\ESP32 pH\\ESP32 pH.csproj",
+      "projectUniqueName": "D:\\aduino\\ProjectLixil\\ESP32 pH\\ESP32pH.csproj",
+      "projectName": "ESP32pH",
+      "projectPath": "D:\\aduino\\ProjectLixil\\ESP32 pH\\ESP32pH.csproj",
       "packagesPath": "C:\\Users\\Doo\\.nuget\\packages\\",
       "outputPath": "D:\\aduino\\ProjectLixil\\ESP32 pH\\obj\\",
       "projectStyle": "PackageReference",

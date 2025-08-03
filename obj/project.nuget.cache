@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "uHlPYycvPLI=",
+  "dgSpecHash": "PJQPdknlAa4=",
   "success": true,
-  "projectFilePath": "D:\\aduino\\ProjectLixil\\ESP32 pH\\ESP32 pH.csproj",
+  "projectFilePath": "D:\\aduino\\ProjectLixil\\ESP32 pH\\ESP32pH.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Doo\\.nuget\\packages\\communitytoolkit.mvvm\\8.4.0\\communitytoolkit.mvvm.8.4.0.nupkg.sha512",
     "C:\\Users\\Doo\\.nuget\\packages\\firebase.auth\\1.0.0\\firebase.auth.1.0.0.nupkg.sha512",
