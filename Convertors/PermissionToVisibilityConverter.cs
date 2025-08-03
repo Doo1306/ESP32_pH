@@ -12,17 +12,20 @@ namespace ESP32_pH.Convertors
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is ePermission currentPermission && parameter is string target)
+            if (value is ePermission currentPermission &&
+                parameter is string minVisiblePermission &&
+                Enum.TryParse(typeof(ePermission), minVisiblePermission, out var parsedTarget))
             {
-                return currentPermission.ToString().Equals(target, StringComparison.OrdinalIgnoreCase);
+                var requiredPermission = (ePermission)parsedTarget;
+
+                //User <= Admin <= Maker;
+                return currentPermission <= requiredPermission;
             }
 
             return false;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
             throw new NotImplementedException();
-        }
     }
 }
