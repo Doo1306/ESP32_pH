@@ -26,7 +26,8 @@ jobs:
         run: dotnet publish ESP32_pH.csproj -f net9.0-ios -c Release -o ./output /p:BuildIpa=true
 
       - name: Upload IPA
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ios-ipa
           path: ./output/**/*.ipa
+
