@@ -18,7 +18,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ESP32pH")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+0f50af57a70d87745af50872bfbb3156ef670c1e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+0d080bab4cddd6bf3152714ac8ca60df6cacff62")]
 [assembly: System.Reflection.AssemblyProductAttribute("ESP32pH")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ESP32pH")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

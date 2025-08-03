@@ -359,44 +359,7 @@
                             </Grid>
                         </StackLayout>
                     </Border>
-
-                     <!--pH Statistics--><!-- 
-                    <Border Style="{StaticResource WhiteCardStyle1}">
-                        <StackLayout>
-                            <Label Text="Statistics" FontSize="16" FontAttributes="Bold" Margin="0,0,0,15"/>
-
-                            <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
-                                 --><!--Average pH--><!-- 
-                                <StackLayout Grid.Column="0" HorizontalOptions="Center">
-                                    <Label Text="Average" FontSize="12" TextColor="Gray" HorizontalOptions="Center"/>
-                                    <Label Text="{Binding CurrentReading.pH, StringFormat='{0:F2}'}" 
-                                   FontSize="20" 
-                                   FontAttributes="Bold" 
-                                   HorizontalOptions="Center"/>
-                                </StackLayout>
-
-                                 --><!--Min pH--><!-- 
-                                <StackLayout Grid.Column="1" HorizontalOptions="Center">
-                                    <Label Text="Minimum" FontSize="12" TextColor="Gray" HorizontalOptions="Center"/>
-                                    <Label Text="{Binding CurrentReading.pHMin, StringFormat='{0:F2}'}" 
-                                   FontSize="20" 
-                                   FontAttributes="Bold" 
-                                   TextColor="Red"
-                                   HorizontalOptions="Center"/>
-                                </StackLayout>
-
-                                 --><!--Max pH--><!-- 
-                                <StackLayout Grid.Column="2" HorizontalOptions="Center">
-                                    <Label Text="Maximum" FontSize="12" TextColor="Gray" HorizontalOptions="Center"/>
-                                    <Label Text="{Binding CurrentReading.pHMax, StringFormat='{0:F2}'}" 
-                                   FontSize="20" 
-                                   FontAttributes="Bold" 
-                                   TextColor="Blue"
-                                   HorizontalOptions="Center"/>
-                                </StackLayout>
-                            </Grid>
-                        </StackLayout>
-                    </Border>-->
+                   
                  
                 </StackLayout>
             </Border>
@@ -405,10 +368,11 @@
             <Label Text="Control Status" Style="{StaticResource SubHeadline}" FontAttributes="Bold" HorizontalOptions="Start" />
             <!--Door request change-->
             <Border Style="{StaticResource WhiteCardStyle}">
-                <HorizontalStackLayout Spacing="10">
-                    <Border Style="{StaticResource InputFieldStyle}">
-                        <StackLayout Orientation="Horizontal">
-                            <controls:CustomToggleSwitch IsToggled="{Binding IsDoorOpen}"
+                <VerticalStackLayout>
+                    <HorizontalStackLayout Spacing="10">
+                        <Border Style="{StaticResource InputFieldStyle}">
+                            <StackLayout Orientation="Horizontal">
+                                <controls:CustomToggleSwitch IsToggled="{Binding IsDoorOpen}"
                                                HeightCustom="50"
                                                WidthCustom="100"
                                                OnColor="Green"
@@ -417,13 +381,32 @@
                                                OffText="CLOSE"
                                                FontSize="12"
                                                Margin="0,0,10,0"/>
-                            <Label Text="Door Request Change" VerticalOptions="Center" />
-                        </StackLayout>
+                                <Label Text="Door Request Change" VerticalOptions="Center" />
+                            </StackLayout>
+                        </Border>
+
+                        <Button Text="Buzze" HeightRequest="80" WidthRequest="80" Style="{StaticResource PrimaryButtonStyle}"/>
+
+                    </HorizontalStackLayout>
+
+                    <Border Style="{StaticResource WhiteCardStyle}">
+                        <Grid HeightRequest="40" BackgroundColor="White">
+
+                            <ProgressBar Progress="{Binding CurrentReading.pHProgress}"
+                     BackgroundColor="LightGray"
+                     ProgressColor="Green"
+                     HeightRequest="0"
+                     >
+                                <ProgressBar.Style>
+                                    <Style TargetType="ProgressBar">
+                                        <Setter Property="ScaleY" Value="10" />
+                                        <!-- Tăng scale để fill height -->
+                                    </Style>
+                                </ProgressBar.Style>
+                            </ProgressBar>
+                        </Grid>
                     </Border>
-
-                    <Button Text="Buzze" HeightRequest="80" WidthRequest="80" Style="{StaticResource PrimaryButtonStyle}"/>
-
-                </HorizontalStackLayout>
+                </VerticalStackLayout>
             </Border>
         </StackLayout>
     </ScrollView>

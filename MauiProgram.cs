@@ -1,4 +1,5 @@
-﻿using ESP32_pH.ViewModels;
+﻿using ESP32_pH.DTOs;
+using ESP32_pH.ViewModels;
 using ESP32_pH.Views;
 using Microsoft.Extensions.Logging;
 
@@ -26,8 +27,8 @@ namespace ESP32_pH
             builder.Services.AddSingleton<ViewModelLocation>();
             builder.Services.AddSingleton<LoginViewModel>();
 
-                      
-               
+            builder.Services.AddSingleton(StreamDataTranfer.Instance);
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

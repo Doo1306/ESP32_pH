@@ -18,6 +18,9 @@ namespace ESP32_pH.Models
         public float PH_Max{ get;set;}
         public float PH_Min{ get;set;}
         public int TimeDelay{ get;set;}
-        public int TimeSpan{ get;set;}
+        public int TimeInterval{ get;set;}
+        public float OffsetX0{ get; set; }
+        public float OffsetY0{ get; set; }      
+
     }
 }

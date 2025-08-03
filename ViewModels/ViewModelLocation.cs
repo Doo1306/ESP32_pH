@@ -16,8 +16,7 @@ namespace ESP32_pH.ViewModels
                 if (_instance == null)
                     _instance = new ViewModelLocation();
                 return _instance;
-            }
-            set { _instance = value; }
+            }           
         }
 
         public ViewModelLocation()
@@ -25,9 +24,11 @@ namespace ESP32_pH.ViewModels
             LoginViewModel = new LoginViewModel();
             MainViewModel = new MainViewModel();
             AppShellViewModel = new AppShellViewModel();
+            SettingViewModel = new SettingViewModel();
         }
         public LoginViewModel LoginViewModel { get; set; }
         public MainViewModel MainViewModel { get; set; }
         public AppShellViewModel AppShellViewModel { get; set; }
+        public SettingViewModel SettingViewModel { get; set; }
     }
 }
