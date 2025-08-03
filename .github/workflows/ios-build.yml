@@ -1,0 +1,33 @@
+name: Build MAUI iOS IPA
+
+on:
+  workflow_dispatch: # chạy thủ công từ GitHub
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Install MAUI workload
+        run: dotnet workload install maui
+
+      - name: Restore dependencies
+        run: dotnet restore ESP32_pH.csproj
+
+      - name: Build iOS
+        run: dotnet publish ESP32_pH.csproj -f net9.0-ios -c Release -o ./output /p:BuildIpa=true
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-ipa
+          path: ./output/**/*.ipa
+
