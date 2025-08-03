@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ESP32_pH.Views.MainView"  
+             xmlns:controls="clr-namespace:ESP32_pH.Helpers"
+             xmlns:viewmodel="clr-namespace:ESP32_pH.ViewModels"
+             xmlns:convertors="clr-namespace:ESP32_pH.Convertors"
+             Title="DashBoad"
+             >
+
+    <ContentPage.BindingContext>
+        <viewmodel:MainViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <convertors:pHToColorConverter x:Key="convertorpHtoColor"/>
+    </ContentPage.Resources>
+    <ScrollView>
+
+        <StackLayout >
+            <!--gradient-->
+            <StackLayout.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#6DD0F0" Offset="0.0" />
+                    <GradientStop Color="#DDB1F0" Offset="1.0" />
+                </LinearGradientBrush>
+            </StackLayout.Background>
+            <!-- Auto | Manual | Remote -->
+            <Border Style="{StaticResource WhiteCardStyle}">
+                <Grid ColumnDefinitions="*,*,*" HeightRequest="60" >
+                    <Border Padding="2"                                 
+                            BackgroundColor="#C8E6C9"
+                            HeightRequest="60"
+                            Grid.Column="0"       
+                            >
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
+                            <!-- ICON -->
+                            <Image Source="auto.png"
+                                    WidthRequest="20"
+                                    HeightRequest="20"
+                                    VerticalOptions="Center" />
+
+                            <!-- TEXT -->
+                            <Label Text="Auto"
+                                    TextColor="Green"
+                                    FontAttributes="Bold"
+                                    FontSize="16"
+                                    VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <!-- GESTURE NHẤN -->
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AutoRequestChangeCommnad}" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                    <Border Padding="2"                                 
+                            BackgroundColor="#C8E6C9"
+                            HeightRequest="60"
+                            Grid.Column="1"    
+                            >
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
+                            <!-- ICON -->
+                            <Image Source="manual.png"
+                                       WidthRequest="20"
+                                       HeightRequest="20"
+                                       VerticalOptions="Center" />
+
+                            <!-- TEXT -->
+                            <Label Text="Manual"
+                                       TextColor="Green"
+                                       FontAttributes="Bold"
+                                       FontSize="16"
+                                       VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <!-- GESTURE NHẤN -->
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ManualRequestChangeCommand}" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                    <Border Padding="2"                                 
+                            BackgroundColor="#C8E6C9"
+                            HeightRequest="60"    
+                            Grid.Column="2"
+                            >
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
+                            <!-- ICON -->
+                            <Image Source="remote.png"
+                                        WidthRequest="20"
+                                        HeightRequest="20"
+                                        VerticalOptions="Center" />
+
+                            <!-- TEXT -->
+                            <Label Text="Remote"
+                                       TextColor="Green"
+                                       FontAttributes="Bold"
+                                       FontSize="16"
+                                       VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <!-- GESTURE NHẤN -->
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RemoteRequestChangeCommand}" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Border>
+                <StackLayout>
+                     <!--Current Reading Card--> 
+                    <Border Style="{StaticResource WhiteCardStyle1}">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                             <!--pH Icon--> 
+                            <Border Grid.Column="0" 
+                            BackgroundColor="{Binding CurrentReading.pH,Converter={StaticResource convertorpHtoColor}}"
+                            WidthRequest="50" 
+                            HeightRequest="50"
+                            VerticalOptions="Center">
+                                <Border.StrokeShape>
+                                    <Ellipse/>
+                                </Border.StrokeShape>
+                                <Label Text="pH" 
+                               FontSize="16" 
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                            </Border>
+
+                             <!--Reading Info--> 
+                            <StackLayout Grid.Column="1" Margin="15,0" VerticalOptions="Center">
+                                <Label Text="Current pH Level" FontSize="14" TextColor="Gray"/>
+                                <Label Text="{Binding CurrentReading.pH, StringFormat='{0:F2}'}" 
+                               FontSize="28" 
+                               FontAttributes="Bold" 
+                               TextColor="#333"/>
+                                <Label Text="{Binding CurrentReading.Status}" 
+                               FontSize="14" 
+                               TextColor="{Binding CurrentReading.StatusColor}"/>
+                            </StackLayout>
+
+                             <!--Timestamp--> 
+                            <StackLayout Grid.Column="2" VerticalOptions="Center">
+                                <Label Text="Last Updated" FontSize="12" TextColor="Gray" HorizontalOptions="End"/>
+                                <Label Text="{Binding CurrentReading.Timestamp, StringFormat='{0:HH:mm:ss}'}" 
+                               FontSize="14" 
+                               FontAttributes="Bold"
+                               HorizontalOptions="End"/>
+                                <Label Text="{Binding CurrentReading.Timestamp, StringFormat='{0:dd/MM/yyyy}'}" 
+                               FontSize="12" 
+                               TextColor="Gray"
+                               HorizontalOptions="End"/>
+                            </StackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!--ProcessBar pH-->
+                    <Border Style="{StaticResource WhiteCardStyle}">
+                        <Grid HeightRequest="40" BackgroundColor="White">
+
+                            <ProgressBar Progress="{Binding CurrentReading.pHProgress}"
+                                         BackgroundColor="LightGray"
+                                         ProgressColor="{Binding CurrentReading.StatusColor}"
+                                         HeightRequest="0"
+                                         >
+                                <ProgressBar.Style>
+                                    <Style TargetType="ProgressBar">
+                                        <Setter Property="ScaleY" Value="10" />
+                                        <!-- Tăng scale để fill height -->
+                                    </Style>
+                                </ProgressBar.Style>
+                            </ProgressBar>
+                            <Label Margin="10,0,0,0" Text="{Binding CurrentReading.StatusDisplay}" VerticalTextAlignment="Center"/>
+                            <!-- Text trên ProgressBar -->
+                        </Grid>
+                    </Border>
+
+                    <!--pH Chart--> 
+                    <Border Style="{StaticResource WhiteCardStyle1}">
+                        <StackLayout>
+                            <Label Text="pH Trend Chart" FontSize="16" FontAttributes="Bold" Margin="0,0,0,10"/>
+
+                             <!--Chart Container--> 
+                            <GraphicsView Drawable="{Binding ChartDrawable,Mode=TwoWay}" 
+                                  HeightRequest="400"
+                                  BackgroundColor="White"/>
+
+                             <!--Legend--> 
+                            <Grid ColumnDefinitions="*,*,*" Margin="0,10,0,0">
+                                <StackLayout Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Ellipse Fill="Red" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
+                                    <Label Text="Acid &lt;6.00"
+                                                    FontSize="12" Margin="5,0,0,0" VerticalOptions="Center"/>
+                                </StackLayout>
+                                <StackLayout Grid.Column="1" Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Ellipse Fill="Green" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
+                                    <Label Text="Normal (6.00-8.00)" 
+                                                    FontSize="12" Margin="5,0,0,0" VerticalOptions="Center"/>
+                                </StackLayout>
+                                <StackLayout Grid.Column="2" Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Ellipse Fill="Purple" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
+                                    <Label Text="Base > 8" 
+                                                    FontSize="12" Margin="5,0,0,0" VerticalOptions="Center"/>
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+                    </Border>
+                    
+                     <!--Time Range Selection--> 
+                    <Border Style="{StaticResource WhiteCardStyle1}">
+                        <StackLayout>
+                            <Label Text="Time Range" FontSize="16" FontAttributes="Bold" Margin="0,0,0,10"/>
+                            <Grid ColumnDefinitions="*,*,*,*,*,*">
+                                <Button Text="Live"
+                                        Command="{Binding ChangeTimeRangeCommand}"
+                                        CommandParameter="Live"
+                                        Grid.Column="0"
+                                        >
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource TimeRangeButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="Button"
+                                                             Binding="{Binding TimeRange}" 
+                                                             Value="Live"> 
+                                                    <Setter Property="BackgroundColor" Value="#2196F3"/>
+                                                    <Setter Property="TextColor" Value="White"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button Text="15M"
+                                        Command="{Binding ChangeTimeRangeCommand}"
+                                        CommandParameter="15M"
+                                        Grid.Column="1"
+                                        >
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource TimeRangeButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="Button"
+                                                              Binding="{Binding TimeRange}" 
+                                                              Value="15M">
+                                                    <Setter Property="BackgroundColor" Value="#2196F3"/>
+                                                    <Setter Property="TextColor" Value="White"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button Text="30M"
+                                        Command="{Binding ChangeTimeRangeCommand}"
+                                        CommandParameter="30M"
+                                        Grid.Column="2"
+                                        >
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource TimeRangeButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="Button"
+                                                             Binding="{Binding TimeRange}" 
+                                                             Value="30M">
+                                                    <Setter Property="BackgroundColor" Value="#2196F3"/>
+                                                    <Setter Property="TextColor" Value="White"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button Text="1H"
+                                        Command="{Binding ChangeTimeRangeCommand}"
+                                        CommandParameter="1H"
+                                        Grid.Column="3"
+                                        >
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource TimeRangeButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="Button"
+                                                                Binding="{Binding TimeRange}" 
+                                                                Value="1H">
+                                                    <Setter Property="BackgroundColor" Value="#2196F3"/>
+                                                    <Setter Property="TextColor" Value="White"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button Text="2H"
+                                        Command="{Binding ChangeTimeRangeCommand}"
+                                        CommandParameter="2H"
+                                        Grid.Column="4"
+                                        >
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource TimeRangeButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="Button"
+                                                                Binding="{Binding TimeRange}" 
+                                                                Value="2H">
+                                                    <Setter Property="BackgroundColor" Value="#2196F3"/>
+                                                    <Setter Property="TextColor" Value="White"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button Text="6H"
+                                    Command="{Binding ChangeTimeRangeCommand}"
+                                    CommandParameter="6H"
+                                        Grid.Column="5"
+                                        >
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource TimeRangeButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="Button"
+                                                                Binding="{Binding TimeRange}" 
+                                                                Value="6H">
+                                                    <Setter Property="BackgroundColor" Value="#2196F3"/>
+                                                    <Setter Property="TextColor" Value="White"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <!--<Button Grid.Column="1" 
+                                        Text="15M" 
+                                        Style="{StaticResource TimeRangeButtonStyle1}"
+                                        Command="{Binding ChangeTimeRangeCommand}"
+                                        CommandParameter="15M"/>
+                                <Button Grid.Column="2" 
+                                        Text="30M" 
+                                        Style="{StaticResource SelectedButtonStyle1}"
+                                        Command="{Binding ChangeTimeRangeCommand}"
+                                        CommandParameter="30M"/>
+                                <Button Grid.Column="3" 
+                                        Text="1H" 
+                                        Style="{StaticResource TimeRangeButtonStyle1}"
+                                        Command="{Binding ChangeTimeRangeCommand}"
+                                        CommandParameter="1H"/>
+                                <Button Grid.Column="4" 
+                                        Text="2H" 
+                                        Style="{StaticResource TimeRangeButtonStyle1}"
+                                        Command="{Binding ChangeTimeRangeCommand}"
+                                        CommandParameter="2H"/>
+                                <Button Grid.Column="5" 
+                                        Text="6H" 
+                                        Style="{StaticResource TimeRangeButtonStyle1}"
+                                        Command="{Binding ChangeTimeRangeCommand}"
+                                        CommandParameter="6H"/>-->
+                            </Grid>
+                        </StackLayout>
+                    </Border>
+
+                     <!--pH Statistics--><!-- 
+                    <Border Style="{StaticResource WhiteCardStyle1}">
+                        <StackLayout>
+                            <Label Text="Statistics" FontSize="16" FontAttributes="Bold" Margin="0,0,0,15"/>
+
+                            <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
+                                 --><!--Average pH--><!-- 
+                                <StackLayout Grid.Column="0" HorizontalOptions="Center">
+                                    <Label Text="Average" FontSize="12" TextColor="Gray" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding CurrentReading.pH, StringFormat='{0:F2}'}" 
+                                   FontSize="20" 
+                                   FontAttributes="Bold" 
+                                   HorizontalOptions="Center"/>
+                                </StackLayout>
+
+                                 --><!--Min pH--><!-- 
+                                <StackLayout Grid.Column="1" HorizontalOptions="Center">
+                                    <Label Text="Minimum" FontSize="12" TextColor="Gray" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding CurrentReading.pHMin, StringFormat='{0:F2}'}" 
+                                   FontSize="20" 
+                                   FontAttributes="Bold" 
+                                   TextColor="Red"
+                                   HorizontalOptions="Center"/>
+                                </StackLayout>
+
+                                 --><!--Max pH--><!-- 
+                                <StackLayout Grid.Column="2" HorizontalOptions="Center">
+                                    <Label Text="Maximum" FontSize="12" TextColor="Gray" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding CurrentReading.pHMax, StringFormat='{0:F2}'}" 
+                                   FontSize="20" 
+                                   FontAttributes="Bold" 
+                                   TextColor="Blue"
+                                   HorizontalOptions="Center"/>
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+                    </Border>-->
+                 
+                </StackLayout>
+            </Border>
+           
+            <!-- Control Status -->
+            <Label Text="Control Status" Style="{StaticResource SubHeadline}" FontAttributes="Bold" HorizontalOptions="Start" />
+            <!--Door request change-->
+            <Border Style="{StaticResource WhiteCardStyle}">
+                <HorizontalStackLayout Spacing="10">
+                    <Border Style="{StaticResource InputFieldStyle}">
+                        <StackLayout Orientation="Horizontal">
+                            <controls:CustomToggleSwitch IsToggled="{Binding IsDoorOpen}"
+                                               HeightCustom="50"
+                                               WidthCustom="100"
+                                               OnColor="Green"
+                                               OffColor="LightGray"
+                                               OnText="OPEN"
+                                               OffText="CLOSE"
+                                               FontSize="12"
+                                               Margin="0,0,10,0"/>
+                            <Label Text="Door Request Change" VerticalOptions="Center" />
+                        </StackLayout>
+                    </Border>
+
+                    <Button Text="Buzze" HeightRequest="80" WidthRequest="80" Style="{StaticResource PrimaryButtonStyle}"/>
+
+                </HorizontalStackLayout>
+            </Border>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

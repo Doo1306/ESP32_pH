@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ESP32_pH.Views.UserControl.FlyoutHeaderControl">
+    <!-- NỀN -->
+    <Grid BackgroundColor="Transparent"
+       HeightRequest="100">
+
+        <!-- ẢNH NỀN -->
+        <Image Source="flyoutheader.png"
+            Aspect="AspectFill" />
+
+        <!-- CHỮ ĐÈ LÊN -->
+        <StackLayout VerticalOptions="End"
+                  HorizontalOptions="End"
+                  
+                  Spacing="4"
+                  BackgroundColor="Transparent"
+                  Margin="10"
+                  Orientation="Vertical">
+            <Label x:Name="lbUserName"
+                FontSize="12"
+                FontAttributes="Bold"
+                TextColor="Green"
+                HorizontalTextAlignment="Start"
+                HorizontalOptions="Start" />
+
+            <Label x:Name="lbPermission"
+                FontAttributes="Bold"
+                FontSize="12"
+                TextColor="Green"
+                HorizontalTextAlignment="Start"
+                HorizontalOptions="Start" />
+        </StackLayout>
+
+    </Grid>
+</ContentView>

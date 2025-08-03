@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ESP32_pH.Helpers.CustomToggleSwitch"
+             x:Name="Root"
+             HeightRequest="{Binding Source={x:Reference Root}, Path=HeightCustom}"
+             WidthRequest="{Binding Source={x:Reference Root}, Path=WidthCustom}"
+             >
+    <Grid BackgroundColor="Transparent">
+        
+        <!-- Background -->
+        <BoxView x:Name="BackgroundBox"
+                 BackgroundColor="{Binding OffColor, Source={x:Reference Root}}"
+                 CornerRadius="{Binding HeightCustom, Source={x:Reference Root}, Converter={StaticResource HalfValueConverter}}"
+                 HorizontalOptions="Fill"
+                 VerticalOptions="Fill" />
+
+        <!-- ON Text -->
+        <Label x:Name="OnLabel"
+               Text="{Binding OnText, Source={x:Reference Root}}"
+               TextColor="{Binding TextColor, Source={x:Reference Root}}"
+               FontSize="{Binding FontSize, Source={x:Reference Root}}"
+               FontAttributes="Bold"
+               HorizontalOptions="Start"
+               VerticalOptions="Center"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center"
+               Margin="8,0,0,0"
+               IsVisible="False" />
+
+        <!-- OFF Text -->
+        <Label x:Name="OffLabel"
+               Text="{Binding OffText, Source={x:Reference Root}}"
+               TextColor="{Binding TextColor, Source={x:Reference Root}}"
+               FontSize="{Binding FontSize, Source={x:Reference Root}}"
+               FontAttributes="Bold"
+               HorizontalOptions="End"
+               VerticalOptions="Center"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center"
+               Margin="0,0,8,0"
+               IsVisible="True" />
+
+        <!-- Thumb -->
+        <Frame x:Name="ThumbFrame"
+               BackgroundColor="{Binding ThumbColor, Source={x:Reference Root}}"
+               CornerRadius="{Binding HeightCustom, Source={x:Reference Root}, Converter={StaticResource ThumbRadiusConverter}}"
+               Padding="0"
+               HasShadow="True"
+               BorderColor="Transparent"
+               HeightRequest="{Binding HeightCustom, Source={x:Reference Root}, Converter={StaticResource ThumbSizeConverter}}"
+               WidthRequest="{Binding HeightCustom, Source={x:Reference Root}, Converter={StaticResource ThumbSizeConverter}}"
+               HorizontalOptions="Start"
+               VerticalOptions="Center"
+               TranslationX="4">
+
+            <Frame.Shadow>
+                <Shadow Brush="Black"
+                        Offset="0,2"
+                        Radius="4"
+                        Opacity="0.3" />
+            </Frame.Shadow>
+        </Frame>
+
+    </Grid>
+</ContentView>

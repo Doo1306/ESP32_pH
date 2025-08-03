@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="ESP32_pH.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ESP32_pH"
+    xmlns:view="clr-namespace:ESP32_pH.Views"
+    xmlns:icon ="clr-namespace:ESP32_pH.Helpers"
+    xmlns:viewmodel="clr-namespace:ESP32_pH.ViewModels"
+    Shell.TabBarIsVisible="False"
+    Title="ESP32_pH">
+
+    <Shell.BindingContext>
+        <viewmodel:AppShellViewModel />
+    </Shell.BindingContext>
+
+    <ShellContent
+     Title="Home"
+     ContentTemplate="{DataTemplate view:LoginView}"
+     FlyoutItemIsVisible="False"
+     Shell.FlyoutBehavior="Disabled"
+     Route="LoginView" />
+
+
+    <FlyoutItem Title="Home" Route="MainView" FlyoutDisplayOptions="AsMultipleItems" >
+        <ShellContent Title="Home" Icon="{x:Static icon:Icons.MainPage}" ContentTemplate="{DataTemplate view:MainView}" Shell.BackgroundColor="#90A4AE" />
+        <ShellContent Title="Setting" Icon="{x:Static icon:Icons.SettingPage}" ContentTemplate="{DataTemplate view:SettingView}" Shell.BackgroundColor="#BBDEFB" />
+        <ShellContent Title="Log" Icon="{x:Static icon:Icons.LogPage}" ContentTemplate="{DataTemplate view:LogView}" Shell.BackgroundColor="#1A237E" />
+        <ShellContent Title="About" Icon="{x:Static icon:Icons.AboutPage}" ContentTemplate="{DataTemplate view:AboutView}" Shell.BackgroundColor="#37474F" />
+    </FlyoutItem>
+
+    <Shell.FlyoutFooter >
+        <StackLayout Padding="20">
+            <Frame Padding="12"
+                Margin="10,0,10,10"
+                BackgroundColor="#C8E6C9"
+                CornerRadius="12"
+                HasShadow="False"
+                HorizontalOptions="FillAndExpand">
+
+                <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
+                    <!-- ICON -->
+                    <Image Source="logout.png"
+                         WidthRequest="20"
+                         HeightRequest="20"
+                         VerticalOptions="Center" />
+
+                    <!-- TEXT -->
+                    <Label Text="Sign out"
+                        TextColor="Green"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <!-- GESTURE NHẤN -->
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SignOutCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+        </StackLayout>
+    </Shell.FlyoutFooter>
+</Shell>

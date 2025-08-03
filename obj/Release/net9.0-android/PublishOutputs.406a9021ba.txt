@@ -1,0 +1,4 @@
+D:\aduino\ProjectLixil\ESP32 pH\bin\Release\net9.0-android\publish\com.companyname.esp32ph-Signed.aab
+D:\aduino\ProjectLixil\ESP32 pH\bin\Release\net9.0-android\publish\com.companyname.esp32ph.aab
+D:\aduino\ProjectLixil\ESP32 pH\bin\Release\net9.0-android\publish\com.companyname.esp32ph-Signed.apk
+D:\aduino\ProjectLixil\ESP32 pH\bin\Release\net9.0-android\publish\_Microsoft.Android.Resource.Designer.dll
