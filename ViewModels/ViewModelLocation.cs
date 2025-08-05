@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ESP32_pH.ViewModels
+namespace ESP32pH.ViewModels
 {
     public class ViewModelLocation
     {

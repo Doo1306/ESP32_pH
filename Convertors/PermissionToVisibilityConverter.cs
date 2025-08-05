@@ -1,4 +1,4 @@
-﻿using ESP32_pH.Models;
+﻿using ESP32pH.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ESP32_pH.Convertors
+namespace ESP32pH.Convertors
 {
     public class PermissionToVisibilityConverter : IValueConverter
     {

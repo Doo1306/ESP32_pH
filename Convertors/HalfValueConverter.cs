@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ESP32_pH.Convertors
+namespace ESP32pH.Convertors
 {
     public class HalfValueConverter : IValueConverter
     {

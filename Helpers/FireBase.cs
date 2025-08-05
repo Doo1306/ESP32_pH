@@ -1,20 +1,37 @@
-﻿using System;
+﻿using ESP32pH.DTOs;
+using ESP32pH.Models;
+using Firebase.Auth;
+using Firebase.Database;
+using Firebase.Database.Query;
+using Firebase.Database.Streaming;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Firebase.Auth;
-using ESP32_pH.DTOs;
 
-namespace ESP32_pH.Helpers
+namespace ESP32pH.Helpers
 {
+//    rele
+//     {
+//  "rules": {
+//    "Data":{
+//    	"$uid":{
+//        ".read": "$uid === auth.uid",
+//    		".write": "$uid === auth.uid"
+//      }			
+//    }
+//	}
+//}  
     public class FireBase
     {
         #region Fields
         private readonly HttpClient httpClient;
         private string firebaseUrl;
-        private string authenticToken;        
+        private string authenticToken; 
+        private FirebaseClient? firebaseClient;
+        private IDisposable? _controlSubscription;
         private FirebaseAuthProvider authProvider;
         private FirebaseConfig firebaseConfig;
         public string token = string.Empty;
@@ -38,11 +55,79 @@ namespace ESP32_pH.Helpers
         {
             httpClient = new HttpClient();
             FirebaseUrl = _firebaseUrl;
-            AuthenticToken = _token;
+            AuthenticToken = _token;           
         }
         #endregion
 
         #region Methods
+        // Generic listener
+        public void ListenToNodeChanges<T>(string nodeKey, string authToken)
+        {
+            EnsureFirebaseClient(authToken);
+
+            firebaseClient
+           .Child("Data")
+           .Child("8Xd57DhumEMAJbtobZnciPT6eYj1")
+           .Child("Control")
+           .AsObservable<Dictionary<string, object>>()
+           .Subscribe(d =>
+           {
+               Console.WriteLine($"🔥 EVENT: {d.EventType} | KEY: {d.Key} | OBJECT: {d.Object}");
+           },
+           ex =>
+           {
+               Console.WriteLine($"❌ ERROR: {ex.Message}");
+           });
+        }
+
+        public void ListenForControlChanges(string userId, string authToken)
+        {
+            EnsureFirebaseClient(authToken);
+            // Xây dựng đường dẫn đến node Control
+            var path = firebaseClient
+                .Child("Data")
+                .Child(userId)
+                .Child("Control");
+
+            // Sử dụng AsObservable để lắng nghe. 
+            // Bất cứ khi nào dữ liệu tại đường dẫn này thay đổi, hàm trong Subscribe sẽ được gọi.
+            path.AsObservable<ESP32ControlModel>()
+                .Subscribe(
+                    e => // 'e' là một đối tượng IEvent chứa thông tin về sự kiện
+                    {
+                        if (e.Object != null)
+                        {
+                            // e.Object chính là dữ liệu đã được tự động chuyển đổi thành ControlModel
+                            var controlData = e.Object;
+
+                            // In ra để kiểm tra
+                            System.Diagnostics.Debug.WriteLine($"[Firebase] Dữ liệu Control đã thay đổi!");
+                            System.Diagnostics.Debug.WriteLine($" -> Chế độ điều khiển: {controlData.ControlMode}");
+                            System.Diagnostics.Debug.WriteLine($" -> Ngưỡng pH Max: {controlData.PH_Max}");
+                            System.Diagnostics.Debug.WriteLine($" -> Còi báo: {controlData.Buzze}");
+                            System.Diagnostics.Debug.WriteLine("------------------------------------");
+
+                            // Kích hoạt event để các thành phần khác (như ViewModel/UI) có thể nhận dữ liệu
+                            StreamDataTranfer.Instance.NotifyDataChanged("Control");
+                        }
+                    },
+                    ex => // Xử lý lỗi nếu có
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[Firebase] Lỗi khi lắng nghe: {ex.Message}");
+                    }
+                );
+        }
+        private void EnsureFirebaseClient(string authToken)
+        {
+            if (firebaseClient == null)
+            {
+                firebaseClient = new FirebaseClient(firebaseUrl,
+                    new FirebaseOptions
+                    {
+                        AuthTokenAsyncFactory = () => Task.FromResult(authToken)
+                    });
+            }
+        }
         public async Task<T> GetDataAsync<T>(string path, string authentoken)
         {
             try
@@ -63,7 +148,7 @@ namespace ESP32_pH.Helpers
             token = await LoginWithEmailPassword(email, password); // Lấy token từ Firebase
             return token;
         }
-        private async Task<string> LoginWithEmailPassword(string email, string password)
+        public async Task<string> LoginWithEmailPassword(string email, string password)
         {
             try
             {

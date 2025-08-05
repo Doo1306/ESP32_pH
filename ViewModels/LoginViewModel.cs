@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ESP32_pH.DTOs;
-using ESP32_pH.Helpers;
-using ESP32_pH.Models;
-using ESP32_pH.Views;
-using ESP32_pH.Views.UserControl;
+using ESP32pH.DTOs;
+using ESP32pH.Helpers;
+using ESP32pH.Models;
+using ESP32pH.Views;
+using ESP32pH.Views.UserControl;
 using Firebase.Auth;
 using Microsoft.Maui.Storage;
 using Newtonsoft.Json;
@@ -17,7 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace ESP32_pH.ViewModels
+namespace ESP32pH.ViewModels
 {
     public class LoginViewModel : ObservableObject
     {
@@ -27,23 +27,10 @@ namespace ESP32_pH.ViewModels
         private bool _rememberMe;
         private bool _isPasswordHidden = true;
         private string token = string.Empty;                   
-        private FireBase firebase = new FireBase(Global.FirebaseBaseUrl, Global.FirebaseAuthToken);
         public LoginViewModel()
         {
-            LoginCommand = new AsyncRelayCommand(LoginCommandAct);
-            FireBaseAuth();
+            LoginCommand = new AsyncRelayCommand(LoginCommandAct);          
             LoadCookie();
-        }
-
-        private async Task FireBaseAuth()
-        {
-
-            token = await firebase.FirebaseAuthenticLogin(Global.UserNameFirebase, Global.PasswordFirebase);
-            if (token == null)
-            {
-                await Shell.Current.DisplayAlert("Lỗi", "không thể kết nối đến DataBase", "OK");
-            }
-            else StreamDataTranfer.Instance.FireBaseToken = token;
         }
 
         private async Task SaveCookie()
@@ -87,28 +74,30 @@ namespace ESP32_pH.ViewModels
 
             try
             {               
-                var data = await firebase.GetDataAsync<Dictionary<string, object>>(Global.pathLogin, token);
+                //var data = await firebase.GetDataAsync<Dictionary<string, object>>(Global.pathLogin, token);
 
-                // Chuyển object → JObject → LoginModel
-                var loginDict = data.ToDictionary(
-                    x => x.Key,
-                    x => ((JObject)x.Value).ToObject<LoginModel>()
-                );
+                //// Chuyển object → JObject → LoginModel
+                //var loginDict = data.ToDictionary(
+                //    x => x.Key,
+                //    x => ((JObject)x.Value).ToObject<LoginModel>()
+                //);
 
-                StreamDataTranfer.Instance.LoginModels = new ObservableCollection<LoginModel>(loginDict.Values);
+                //StreamDataTranfer.Instance.LoginModels = new ObservableCollection<LoginModel>(loginDict.Values);
 
-                //Check đăng nhập
-                var user = StreamDataTranfer.Instance.LoginModels
-                    .FirstOrDefault(x =>
-                        string.Equals(x.UserName, UserName, StringComparison.OrdinalIgnoreCase) &&
-                        x.Password == Password
-                        );
+                ////Check đăng nhập
+                //var user = StreamDataTranfer.Instance.LoginModels
+                //    .FirstOrDefault(x =>
+                //        string.Equals(x.UserName, UserName, StringComparison.OrdinalIgnoreCase) &&
+                //        x.Password == Password
+                //        );
 
+               var user = await StreamDataTranfer.Instance.LoginAsync(UserName, Password);
+                
                 if (user != null)
                 {
                     //await ShowAlertAsync("Thành công", $"Đăng nhập thành công. Quyền: {user.Permission}");
                     SaveCookie();
-                    // TODO: chuyển trang hoặc xử lý sau đăng nhập
+                    //chuyển trang hoặc xử lý sau đăng nhập
                     StreamDataTranfer.Instance.CurrentLoginModel = user;
                     AppShell.Current.FlyoutHeader = new FlyoutHeaderControl();
                     await Shell.Current.GoToAsync($"//{nameof(MainView)}");

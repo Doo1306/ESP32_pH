@@ -1,26 +1,52 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ESP32_pH.Models
+namespace ESP32pH.Models
 {
     public class ESP32ControlModel
     {
-        public bool Buzze{ get;set;}
-        public int Control_Mode{ get;set;}
-        public bool Door_Close_Req{ get;set;}
-        public bool Door_Open_Req{ get;set;}
-        public bool IsAlarm{ get;set;}
-        public bool IsDoor_Close{ get;set;}
-        public bool IsDoor_Open{ get;set;}
-        public float PH_Max{ get;set;}
-        public float PH_Min{ get;set;}
-        public int TimeDelay{ get;set;}
-        public int TimeInterval{ get;set;}
-        public float OffsetX0{ get; set; }
-        public float OffsetY0{ get; set; }      
+        [JsonProperty("Buzze")]
+        public bool Buzze { get; set; }
+
+        [JsonProperty("Control_Mode")]
+        public int ControlMode { get; set; }
+
+        [JsonProperty("Door_Close_Req")]
+        public bool DoorCloseReq { get; set; }
+
+        [JsonProperty("Door_Open_Req")]
+        public bool DoorOpenReq { get; set; }
+
+        [JsonProperty("IsAlarm")]
+        public bool IsAlarm { get; set; }
+
+        [JsonProperty("IsDoor_Close")]
+        public bool IsDoorClose { get; set; }
+
+        [JsonProperty("IsDoor_Open")]
+        public bool IsDoorOpen { get; set; }
+
+        [JsonProperty("OffsetX0")]
+        public float OffsetX0 { get; set; }
+
+        [JsonProperty("OffsetY0")]
+        public float OffsetY0 { get; set; }
+
+        [JsonProperty("PH_Max")]
+        public float PH_Max { get; set; }
+
+        [JsonProperty("PH_Min")]
+        public float PH_Min { get; set; }
+
+        [JsonProperty("TimeDelay")]
+        public int TimeDelay { get; set; }
+
+        [JsonProperty("TimeInterval")]
+        public int TimeInterval { get; set; }
 
     }
 }

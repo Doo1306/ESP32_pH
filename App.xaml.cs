@@ -1,4 +1,4 @@
-﻿namespace ESP32_pH
+﻿namespace ESP32pH
 {
     public partial class App : Application
     {

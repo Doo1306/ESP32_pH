@@ -1,10 +1,10 @@
-﻿using ESP32_pH.DTOs;
-using ESP32_pH.ViewModels;
-using ESP32_pH.Views;
+﻿using ESP32pH.DTOs;
+using ESP32pH.ViewModels;
+using ESP32pH.Views;
 using Microsoft.Extensions.Logging;
 
 
-namespace ESP32_pH
+namespace ESP32pH
 {
     public static class MauiProgram
     {

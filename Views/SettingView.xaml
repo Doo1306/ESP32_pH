@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ESP32_pH.Views.SettingView"
-             xmlns:viewmodel="clr-namespace:ESP32_pH.ViewModels"
-             xmlns:convertor="clr-namespace:ESP32_pH.Convertors"
+             x:Class="ESP32pH.Views.SettingView"
+             xmlns:viewmodel="clr-namespace:ESP32pH.ViewModels"
+             xmlns:convertor="clr-namespace:ESP32pH.Convertors"
              Title="Setting"
              >
 
@@ -26,7 +26,7 @@
             </StackLayout.Background>
 
             <!-- Time Span -->
-            <Border Style="{StaticResource WhiteCardStyle}" IsVisible="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Maker}">
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Maker}">
                 <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
                     <Label Text="Time Interval" WidthRequest="180" VerticalOptions="Center" />
                     <Entry x:Name="TimeSpanEntry" Text="{Binding TimeInterval,Mode=TwoWay}" Keyboard="Numeric"/>
@@ -35,7 +35,7 @@
             </Border>
 
             <!-- Door Delay -->
-            <Border Style="{StaticResource WhiteCardStyle}" IsVisible="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Admin}">
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Admin}">
                 <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
                     <Label Text="Time Delay request Door change" WidthRequest="250" VerticalOptions="Center" />
                     <Entry x:Name="DoorDelayEntry" Text="{Binding TimeDelay,Mode=TwoWay}" Keyboard="Numeric" />
@@ -44,7 +44,7 @@
             </Border>
 
             <!-- Analog Offsets -->
-            <Border Style="{StaticResource WhiteCardStyle}" IsVisible="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Maker}">
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Maker}">
                 <VerticalStackLayout Spacing="10">
 
                     <HorizontalStackLayout Spacing="10">
@@ -87,7 +87,7 @@
             </Border>
 
             <!-- pH Min/Max -->
-            <Border Style="{StaticResource WhiteCardStyle}" IsVisible="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Admin}">
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Admin}">
                 <VerticalStackLayout Spacing="10">
                     <HorizontalStackLayout Spacing="10">
                         <Label Text="pH Min" WidthRequest="150" VerticalOptions="Center" />
@@ -104,7 +104,7 @@
             </Border>
 
             <!-- Buttons -->
-            <Border Style="{StaticResource WhiteCardStyle}" IsVisible="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Admin}">
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Admin}">
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="30" Margin="0,20,0,0">
                     <Button Text="Accept"
                         Style="{StaticResource ButtonRemain}"

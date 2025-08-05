@@ -2,7 +2,7 @@ using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 
-namespace ESP32_pH
+namespace ESP32pH
 {
     internal class Program : MauiApplication
     {

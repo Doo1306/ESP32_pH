@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ESP32_pH.Views.MainView"  
-             xmlns:controls="clr-namespace:ESP32_pH.Helpers"
-             xmlns:viewmodel="clr-namespace:ESP32_pH.ViewModels"
-             xmlns:convertors="clr-namespace:ESP32_pH.Convertors"
+             x:Class="ESP32pH.Views.MainView"  
+             xmlns:controls="clr-namespace:ESP32pH.Helpers"
+             xmlns:viewmodel="clr-namespace:ESP32pH.ViewModels"
+             xmlns:convertors="clr-namespace:ESP32pH.Convertors"
              Title="DashBoad"
              >
 
@@ -182,7 +182,7 @@
                                     </Style>
                                 </ProgressBar.Style>
                             </ProgressBar>
-                            <Label Margin="10,0,0,0" Text="{Binding CurrentReading.StatusDisplay}" VerticalTextAlignment="Center"/>
+                            <Label Text="{Binding CurrentReading.StatusDisplay}" VerticalTextAlignment="Center"/>
                             <!-- Text trên ProgressBar -->
                         </Grid>
                     </Border>
@@ -194,7 +194,7 @@
 
                              <!--Chart Container--> 
                             <GraphicsView Drawable="{Binding ChartDrawable,Mode=TwoWay}" 
-                                  HeightRequest="400"
+                                  HeightRequest="450"
                                   BackgroundColor="White"/>
 
                              <!--Legend--> 

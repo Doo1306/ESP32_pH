@@ -1,5 +1,5 @@
-namespace ESP32_pH.Views.UserControl;
-using ESP32_pH.DTOs;
+namespace ESP32pH.Views.UserControl;
+using ESP32pH.DTOs;
 
 public partial class FlyoutHeaderControl : ContentView
 {

@@ -1,9 +1,9 @@
-ESP32_pH.MainActivity, ESP32pH;crc64e546dd06175c2bb7.MainActivity
-ESP32_pH.MainActivity;crc64e546dd06175c2bb7.MainActivity
-esp32_ph.MainActivity;crc64e546dd06175c2bb7.MainActivity
-ESP32_pH.MainApplication, ESP32pH;crc64e546dd06175c2bb7.MainApplication
-ESP32_pH.MainApplication;crc64e546dd06175c2bb7.MainApplication
-esp32_ph.MainApplication;crc64e546dd06175c2bb7.MainApplication
+ESP32pH.MainActivity, ESP32pH;crc64490ea7a9f97d179a.MainActivity
+ESP32pH.MainActivity;crc64490ea7a9f97d179a.MainActivity
+esp32ph.MainActivity;crc64490ea7a9f97d179a.MainActivity
+ESP32pH.MainApplication, ESP32pH;crc64490ea7a9f97d179a.MainApplication
+ESP32pH.MainApplication;crc64490ea7a9f97d179a.MainApplication
+esp32ph.MainApplication;crc64490ea7a9f97d179a.MainApplication
 GoogleGson.IExclusionStrategy, GoogleGson;com.google.gson.ExclusionStrategy
 GoogleGson.IExclusionStrategy;com.google.gson.ExclusionStrategy
 com.google.gson.ExclusionStrategy;com.google.gson.ExclusionStrategy

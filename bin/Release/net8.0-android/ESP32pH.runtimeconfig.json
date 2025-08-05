@@ -4,11 +4,11 @@
     "frameworks": [
       {
         "name": "Microsoft.NETCore.App",
-        "version": "8.0.18"
+        "version": "8.0.0"
       },
       {
         "name": "Microsoft.Android",
-        "version": "34.0.154"
+        "version": ""
       }
     ],
     "configProperties": {

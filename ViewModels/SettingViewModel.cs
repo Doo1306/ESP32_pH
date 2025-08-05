@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ESP32_pH.DTOs;
-using ESP32_pH.Helpers;
-using ESP32_pH.Models;
+using ESP32pH.DTOs;
+using ESP32pH.Helpers;
+using ESP32pH.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace ESP32_pH.ViewModels
+namespace ESP32pH.ViewModels
 {
     public class SettingViewModel : ObservableObject
     {
@@ -20,49 +20,51 @@ namespace ESP32_pH.ViewModels
             SaveSettingCommand = new RelayCommand(SaveSettingAct);
             CancelSettingCommand = new RelayCommand(CancelSettingAct);
 
-            // Initialize FireBase with base URL and auth token
-            firebase = new FireBase(Global.FirebaseBaseUrl, Global.FirebaseAuthToken);
-
-            // Initialize CurrentLoginModel
+            //Initialize CurrentLoginModel
             CurrentLoginModel = StreamDataTranfer.Instance.CurrentLoginModel;
-
-            // notify when login changed update CurrentLoginModel Permission
-            var stream = StreamDataTranfer.Instance;
-            CurrentLoginModel = stream.CurrentLoginModel;
-
-            stream.LoginChanged += (s, e) =>
+            if(StreamDataTranfer.Instance.ESP32Control != null)
             {
-                CurrentLoginModel = stream.CurrentLoginModel;
-            };
+                ESP32Control = StreamDataTranfer.Instance.ESP32Control;
+                LoadParameters();
+            }else
+            {
+                
+            }
+            StreamDataTranfer.Instance.EP32DataChanged += Instance_EP32DataChanged;
         }
 
-        public SettingViewModel(ESP32ControlModel data) : this() // Call the default constructor to initialize common properties
+        private void Instance_EP32DataChanged(string key)
         {
-            SaveSettingCommand = new RelayCommand(SaveSettingAct);
-            CancelSettingCommand = new RelayCommand(CancelSettingAct);
-            // Initialize FireBase with base URL and auth token
-            firebase = new FireBase(Global.FirebaseBaseUrl, Global.FirebaseAuthToken);
-            // Initialize CurrentLoginModel
-            CurrentLoginModel = StreamDataTranfer.Instance.CurrentLoginModel;
-            // notify when login changed update CurrentLoginModel Permission
+            if (key == Global.pathESP32ControlTest)
+            {
+                LoadParameters();
+                ESP32Control = StreamDataTranfer.Instance.ESP32Control;
+            }
+        }
+
+        public SettingViewModel(ESP32ControlModel data):base()  // Call the default constructor to initialize common properties
+        {         
             var stream = StreamDataTranfer.Instance;
             CurrentLoginModel = stream.CurrentLoginModel;
             stream.LoginChanged += (s, e) =>
             {
                 CurrentLoginModel = stream.CurrentLoginModel;
             };
-            ESP32Control = data;
+            if(data != null)
+            {
+                ESP32Control = data;
+            }          
             LoadParameters();
         }
 
         private void LoadParameters()
         {
-            this.TimeInterval = ESP32Control.TimeInterval;
-            this.TimeDelay = ESP32Control.TimeDelay;
-            this.pHMin = ESP32Control.PH_Min;
-            this.pHMax = ESP32Control.PH_Max;
-            this.OffsetX0 = ESP32Control.OffsetX0;
-            this.OffsetY0 = ESP32Control.OffsetY0;
+            this._timeInterval = ESP32Control.TimeInterval;
+            this._timeDelay = ESP32Control.TimeDelay;
+            this._pHMin = ESP32Control.PH_Min;
+            this._pHMax = ESP32Control.PH_Max;
+            this._offsetX0 = ESP32Control.OffsetX0;
+            this._offsetY0 = ESP32Control.OffsetY0;
             // Load other parameters as needed
         }
 
@@ -171,19 +173,21 @@ namespace ESP32_pH.ViewModels
                 }
             }
         }
-
-
         private void CancelSettingAct()
         {
-            throw new NotImplementedException();
+            LoadParameters();
         }
-
         private void SaveSettingAct()
         {
-            throw new NotImplementedException();
+            StreamDataTranfer.Instance.ESP32Control.TimeInterval = TimeInterval;
+            StreamDataTranfer.Instance.ESP32Control.TimeDelay = TimeDelay;
+            StreamDataTranfer.Instance.ESP32Control.OffsetX0 = OffsetX0;
+            StreamDataTranfer.Instance.ESP32Control.OffsetY0 = OffsetY0;
+            StreamDataTranfer.Instance.ESP32Control.PH_Max = pHMax;
+            StreamDataTranfer.Instance.ESP32Control.PH_Min = pHMin;
+
+            StreamDataTranfer.Instance.UpdateDataAsync(Global.pathESP32Control, StreamDataTranfer.Instance.ESP32Control);
         }
-
-
         //create a ICommnand to accepted to save setting
         public ICommand SaveSettingCommand { get; set; }
         //create a ICommnand to accepted to cancel setting

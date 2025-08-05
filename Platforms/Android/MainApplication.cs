@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace ESP32_pH
+namespace ESP32pH
 {
     [Application]
     public class MainApplication : MauiApplication

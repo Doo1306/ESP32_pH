@@ -1,6 +1,6 @@
-using ESP32_pH.ViewModels;
+using ESP32pH.ViewModels;
 
-namespace ESP32_pH.Views;
+namespace ESP32pH.Views;
 
 public partial class MainView : ContentPage
 {

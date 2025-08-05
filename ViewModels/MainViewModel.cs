@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ESP32_pH.Models;
+using ESP32pH.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
 
-namespace ESP32_pH.ViewModels
+namespace ESP32pH.ViewModels
 {
     public enum eMode
     {
@@ -29,7 +29,7 @@ namespace ESP32_pH.ViewModels
         public MainViewModel()
         {
             DoorRequestChangeCommand = new RelayCommand(DoorRequestChangeCommandAct);
-            _timer = new System.Timers.Timer(1000); // Update every 1 seconds
+            _timer = new System.Timers.Timer(2000); // Update every 1 seconds
             _timer.Elapsed += async (s, e) => await FetchPHAsync();
             _timer.Start();
 
@@ -115,7 +115,7 @@ namespace ESP32_pH.ViewModels
                 return;
 
             // Xác định thời gian cắt dựa trên TimeRange + buffer
-            var bufferHours = 1; // Giữ thêm 1 giờ dữ liệu để tránh mất dữ liệu khi chuyển TimeRange
+            var bufferHours = 2; // Giữ thêm 1 giờ dữ liệu để tránh mất dữ liệu khi chuyển TimeRange
 
             DateTime cutoffTime = TimeRange switch
             {

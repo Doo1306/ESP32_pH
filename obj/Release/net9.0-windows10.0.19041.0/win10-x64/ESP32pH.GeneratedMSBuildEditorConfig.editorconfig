@@ -14,8 +14,8 @@ build_property.InvariantGlobalization =
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
-build_property.RootNamespace = ESP32_pH
-build_property.ProjectDir = D:\aduino\ProjectLixil\ESP32 pH\
+build_property.RootNamespace = ESP32pH
+build_property.ProjectDir = D:\aduino\ProjectLixil\ESP32pH\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTAotExportsEnabled = 
@@ -27,68 +27,68 @@ build_property.CsWinRTUseWindowsUIXamlProjections = false
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[D:/aduino/ProjectLixil/ESP32 pH/App.xaml]
+[D:/aduino/ProjectLixil/ESP32pH/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = ESP32_pH.App.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ESP32pH.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
-[D:/aduino/ProjectLixil/ESP32 pH/AppShell.xaml]
+[D:/aduino/ProjectLixil/ESP32pH/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = ESP32_pH.AppShell.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ESP32pH.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
-[D:/aduino/ProjectLixil/ESP32 pH/Helpers/CustomToggleSwitch.xaml]
+[D:/aduino/ProjectLixil/ESP32pH/Helpers/CustomToggleSwitch.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = ESP32_pH.Helpers.CustomToggleSwitch.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ESP32pH.Helpers.CustomToggleSwitch.xaml
 build_metadata.AdditionalFiles.TargetPath = Helpers\CustomToggleSwitch.xaml
 build_metadata.AdditionalFiles.RelativePath = Helpers\CustomToggleSwitch.xaml
 
-[D:/aduino/ProjectLixil/ESP32 pH/Resources/Styles/Colors.xaml]
+[D:/aduino/ProjectLixil/ESP32pH/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = ESP32_pH.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ESP32pH.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
 
-[D:/aduino/ProjectLixil/ESP32 pH/Resources/Styles/Styles.xaml]
+[D:/aduino/ProjectLixil/ESP32pH/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = ESP32_pH.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ESP32pH.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
 
-[D:/aduino/ProjectLixil/ESP32 pH/Views/AboutView.xaml]
+[D:/aduino/ProjectLixil/ESP32pH/Views/AboutView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = ESP32_pH.Views.AboutView.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ESP32pH.Views.AboutView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\AboutView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\AboutView.xaml
 
-[D:/aduino/ProjectLixil/ESP32 pH/Views/LoginView.xaml]
+[D:/aduino/ProjectLixil/ESP32pH/Views/LoginView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = ESP32_pH.Views.LoginView.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ESP32pH.Views.LoginView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\LoginView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\LoginView.xaml
 
-[D:/aduino/ProjectLixil/ESP32 pH/Views/LogView.xaml]
+[D:/aduino/ProjectLixil/ESP32pH/Views/LogView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = ESP32_pH.Views.LogView.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ESP32pH.Views.LogView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\LogView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\LogView.xaml
 
-[D:/aduino/ProjectLixil/ESP32 pH/Views/MainView.xaml]
+[D:/aduino/ProjectLixil/ESP32pH/Views/MainView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = ESP32_pH.Views.MainView.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ESP32pH.Views.MainView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\MainView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\MainView.xaml
 
-[D:/aduino/ProjectLixil/ESP32 pH/Views/SettingView.xaml]
+[D:/aduino/ProjectLixil/ESP32pH/Views/SettingView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = ESP32_pH.Views.SettingView.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ESP32pH.Views.SettingView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\SettingView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\SettingView.xaml
 
-[D:/aduino/ProjectLixil/ESP32 pH/Views/UserControl/FlyoutHeaderControl.xaml]
+[D:/aduino/ProjectLixil/ESP32pH/Views/UserControl/FlyoutHeaderControl.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = ESP32_pH.Views.UserControl.FlyoutHeaderControl.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ESP32pH.Views.UserControl.FlyoutHeaderControl.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\UserControl\FlyoutHeaderControl.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\UserControl\FlyoutHeaderControl.xaml

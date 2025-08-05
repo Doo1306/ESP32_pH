@@ -1,11 +1,11 @@
 ﻿<?xml version = "1.0" encoding = "UTF-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:ESP32_pH"
-             xmlns:vm="clr-namespace:ESP32_pH.ViewModels"
-             xmlns:view="clr-namespace:ESP32_pH.Views"
-             xmlns:converters="clr-namespace:ESP32_pH.Convertors"
-             x:Class="ESP32_pH.App">
+             xmlns:local="clr-namespace:ESP32pH"
+             xmlns:vm="clr-namespace:ESP32pH.ViewModels"
+             xmlns:view="clr-namespace:ESP32pH.Views"
+             xmlns:converters="clr-namespace:ESP32pH.Convertors"
+             x:Class="ESP32pH.App">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

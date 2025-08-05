@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace ESP32_pH
+namespace ESP32pH
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ESP32_pH.Models
+namespace ESP32pH.Models
 {
     public class ESP32pHModel
     {

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\mainpage@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\mainpage@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\mainpage.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\homepage@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\homepage@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\homepage.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\Resources\flyoutheader.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\logsave@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\logsave@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\logsave.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\dotnet_bot@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\dotnet_bot@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\dotnet_bot.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\logout@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\logout@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\logout.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\auto@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\auto@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\auto.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\appiconmem@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\appiconmem@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\appiconmem.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\settingpage@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\settingpage@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\settingpage.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\remote@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\remote@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\remote.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\manual@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\manual@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\manual.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\authent@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\authent@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\authent.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\eyeclose@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\eyeclose@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\eyeclose.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\userlogin@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\userlogin@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\userlogin.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\eyeopen@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\eyeopen@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\eyeopen.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\aboutpage@3x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\aboutpage@2x.png" />
+    <BundleResource Include="D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\resizetizer\r\aboutpage.png" />
+    <BundleResource Include="obj\Release\net8.0-maccatalyst\resizetizer\f\OpenSans-Regular.ttf" />
+    <BundleResource Include="obj\Release\net8.0-maccatalyst\resizetizer\f\OpenSans-Semibold.ttf" />
+  </ItemGroup>
+</Project>

@@ -5,7 +5,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ESP32_pH.DTOs
+namespace ESP32pH.DTOs
 {
     public class Global
     {
@@ -19,5 +19,7 @@ namespace ESP32_pH.DTOs
         public static readonly string pathLogin = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login";
 
         public static readonly string pathESP32Control = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Control";
+        public static readonly string pathESP32ControlTest = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Control/Buzze";
     }
 }
+

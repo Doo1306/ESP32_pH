@@ -1,4 +1,4 @@
-namespace ESP32_pH.Views;
+namespace ESP32pH.Views;
 
 public partial class SettingView : ContentPage
 {

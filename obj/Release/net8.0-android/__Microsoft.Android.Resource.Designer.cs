@@ -5,7 +5,7 @@
 //------------------------------------------------------------------------------
 using System;
 
-namespace ESP32_pH {
+namespace ESP32pH {
 	#pragma warning disable IDE0002
 	public partial class Resource : _Microsoft.Android.Resource.Designer.ResourceConstant {
 	}

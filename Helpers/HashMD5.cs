@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ESP32_pH.Helpers
+namespace ESP32pH.Helpers
 {
     public static class HashMD5    
     {

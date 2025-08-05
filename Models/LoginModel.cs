@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace ESP32_pH.Models
+namespace ESP32pH.Models
 {
     public enum ePermission
     {

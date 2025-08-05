@@ -1,13 +1,13 @@
-﻿using ESP32_pH.DTOs;
+﻿using ESP32pH.DTOs;
 
-namespace ESP32_pH
+namespace ESP32pH
 {
     public partial class AppShell : Shell
     {
         public AppShell()
         {
             InitializeComponent();
-            int result = StreamDataTranfer.Instance.Initialize();
+            var result = StreamDataTranfer.Instance.Initialize();
         }
     }
 }

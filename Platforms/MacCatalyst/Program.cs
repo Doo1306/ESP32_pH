@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace ESP32_pH
+namespace ESP32pH
 {
     public class Program
     {

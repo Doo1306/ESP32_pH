@@ -1,6 +1,6 @@
 using System.Windows.Input;
 
-namespace ESP32_pH.Helpers;
+namespace ESP32pH.Helpers;
 
 public partial class CustomToggleSwitch : ContentView
 {

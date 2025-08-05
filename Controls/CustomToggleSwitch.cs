@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace ESP32_pH.Controls
+namespace ESP32pH.Controls
 {
     public class CustomToggleSwitch : ContentView
     {
