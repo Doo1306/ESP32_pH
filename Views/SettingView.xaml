@@ -4,6 +4,7 @@
              x:Class="ESP32pH.Views.SettingView"
              xmlns:viewmodel="clr-namespace:ESP32pH.ViewModels"
              xmlns:convertor="clr-namespace:ESP32pH.Convertors"
+             xmlns:controls="clr-namespace:ESP32pH.Controls"
              Title="Setting"
              >
 
@@ -43,6 +44,41 @@
                 </HorizontalStackLayout>
             </Border>
 
+           
+           
+            <!-- pH Min/Max -->
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Admin}">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="pH Min" WidthRequest="150" VerticalOptions="Center" />
+                        <Entry x:Name="PhMinEntry" Text="{Binding pHMin}" Keyboard="Numeric"  />
+                        <Label Text="pH" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="pH Max" WidthRequest="150" VerticalOptions="Center" />
+                        <Entry x:Name="PhMaxEntry" Text="{Binding pHMax}" Keyboard="Numeric"  />
+                        <Label Text="pH" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Test mode -->
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Maker}">
+                <StackLayout Orientation="Horizontal">
+                    <controls:CustomToggleSwitch IsToggled="{Binding TestMode}"
+                       HeightCustom="50"
+                       WidthCustom="120"
+                       OnColor="Green"
+                       OffColor="LightGray"
+                       OnText="On Test"
+                       OffText="Off Test"
+                       FontSize="12"
+                       Margin="0,0,10,0"/>
+                    <Label Text="Test Mode Change" VerticalOptions="Center" />
+                </StackLayout>
+            </Border>
+
             <!-- Analog Offsets -->
             <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Maker}">
                 <VerticalStackLayout Spacing="10">
@@ -61,45 +97,28 @@
 
                     <HorizontalStackLayout Spacing="10">
                         <Label Text="Analog offset X1" WidthRequest="150" VerticalOptions="Center" />
-                        <Entry x:Name="OffsetX1Entry" Keyboard="Numeric"  />
+                        <Entry x:Name="OffsetX1Entry" Text="{Binding OffsetX1}"  Keyboard="Numeric"  />
                         <Label Text="AnalogValue" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
                         <Label Text="Analog offset Y1" WidthRequest="150" VerticalOptions="Center" />
-                        <Entry x:Name="OffsetY1Entry" Keyboard="Numeric" />
+                        <Entry x:Name="OffsetY1Entry" Text="{Binding OffsetY1}" Keyboard="Numeric" />
                         <Label Text="V" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
                         <Label Text="Analog offset X2" WidthRequest="150" VerticalOptions="Center" />
-                        <Entry x:Name="OffsetX2Entry" Keyboard="Numeric"  />
+                        <Entry x:Name="OffsetX2Entry" Text="{Binding OffsetX2}" Keyboard="Numeric"  />
                         <Label Text="AnalogValue" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
                         <Label Text="Analog offset Y2" WidthRequest="150" VerticalOptions="Center" />
-                        <Entry x:Name="OffsetY2Entry" Keyboard="Numeric" />
+                        <Entry x:Name="OffsetY2Entry" Text="{Binding OffsetY1}" Keyboard="Numeric" />
                         <Label Text="V" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- pH Min/Max -->
-            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Admin}">
-                <VerticalStackLayout Spacing="10">
-                    <HorizontalStackLayout Spacing="10">
-                        <Label Text="pH Min" WidthRequest="150" VerticalOptions="Center" />
-                        <Entry x:Name="PhMinEntry" Text="{Binding pHMin}" Keyboard="Numeric"  />
-                        <Label Text="pH" VerticalOptions="Center"/>
-                    </HorizontalStackLayout>
-
-                    <HorizontalStackLayout Spacing="10">
-                        <Label Text="pH Max" WidthRequest="150" VerticalOptions="Center" />
-                        <Entry x:Name="PhMaxEntry" Text="{Binding pHMax}" Keyboard="Numeric"  />
-                        <Label Text="pH" VerticalOptions="Center"/>
-                    </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Border>
 

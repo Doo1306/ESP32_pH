@@ -35,15 +35,9 @@ namespace ESP32pH.DTOs
         }
 
         private void InitFirebaseListeners()
-        {
-            var databaseUrl = "https://haonguyen-ph-96-default-rtdb.firebaseio.com/";
-            
-            //firebase.ListenToNodeChanges<ESP32ControlModel>(databaseUrl,FireBaseToken);
-            var userId = "8Xd57DhumEMAJbtobZnciPT6eYj1"; // Replace with your actual user ID
-
+        {          
             firebase.ListenToNodeChanges<ESP32ControlModel>($"{Global.pathESP32Control}", FireBaseToken, data =>
-            {
-                Console.WriteLine($"Control Mode: {data.Object.ControlMode}, pH Max: {data.Object.PH_Max}, Buzzer: {data.Object.Buzze}");
+            {          
                 ESP32Control = data.Object; // Update the ESP32Control property
                 NotifyDataChanged(Global.pathESP32Control); // Notify listeners about the change
             });           
@@ -69,6 +63,7 @@ namespace ESP32pH.DTOs
 
         public ESP32ControlModel ESP32Control { get; internal set; }
         public SettingViewModel SettingViewModel { get; set; }
+        public MainViewModel MainViewModel { get; set; }
 
         public bool IsAuthenticated => throw new NotImplementedException();
 
@@ -91,14 +86,15 @@ namespace ESP32pH.DTOs
         private async Task CreateSettingComponents()
         {                   
             // Load Data FireBase bằng cách gọi đến Helper FireBase          
-            var value = await GetDataAsync<ESP32ControlModel>(Global.pathESP32Control);
+            var value = await GetDataAsync<ESP32ControlModel>(Global.pathESP32ControlReadOne);
             ESP32Control = value;
             SettingViewModel = new SettingViewModel(ESP32Control);
+            MainViewModel = new MainViewModel(ESP32Control);
         }
         // CRUD operations for Firebase
         public async Task<T> GetDataAsync<T>(string path)
         {
-            return await firebase.GetDataAsync<T>(path, FireBaseToken);
+            return await firebase.GetDataAsync<T>(path, FireBaseToken);           
         }
 
         public Task<T> GetDataByIdAsync<T>(string path, string id)

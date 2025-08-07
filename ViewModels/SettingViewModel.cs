@@ -35,10 +35,10 @@ namespace ESP32pH.ViewModels
 
         private void Instance_EP32DataChanged(string key)
         {
-            if (key == Global.pathESP32ControlTest)
-            {
-                LoadParameters();
+            if (key == Global.pathESP32Control)
+            {             
                 ESP32Control = StreamDataTranfer.Instance.ESP32Control;
+                LoadParameters();
             }
         }
 
@@ -59,12 +59,17 @@ namespace ESP32pH.ViewModels
 
         private void LoadParameters()
         {
-            this._timeInterval = ESP32Control.TimeInterval;
-            this._timeDelay = ESP32Control.TimeDelay;
-            this._pHMin = ESP32Control.PH_Min;
-            this._pHMax = ESP32Control.PH_Max;
-            this._offsetX0 = ESP32Control.OffsetX0;
-            this._offsetY0 = ESP32Control.OffsetY0;
+            this.TimeInterval = ESP32Control.TimeInterval;
+            this.TimeDelay = ESP32Control.TimeDelay;
+            this.pHMin = ESP32Control.PH_Min;
+            this.pHMax = ESP32Control.PH_Max;
+            this.OffsetX0 = ESP32Control.OffsetX0;
+            this.OffsetY0 = ESP32Control.OffsetY0;
+            this.OffsetX1 = 0;
+            this.OffsetY1 = 0;
+            this.OffsetX2 = 0;
+            this.OffsetY2 = 0;
+            this.TestMode = ESP32Control.TestMode;
             // Load other parameters as needed
         }
 
@@ -173,11 +178,82 @@ namespace ESP32pH.ViewModels
                 }
             }
         }
+        private float _offsetX1;
+        public float OffsetX1
+        {
+            get { return _offsetX1; }
+            set
+            {
+                if (_offsetX1 != value)
+                {
+                    _offsetX1 = value;
+                    OnPropertyChanged(nameof(OffsetX1));
+                }
+            }
+        }
+        private float _offsetY1;
+        public float OffsetY1
+        {
+            get { return _offsetY1; }
+            set
+            {
+                if (_offsetY1 != value)
+                {
+                    _offsetY1 = value;
+                    OnPropertyChanged(nameof(OffsetY1));
+                }
+            }
+        }
+        private float _offsetX2;
+        public float OffsetX2
+        {
+            get { return _offsetX2; }
+            set
+            {
+                if (_offsetX2 != value)
+                {
+                    _offsetX2 = value;
+                    OnPropertyChanged(nameof(OffsetX2));
+                }
+            }
+        }
+        private float _offsetY2;
+        public float OffsetY2
+        {
+            get { return _offsetY2; }
+            set
+            {
+                if (_offsetY2 != value)
+                {
+                    _offsetY2 = value;
+                    OnPropertyChanged(nameof(OffsetY2));
+                }
+            }
+        }
+        private bool _testMode;
+        public bool TestMode
+        {
+            get => _testMode;
+            set
+            {
+                if (_testMode != value)
+                {
+                    _testMode = value;
+                    UpdateDataSync();
+                    OnPropertyChanged(nameof(TestMode));
+                }
+            }
+        }
         private void CancelSettingAct()
         {
             LoadParameters();
         }
         private void SaveSettingAct()
+        {
+            UpdateDataSync();
+        }
+
+        private void UpdateDataSync()
         {
             StreamDataTranfer.Instance.ESP32Control.TimeInterval = TimeInterval;
             StreamDataTranfer.Instance.ESP32Control.TimeDelay = TimeDelay;
@@ -185,8 +261,8 @@ namespace ESP32pH.ViewModels
             StreamDataTranfer.Instance.ESP32Control.OffsetY0 = OffsetY0;
             StreamDataTranfer.Instance.ESP32Control.PH_Max = pHMax;
             StreamDataTranfer.Instance.ESP32Control.PH_Min = pHMin;
-
-            StreamDataTranfer.Instance.UpdateDataAsync(Global.pathESP32Control, StreamDataTranfer.Instance.ESP32Control);
+            StreamDataTranfer.Instance.ESP32Control.TestMode = TestMode;
+            StreamDataTranfer.Instance.UpdateDataAsync($"{Global.pathESP32Control}{"/Transfer"}", StreamDataTranfer.Instance.ESP32Control);
         }
         //create a ICommnand to accepted to save setting
         public ICommand SaveSettingCommand { get; set; }

@@ -13,6 +13,8 @@
     </ContentPage.BindingContext>
     <ContentPage.Resources>
         <convertors:pHToColorConverter x:Key="convertorpHtoColor"/>
+        <convertors:BoolToColorConverter x:Key="ConvertorBoolToColor"/>
+        <convertors:BoolToIsVisibleConverter x:Key="ConverterBoolToIsVisible"/>
     </ContentPage.Resources>
     <ScrollView>
 
@@ -26,94 +28,65 @@
             </StackLayout.Background>
             <!-- Auto | Manual | Remote -->
             <Border Style="{StaticResource WhiteCardStyle}">
-                <Grid ColumnDefinitions="*,*,*" HeightRequest="60" >
-                    <Border Padding="2"                                 
-                            BackgroundColor="#C8E6C9"
+                <Grid ColumnDefinitions="*,*,*" HeightRequest="60">
+
+                    <!-- AUTO -->
+                    <Border Padding="2"
+                            BackgroundColor="{Binding IsAuto, Converter={StaticResource ConvertorBoolToColor}}"
                             HeightRequest="60"
-                            Grid.Column="0"       
-                            >
+                            Grid.Column="0">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10"/>
+                            <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
 
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
-                            <!-- ICON -->
-                            <Image Source="auto.png"
-                                    WidthRequest="20"
-                                    HeightRequest="20"
-                                    VerticalOptions="Center" />
-
-                            <!-- TEXT -->
-                            <Label Text="Auto"
-                                    TextColor="Green"
-                                    FontAttributes="Bold"
-                                    FontSize="16"
-                                    VerticalOptions="Center" />
+                            <Image Source="auto.png" WidthRequest="20" HeightRequest="20" VerticalOptions="Center" />
+                            <Label Text="Auto Mode" TextColor="Green" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
                         </HorizontalStackLayout>
 
-                        <!-- GESTURE NHẤN -->
-                        <Border.GestureRecognizers>
+                        <!--<Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding AutoRequestChangeCommnad}" />
-                        </Border.GestureRecognizers>
+                        </Border.GestureRecognizers>-->
                     </Border>
-                    <Border Padding="2"                                 
-                            BackgroundColor="#C8E6C9"
+
+                    <!-- MANUAL -->
+                    <Border Padding="2"
+                            BackgroundColor="{Binding IsManual, Converter={StaticResource ConvertorBoolToColor}}"
                             HeightRequest="60"
-                            Grid.Column="1"    
-                            >
+                            Grid.Column="1">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10"/>
+                            <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
 
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
-                            <!-- ICON -->
-                            <Image Source="manual.png"
-                                       WidthRequest="20"
-                                       HeightRequest="20"
-                                       VerticalOptions="Center" />
-
-                            <!-- TEXT -->
-                            <Label Text="Manual"
-                                       TextColor="Green"
-                                       FontAttributes="Bold"
-                                       FontSize="16"
-                                       VerticalOptions="Center" />
+                            <Image Source="manual.png" WidthRequest="20" HeightRequest="20" VerticalOptions="Center" />
+                            <Label Text="Manual Mode" TextColor="Green" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
                         </HorizontalStackLayout>
 
-                        <!-- GESTURE NHẤN -->
-                        <Border.GestureRecognizers>
+                        <!--<Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding ManualRequestChangeCommand}" />
-                        </Border.GestureRecognizers>
+                        </Border.GestureRecognizers>-->
                     </Border>
-                    <Border Padding="2"                                 
-                            BackgroundColor="#C8E6C9"
-                            HeightRequest="60"    
-                            Grid.Column="2"
-                            >
+
+                    <!-- REMOTE -->
+                    <Border Padding="2"
+                            BackgroundColor="{Binding IsRemote, Converter={StaticResource ConvertorBoolToColor}}"
+                            HeightRequest="60"
+                            Grid.Column="2">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10"/>
+                            <RoundRectangle CornerRadius="10" />
                         </Border.StrokeShape>
 
                         <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
-                            <!-- ICON -->
-                            <Image Source="remote.png"
-                                        WidthRequest="20"
-                                        HeightRequest="20"
-                                        VerticalOptions="Center" />
-
-                            <!-- TEXT -->
-                            <Label Text="Remote"
-                                       TextColor="Green"
-                                       FontAttributes="Bold"
-                                       FontSize="16"
-                                       VerticalOptions="Center" />
+                            <Image Source="remote.png" WidthRequest="20" HeightRequest="20" VerticalOptions="Center" />
+                            <Label Text="Remote Mode" TextColor="Green" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
                         </HorizontalStackLayout>
 
-                        <!-- GESTURE NHẤN -->
-                        <Border.GestureRecognizers>
+                        <!--<Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding RemoteRequestChangeCommand}" />
-                        </Border.GestureRecognizers>
+                        </Border.GestureRecognizers>-->
                     </Border>
+
                 </Grid>
             </Border>
 
@@ -331,31 +304,6 @@
                                         </Style>
                                     </Button.Style>
                                 </Button>
-                                <!--<Button Grid.Column="1" 
-                                        Text="15M" 
-                                        Style="{StaticResource TimeRangeButtonStyle1}"
-                                        Command="{Binding ChangeTimeRangeCommand}"
-                                        CommandParameter="15M"/>
-                                <Button Grid.Column="2" 
-                                        Text="30M" 
-                                        Style="{StaticResource SelectedButtonStyle1}"
-                                        Command="{Binding ChangeTimeRangeCommand}"
-                                        CommandParameter="30M"/>
-                                <Button Grid.Column="3" 
-                                        Text="1H" 
-                                        Style="{StaticResource TimeRangeButtonStyle1}"
-                                        Command="{Binding ChangeTimeRangeCommand}"
-                                        CommandParameter="1H"/>
-                                <Button Grid.Column="4" 
-                                        Text="2H" 
-                                        Style="{StaticResource TimeRangeButtonStyle1}"
-                                        Command="{Binding ChangeTimeRangeCommand}"
-                                        CommandParameter="2H"/>
-                                <Button Grid.Column="5" 
-                                        Text="6H" 
-                                        Style="{StaticResource TimeRangeButtonStyle1}"
-                                        Command="{Binding ChangeTimeRangeCommand}"
-                                        CommandParameter="6H"/>-->
                             </Grid>
                         </StackLayout>
                     </Border>
@@ -366,13 +314,58 @@
            
             <!-- Control Status -->
             <Label Text="Control Status" Style="{StaticResource SubHeadline}" FontAttributes="Bold" HorizontalOptions="Start" />
-            <!--Door request change-->
-            <Border Style="{StaticResource WhiteCardStyle}">
+
+            <Border Style="{StaticResource WhiteCardStyle}" IsVisible="{Binding IsRemote,Converter={StaticResource ConverterBoolToIsVisible}}">
+                <Grid ColumnDefinitions="*,*,*" HeightRequest="60">
+
+                    <!-- AUTO -->
+                    <Border Padding="2"
+                            BackgroundColor="{Binding IsAutoMode, Converter={StaticResource ConvertorBoolToColor}}"
+                            HeightRequest="60"
+                            Grid.Column="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
+                            <Image Source="auto.png" WidthRequest="20" HeightRequest="20" VerticalOptions="Center" />
+                            <Label Text="Auto" TextColor="Green" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AutoRequestChangeCommnad}" />
+                        </Border.GestureRecognizers>
+                     </Border>
+
+                    <!-- MANUAL -->
+                    <Border Padding="2"
+                            BackgroundColor="{Binding IsManualMode, Converter={StaticResource ConvertorBoolToColor}}"
+                            HeightRequest="60"
+                            Grid.Column="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
+                            <Image Source="manual.png" WidthRequest="20" HeightRequest="20" VerticalOptions="Center" />
+                            <Label Text="Manual" TextColor="Green" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <Border.GestureRecognizers>
+                             <TapGestureRecognizer Command="{Binding ManualRequestChangeCommand}" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                </Grid>
+                </Border>
+
+
+                    <!--Door request change-->
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding IsManualMode,Converter={StaticResource ConverterBoolToIsVisible}}">
                 <VerticalStackLayout>
                     <HorizontalStackLayout Spacing="10">
                         <Border Style="{StaticResource InputFieldStyle}">
                             <StackLayout Orientation="Horizontal">
-                                <controls:CustomToggleSwitch IsToggled="{Binding IsDoorOpen}"
+                                <controls:CustomToggleSwitch IsToggled="{Binding IsDoorOpenReq}"
                                                HeightCustom="50"
                                                WidthCustom="100"
                                                OnColor="Green"
@@ -384,29 +377,36 @@
                                 <Label Text="Door Request Change" VerticalOptions="Center" />
                             </StackLayout>
                         </Border>
-
-                        <Button Text="Buzze" HeightRequest="80" WidthRequest="80" Style="{StaticResource PrimaryButtonStyle}"/>
-
                     </HorizontalStackLayout>
-
-                    <Border Style="{StaticResource WhiteCardStyle}">
-                        <Grid HeightRequest="40" BackgroundColor="White">
-
-                            <ProgressBar Progress="{Binding CurrentReading.pHProgress}"
-                     BackgroundColor="LightGray"
-                     ProgressColor="Green"
-                     HeightRequest="0"
-                     >
-                                <ProgressBar.Style>
-                                    <Style TargetType="ProgressBar">
-                                        <Setter Property="ScaleY" Value="10" />
-                                        <!-- Tăng scale để fill height -->
-                                    </Style>
-                                </ProgressBar.Style>
-                            </ProgressBar>
-                        </Grid>
-                    </Border>
                 </VerticalStackLayout>
+            </Border>
+            <Border Style="{StaticResource WhiteCardStyle}" Background="{Binding BorderAlarmBackground }">
+                <Grid ColumnDefinitions="100,*" BackgroundColor="White">
+                    <Button Grid.Column="0"
+                                        Text="Buzzer" 
+                                        Command="{Binding BuzzeRequestChangeCommand}"  
+                                        Background="{Binding BuzzeButtonBackground}"  
+                                        Style="{StaticResource PrimaryButtonStyle}"
+                                        HeightRequest="80"
+                                        WidthRequest="80"
+                            />
+                    <ProgressBar Grid.Column="1"                                  
+                                           Progress="{Binding DoorProcessBar}"
+                                           BackgroundColor="LightGray"
+                                           ProgressColor="Yellow"
+                                           HeightRequest="0"
+                                           >
+                        <ProgressBar.Style>
+                            <Style TargetType="ProgressBar">
+                                <Setter Property="ScaleY" Value="10" />
+                                <!-- Tăng scale để fill height -->
+                            </Style>
+                        </ProgressBar.Style>
+                        
+                    </ProgressBar>
+                    <Label Grid.Column="1"  Margin="40,0,0,0" Text="Door Close" VerticalTextAlignment="Center"/>
+                    <Label Grid.Column="1"  Margin="0,0,40,0" HorizontalTextAlignment="End" Text="Door Open" VerticalTextAlignment="Center"/>
+                </Grid>
             </Border>
         </StackLayout>
     </ScrollView>

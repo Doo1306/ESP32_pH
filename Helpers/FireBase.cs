@@ -93,7 +93,7 @@ namespace ESP32pH.Helpers
             {
                 string url = $"{FirebaseUrl}{path}.json?auth={authentoken}"; // Firebase sử dụng đuôi .json để gọi API
                 string jsonResponse = await httpClient.GetStringAsync(url);
-                return JsonConvert.DeserializeObject<T>(jsonResponse);
+                return JsonConvert.DeserializeObject<T>(jsonResponse);                                 
             }
             catch (Exception ex)
             {

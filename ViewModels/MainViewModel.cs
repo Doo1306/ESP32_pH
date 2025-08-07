@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ESP32pH.DTOs;
 using ESP32pH.Models;
 using System;
 using System.Collections.Generic;
@@ -37,21 +38,171 @@ namespace ESP32pH.ViewModels
 
             // Commands
             ChangeTimeRangeCommand = new Command<string>(ChangeTimeRange);
-            AutoRequestChangeCommnad = new RelayCommand(() => ChangeMode(eMode.Auto));
-            ManualRequestChangeCommand = new RelayCommand(() => ChangeMode(eMode.Manual));
-            RemoteRequestChangeCommand = new RelayCommand(() => ChangeMode(eMode.Remote));
+            AutoRequestChangeCommnad = new RelayCommand(AutoRequestChangeCommnadAct);
+            ManualRequestChangeCommand = new RelayCommand(ManualRequestChangeCommandAct);
+            //RemoteRequestChangeCommand = new RelayCommand(() => ChangeMode(eMode.Remote));
+            BuzzeRequestChangeCommand = new RelayCommand(BuzzeRequestChangeCommandAct);
 
             // Zoom commands
             ZoomInCommand = new RelayCommand(ZoomIn);
             ZoomOutCommand = new RelayCommand(ZoomOut);
             ResetZoomCommand = new RelayCommand(ResetZoom);
             ToggleAutoScaleCommand = new RelayCommand(ToggleAutoScale);
+            StreamDataTranfer.Instance.EP32DataChanged += Instance_EP32DataChanged;
+            LoadParameters();
         }
 
+        private void ManualRequestChangeCommandAct()
+        {
+            IsAutoMode = false;
+            IsManualMode = true;
+        }  
+        private void AutoRequestChangeCommnadAct()
+        {
+            IsAutoMode = true;
+            IsManualMode = false;        
+        }
+
+        private void BuzzeRequestChangeCommandAct()
+        {
+            IsBuzze = !IsBuzze;
+            UpdatedataSync();
+        }
+
+        private void UpdatedataSync()
+        {
+            StreamDataTranfer.Instance.ESP32Control.Buzze = IsBuzze;
+            if (IsRemote && IsManualMode)
+            {
+                StreamDataTranfer.Instance.ESP32Control.DoorOpenReq = IsDoorOpenReq;
+                StreamDataTranfer.Instance.ESP32Control.DoorCloseReq = !IsDoorOpenReq;
+            }
+            StreamDataTranfer.Instance.UpdateDataAsync(Global.pathESP32ControlReadOne, StreamDataTranfer.Instance.ESP32Control);
+        }
+
+        private void Instance_EP32DataChanged(string key)
+        {
+            if (key == Global.pathESP32Control)
+            {
+                ESP32Control = StreamDataTranfer.Instance.ESP32Control;
+                LoadParameters();
+            }
+        }
+
+        public MainViewModel(ESP32ControlModel controlData)
+        {
+            LoadParameters();
+        }
+
+        private void LoadParameters()
+        {
+            ESP32Control = StreamDataTranfer.Instance.ESP32Control;
+            switch (ESP32Control.ControlMode)
+            {
+                case 3:
+                    // Auto
+                    ChangeMode(eMode.Auto);
+                    break;
+                case 2:
+                    // Manual
+                    ChangeMode(eMode.Manual);
+                    break;
+                case 1:
+                    // Remote
+                    ChangeMode(eMode.Remote);
+                    break;
+                default:
+                    break;
+            }
+            IsDoorOpen = ESP32Control.IsDoorOpen;
+            IsDoorClose = ESP32Control.IsDoorClose;
+            IsDoorOpenReq = ESP32Control.DoorOpenReq;
+            IsDoorCloseReq = ESP32Control.DoorCloseReq;
+            IsBuzze = ESP32Control.Buzze;
+            IsAlarm = ESP32Control.IsAlarm;
+            if (CurrentReading == null) return;
+            CurrentReading.pHMin = ESP32Control.PH_Min;
+            CurrentReading.pHMax = ESP32Control.PH_Max;
+        }
+
+        #region Notify Mode
         private void ChangeMode(eMode mode)
         {
             CurrentMode = mode;
+            IsRemote = CurrentMode == eMode.Remote ? true : false;
+            IsManual = CurrentMode == eMode.Manual ? true : false;
+            IsAuto = CurrentMode == eMode.Auto ? true : false;
         }
+        private eMode _currentMode = eMode.Auto;
+        public eMode CurrentMode
+        {
+            get => _currentMode;
+            set
+            {
+                if (_currentMode != value)
+                {
+                    _currentMode = value;
+                    OnPropertyChanged(nameof(CurrentMode));
+                }
+            }
+        }
+        private bool _isAuto;
+        public bool IsAuto
+        {
+            get => _isAuto;
+            set
+            {
+                if (_isAuto != value)
+                {
+                    _isAuto = value;
+                    OnPropertyChanged(nameof(IsAuto));
+                }
+            }
+        }
+        private bool _isManual;
+        public bool IsManual
+        {
+            get => _isManual;
+            set
+            {
+                if (_isManual != value)
+                {
+                    _isManual = value;
+                    OnPropertyChanged(nameof(IsManual));
+                }
+            }
+        }
+        private bool _isRemote;
+        public bool IsRemote
+        {
+            get => _isRemote;
+            set
+            {
+                if (_isRemote != value)
+                {
+                    _isRemote = value;
+                    OnPropertyChanged(nameof(IsRemote));
+                }
+            }
+        }
+
+        #endregion
+
+        //Control ESP32
+        private ESP32ControlModel _ESP32Control;
+        public ESP32ControlModel ESP32Control
+        {
+            get { return _ESP32Control; }
+            set
+            {
+                if (_ESP32Control != value)
+                {
+                    _ESP32Control = value;
+                    OnPropertyChanged(nameof(ESP32Control));
+                }
+            }
+        }
+
 
         private async Task FetchPHAsync()
         {
@@ -140,21 +291,39 @@ namespace ESP32pH.ViewModels
         {
             //IsDoorOpen = !IsDoorOpen;
         }
+    
+        #region Door Control
 
-        private eMode _currentMode = eMode.Auto;
-        public eMode CurrentMode
+        private bool _isDoorOpenReq = false;
+        public bool IsDoorOpenReq
         {
-            get => _currentMode;
+            get => _isDoorOpenReq;
             set
             {
-                if (_currentMode != value)
+                if (_isDoorOpenReq != value)
                 {
-                    _currentMode = value;
-                    OnPropertyChanged(nameof(CurrentMode));
+                    _isDoorOpenReq = value;
+                    _isDoorCloseReq = !_isDoorOpenReq;
+                    UpdateDoorProcessBar();
+                    UpdatedataSync();
+                    OnPropertyChanged(nameof(IsDoorOpenReq));
+                }
+            }
+        }  
+        private bool _isDoorCloseReq = false;
+        public bool IsDoorCloseReq
+        {
+            get => _isDoorCloseReq;
+            set
+            {
+                if (_isDoorCloseReq != value)
+                {
+                    _isDoorCloseReq = value;
+                    UpdateDoorProcessBar();
+                    OnPropertyChanged(nameof(IsDoorCloseReq));
                 }
             }
         }
-
         private bool _isDoorOpen = false;
         public bool IsDoorOpen
         {
@@ -164,10 +333,130 @@ namespace ESP32pH.ViewModels
                 if (_isDoorOpen != value)
                 {
                     _isDoorOpen = value;
+                    UpdateDoorProcessBar();                  
                     OnPropertyChanged(nameof(IsDoorOpen));
                 }
             }
         }
+
+        private bool _isDoorClose = false;
+        public bool IsDoorClose
+        {
+            get => _isDoorClose;
+            set
+            {
+                if (_isDoorClose != value)
+                {
+                    _isDoorClose = value;
+                    UpdateDoorProcessBar();
+                    OnPropertyChanged(nameof(IsDoorClose));
+                }
+            }
+        }
+        private double _doorProcessbar;
+        public double DoorProcessBar
+        {
+            get => _doorProcessbar;
+            set
+            {
+                if (_doorProcessbar != value)
+                {
+                    _doorProcessbar = value;
+                    OnPropertyChanged(nameof(DoorProcessBar));
+                }
+            }
+        }
+        private void UpdateDoorProcessBar()
+        {
+            DoorProcessBar = 0.5;
+            if (IsDoorOpen)
+            {
+                DoorProcessBar = 1.0; // Cửa đang mở
+            }
+            else if (IsDoorClose)
+            {
+                DoorProcessBar = 0.0; // Cửa đang đóng
+            }
+            else if(!IsDoorOpen && !IsDoorClose)
+            {
+                if (IsDoorOpenReq)
+                {
+                    DoorProcessBar = 0.75; // Chỉ yêu cầu mở cửa
+                }
+                else if (IsDoorCloseReq)
+                {
+                    DoorProcessBar = 0.25; // Chỉ yêu cầu đóng cửa
+                }
+            }
+            else
+            {
+                DoorProcessBar = 0.5; // Trạng thái không xác định
+            }
+        }   
+        private bool _isBuzze;
+        public bool IsBuzze
+        {
+            get => _isBuzze;
+            set
+            {
+                if(_isBuzze!=value)
+                {
+                    _isBuzze = value;
+                    SetProperty(ref _isBuzze, value);
+                    OnPropertyChanged(nameof(IsBuzze));
+                    OnPropertyChanged(nameof(BuzzeButtonBackground));
+                }    
+            }
+        }
+        public Brush BuzzeButtonBackground => IsBuzze ? Color.FromArgb("#FFC603") : Brush.Gray;
+
+        private bool _isAlarm;
+        public bool IsAlarm
+        {
+            get => _isAlarm;
+            set
+            {
+                if (_isAlarm != value)
+                {
+                    _isAlarm = value;
+                    SetProperty(ref _isAlarm, value);
+                    OnPropertyChanged(nameof(IsAlarm));
+                    OnPropertyChanged(nameof(BorderAlarmBackground));
+                }
+            }
+        }
+        public Brush BorderAlarmBackground => IsAlarm ? Brush.Red : Brush.White;
+        #endregion
+
+        #region Mode Control 1: Auto 2: Manual
+        private bool _isAutoMode = true;
+        public bool IsAutoMode
+        {
+            get => _isAutoMode;
+            set
+            {
+                if (_isAutoMode != value)
+                {
+                    _isAutoMode = value;
+                    OnPropertyChanged(nameof(IsAutoMode));
+                }
+            }
+        }
+        private bool _isManualMode = false;
+        public bool IsManualMode
+        {
+            get => _isManualMode;
+            set
+            {
+                if (_isManualMode != value)
+                {
+                    _isManualMode = value;
+                    OnPropertyChanged(nameof(IsManualMode));
+                }
+            }
+        }
+        #endregion
+
 
         // Zoom properties
         private double _zoomLevel = 1.0;
@@ -223,6 +512,7 @@ namespace ESP32pH.ViewModels
         public ICommand AutoRequestChangeCommnad { get; set; }
         public ICommand ManualRequestChangeCommand { get; set; }
         public ICommand RemoteRequestChangeCommand { get; set; }
+        public ICommand BuzzeRequestChangeCommand { get; set; }
         public ICommand ZoomInCommand { get; set; }
         public ICommand ZoomOutCommand { get; set; }
         public ICommand ResetZoomCommand { get; set; }
@@ -254,7 +544,7 @@ namespace ESP32pH.ViewModels
             }
         }
 
-        private string _timeRange;
+        private string _timeRange = "Live";
         public string TimeRange
         {
             get => _timeRange;
@@ -391,11 +681,11 @@ namespace ESP32pH.ViewModels
             UpdateChart();
         }
     }
-   
+
     public class pHChartDrawable : IDrawable
     {
         private readonly ObservableCollection<pHReadingModel> _readings;
-        private readonly float _margin = 30f;
+        private readonly float _margin = 40f;
         private readonly float _topMargin = 10f;
 
         // Auto scale and zoom properties
@@ -524,7 +814,7 @@ namespace ESP32pH.ViewModels
             canvas.FontSize = 12;
             canvas.FontColor = Colors.DarkSlateGray;
 
-            var statsY = chartRect.Bottom + 35;
+            var statsY = chartRect.Bottom + 20;
             var statsSpacing = dirtyRect.Width / 5;
 
             // Current
@@ -639,7 +929,7 @@ namespace ESP32pH.ViewModels
                     var time = minTime.AddTicks(i * timeSpan.Ticks / 4);
                     var timeLabel = time.ToString("HH:mm");
 
-                    canvas.DrawString(timeLabel, x, chartRect.Bottom + 15, HorizontalAlignment.Center);
+                    canvas.DrawString(timeLabel, x, chartRect.Bottom + 25, HorizontalAlignment.Center);
                 }
             }
 
@@ -765,12 +1055,12 @@ namespace ESP32pH.ViewModels
 
                 // Point color based on pH status
                 canvas.FillColor = reading.StatusColor;
-                canvas.FillCircle(point.X, point.Y, 5);
+                canvas.FillCircle(point.X, point.Y, 1);
 
                 // White outline
                 canvas.StrokeColor = Colors.White;
                 canvas.StrokeSize = 2f;
-                canvas.DrawCircle(point.X, point.Y, 5);
+                canvas.DrawCircle(point.X, point.Y, 1);
             }
         }
 

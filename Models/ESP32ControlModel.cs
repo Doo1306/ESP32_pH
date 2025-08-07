@@ -47,6 +47,7 @@ namespace ESP32pH.Models
 
         [JsonProperty("TimeInterval")]
         public int TimeInterval { get; set; }
-
+        [JsonProperty("TestMode")]
+        public bool TestMode { get; set; }
     }
 }
