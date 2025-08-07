@@ -11,6 +11,7 @@
         "dependencies": {
           "CommunityToolkit.Mvvm": "8.4.0",
           "Firebase.Auth": "1.0.0",
+          "FirebaseDatabase.net": "5.0.0",
           "Microsoft.Extensions.Logging.Debug": "9.0.0",
           "Microsoft.Maui.Controls": "9.0.51",
           "Newtonsoft.Json": "13.0.3",
@@ -51,6 +52,27 @@
           "lib/netstandard1.1/Firebase.Auth.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "FirebaseDatabase.net/5.0.0": {
+        "dependencies": {
+          "LiteDB": "5.0.17",
+          "Newtonsoft.Json": "13.0.3",
+          "System.Reactive": "6.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Firebase.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "LiteDB/5.0.17": {
+        "runtime": {
+          "lib/netstandard2.0/LiteDB.dll": {
+            "assemblyVersion": "5.0.17.0",
+            "fileVersion": "5.0.17.0"
           }
         }
       },
@@ -986,6 +1008,14 @@
           "runtime.win7.System.Private.Uri": "4.0.1"
         }
       },
+      "System.Reactive/6.0.0": {
+        "runtime": {
+          "lib/net6.0-windows10.0.19041/System.Reactive.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.0.1"
+          }
+        }
+      },
       "System.Reflection/4.1.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.0.1",
@@ -1395,6 +1425,20 @@
       "sha512": "sha512-MRAGIRDXqB0jRvtJx0yRmTMjZInQcUSyHN7LuOwxL/nfyceDEA+Gfiimn7HtI2ntHw3hdUAoeeCA6BCc3qg0/A==",
       "path": "firebase.auth/1.0.0",
       "hashPath": "firebase.auth.1.0.0.nupkg.sha512"
+    },
+    "FirebaseDatabase.net/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tU2JF31msyK30cN1fqcRfeyRikobOfx9FKmgHVINHSN0NnP+DqG89KkFdd5ebefDLthG4Ac9yLnXjOpeEX+52g==",
+      "path": "firebasedatabase.net/5.0.0",
+      "hashPath": "firebasedatabase.net.5.0.0.nupkg.sha512"
+    },
+    "LiteDB/5.0.17": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cKPvkdlzIts3ZKu/BzoIc/Y71e4VFKlij4LyioPFATZMot+wB7EAm1FFbZSJez6coJmQUoIg/3yHE1MMU+zOdg==",
+      "path": "litedb/5.0.17",
+      "hashPath": "litedb.5.0.17.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration/9.0.0": {
       "type": "package",
@@ -2018,6 +2062,13 @@
       "sha512": "sha512-OltceAn9yyNf9LZIqvf80DhdRH55iVu1fxowdR79018w1CWIRNojUZBStsiRHvADeKI5pXcM9EftOFikBQh5AA==",
       "path": "system.private.uri/4.0.1",
       "hashPath": "system.private.uri.4.0.1.nupkg.sha512"
+    },
+    "System.Reactive/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-31kfaW4ZupZzPsI5PVe77VhnvFF55qgma7KZr/E0iFTs6fmdhhG8j0mgEx620iLTey1EynOkEfnyTjtNEpJzGw==",
+      "path": "system.reactive/6.0.0",
+      "hashPath": "system.reactive.6.0.0.nupkg.sha512"
     },
     "System.Reflection/4.1.0": {
       "type": "package",

@@ -40,7 +40,13 @@ namespace ESP32pH.DTOs
             
             //firebase.ListenToNodeChanges<ESP32ControlModel>(databaseUrl,FireBaseToken);
             var userId = "8Xd57DhumEMAJbtobZnciPT6eYj1"; // Replace with your actual user ID
-            firebase.ListenForControlChanges(userId,FireBaseToken);
+
+            firebase.ListenToNodeChanges<ESP32ControlModel>($"{Global.pathESP32Control}", FireBaseToken, data =>
+            {
+                Console.WriteLine($"Control Mode: {data.Object.ControlMode}, pH Max: {data.Object.PH_Max}, Buzzer: {data.Object.Buzze}");
+                ESP32Control = data.Object; // Update the ESP32Control property
+                NotifyDataChanged(Global.pathESP32Control); // Notify listeners about the change
+            });           
         }
 
         public string FireBaseToken { get; set; }

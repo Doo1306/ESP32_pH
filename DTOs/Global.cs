@@ -16,9 +16,9 @@ namespace ESP32pH.DTOs
         public static readonly string FirebaseBaseUrl = "https://haonguyen-ph-96-default-rtdb.firebaseio.com/";
         public static readonly string FirebaseAuthToken = "494a82cc705ff883d395eacf16ceeeaf1be1602f";
         public static readonly string path = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/ESP32";
-        public static readonly string pathLogin = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login";
+        public static readonly string pathLogin = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/Account";
 
-        public static readonly string pathESP32Control = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Control";
+        public static readonly string pathESP32Control = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/Control";
         public static readonly string pathESP32ControlTest = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Control/Buzze";
     }
 }

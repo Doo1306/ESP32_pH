@@ -61,62 +61,21 @@ namespace ESP32pH.Helpers
 
         #region Methods
         // Generic listener
-        public void ListenToNodeChanges<T>(string nodeKey, string authToken)
+        public void ListenToNodeChanges<T>(string nodeKey, string authToken, Action<FirebaseObject<T>> onDataChanged)
         {
             EnsureFirebaseClient(authToken);
 
             firebaseClient
-           .Child("Data")
-           .Child("8Xd57DhumEMAJbtobZnciPT6eYj1")
-           .Child("Control")
-           .AsObservable<Dictionary<string, object>>()
-           .Subscribe(d =>
-           {
-               Console.WriteLine($"🔥 EVENT: {d.EventType} | KEY: {d.Key} | OBJECT: {d.Object}");
-           },
-           ex =>
-           {
-               Console.WriteLine($"❌ ERROR: {ex.Message}");
-           });
-        }
-
-        public void ListenForControlChanges(string userId, string authToken)
-        {
-            EnsureFirebaseClient(authToken);
-            // Xây dựng đường dẫn đến node Control
-            var path = firebaseClient
-                .Child("Data")
-                .Child(userId)
-                .Child("Control");
-
-            // Sử dụng AsObservable để lắng nghe. 
-            // Bất cứ khi nào dữ liệu tại đường dẫn này thay đổi, hàm trong Subscribe sẽ được gọi.
-            path.AsObservable<ESP32ControlModel>()
-                .Subscribe(
-                    e => // 'e' là một đối tượng IEvent chứa thông tin về sự kiện
+                .Child(nodeKey)
+                 .AsObservable<T>()
+                    .Subscribe(d =>
                     {
-                        if (e.Object != null)
+                        if (d.Object != null && d.EventType != FirebaseEventType.Delete)
                         {
-                            // e.Object chính là dữ liệu đã được tự động chuyển đổi thành ControlModel
-                            var controlData = e.Object;
-
-                            // In ra để kiểm tra
-                            System.Diagnostics.Debug.WriteLine($"[Firebase] Dữ liệu Control đã thay đổi!");
-                            System.Diagnostics.Debug.WriteLine($" -> Chế độ điều khiển: {controlData.ControlMode}");
-                            System.Diagnostics.Debug.WriteLine($" -> Ngưỡng pH Max: {controlData.PH_Max}");
-                            System.Diagnostics.Debug.WriteLine($" -> Còi báo: {controlData.Buzze}");
-                            System.Diagnostics.Debug.WriteLine("------------------------------------");
-
-                            // Kích hoạt event để các thành phần khác (như ViewModel/UI) có thể nhận dữ liệu
-                            StreamDataTranfer.Instance.NotifyDataChanged("Control");
+                            onDataChanged(d);
                         }
-                    },
-                    ex => // Xử lý lỗi nếu có
-                    {
-                        System.Diagnostics.Debug.WriteLine($"[Firebase] Lỗi khi lắng nghe: {ex.Message}");
-                    }
-                );
-        }
+                    });
+        }       
         private void EnsureFirebaseClient(string authToken)
         {
             if (firebaseClient == null)

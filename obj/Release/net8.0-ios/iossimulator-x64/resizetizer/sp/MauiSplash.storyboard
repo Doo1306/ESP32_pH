@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="splashnew_8463D454315420EF8778051EA9420883F565646511B9B63867A60CE69D99D204.png" translatesAutoresizingMaskIntoConstraints="NO" id="aT4-1l-d9a">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="splashnew_B15D25EB78FD16FCAEE52DACF8C69072DB4973AABCA558BEA69482928B02A83A.png" translatesAutoresizingMaskIntoConstraints="NO" id="aT4-1l-d9a">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
@@ -33,6 +33,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="splashnew_8463D454315420EF8778051EA9420883F565646511B9B63867A60CE69D99D204.png" />
+        <image name="splashnew_B15D25EB78FD16FCAEE52DACF8C69072DB4973AABCA558BEA69482928B02A83A.png" />
     </resources>
 </document>

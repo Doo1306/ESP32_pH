@@ -662,7 +662,9 @@
         </Setter>
         <Setter Property="Padding" Value="10"/>
         <Setter Property="Margin" Value="3"/>
-        <Setter Property="Shadow">
+        <Setter Property="Padding" Value="15"/>
+        <Setter Property="Margin" Value="10"/>
+            <Setter Property="Shadow">
             <Setter.Value>
                 <Shadow Brush="Gray" 
                         Offset="0,5" 

@@ -328,3 +328,6 @@ D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\maccatalyst-arm64\
 D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\maccatalyst-arm64\ESP32pH.pdb
 D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\maccatalyst-arm64\ESP32pH.genruntimeconfig.cache
 D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-maccatalyst\maccatalyst-arm64\ref\ESP32pH.dll
+D:\aduino\ProjectLixil\ESP32pH\bin\Release\net8.0-maccatalyst\maccatalyst-arm64\Firebase.dll
+D:\aduino\ProjectLixil\ESP32pH\bin\Release\net8.0-maccatalyst\maccatalyst-arm64\LiteDB.dll
+D:\aduino\ProjectLixil\ESP32pH\bin\Release\net8.0-maccatalyst\maccatalyst-arm64\System.Reactive.dll

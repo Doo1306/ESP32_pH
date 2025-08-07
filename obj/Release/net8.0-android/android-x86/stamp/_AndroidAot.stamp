@@ -2,6 +2,8 @@ obj\Release\net8.0-android\android-x86\aot\_Microsoft.Android.Resource.Designer.
 obj\Release\net8.0-android\android-x86\aot\ESP32pH.dll.so
 obj\Release\net8.0-android\android-x86\aot\CommunityToolkit.Mvvm.dll.so
 obj\Release\net8.0-android\android-x86\aot\Firebase.Auth.dll.so
+obj\Release\net8.0-android\android-x86\aot\Firebase.dll.so
+obj\Release\net8.0-android\android-x86\aot\LiteDB.dll.so
 obj\Release\net8.0-android\android-x86\aot\Microsoft.Extensions.Configuration.dll.so
 obj\Release\net8.0-android\android-x86\aot\Microsoft.Extensions.Configuration.Abstractions.dll.so
 obj\Release\net8.0-android\android-x86\aot\Microsoft.Extensions.DependencyInjection.dll.so
@@ -18,6 +20,7 @@ obj\Release\net8.0-android\android-x86\aot\Microsoft.Maui.Graphics.dll.so
 obj\Release\net8.0-android\android-x86\aot\System.ServiceModel.dll.so
 obj\Release\net8.0-android\android-x86\aot\Newtonsoft.Json.dll.so
 obj\Release\net8.0-android\android-x86\aot\System.Diagnostics.DiagnosticSource.dll.so
+obj\Release\net8.0-android\android-x86\aot\System.Reactive.dll.so
 obj\Release\net8.0-android\android-x86\aot\Xamarin.AndroidX.Activity.dll.so
 obj\Release\net8.0-android\android-x86\aot\Xamarin.AndroidX.AppCompat.dll.so
 obj\Release\net8.0-android\android-x86\aot\Xamarin.AndroidX.AppCompat.AppCompatResources.dll.so
@@ -98,6 +101,7 @@ obj\Release\net8.0-android\android-x86\aot\System.Xml.ReaderWriter.dll.so
 obj\Release\net8.0-android\android-x86\aot\System.Xml.XDocument.dll.so
 obj\Release\net8.0-android\android-x86\aot\System.dll.so
 obj\Release\net8.0-android\android-x86\aot\mscorlib.dll.so
+obj\Release\net8.0-android\android-x86\aot\netstandard.dll.so
 obj\Release\net8.0-android\android-x86\aot\Java.Interop.dll.so
 obj\Release\net8.0-android\android-x86\aot\Mono.Android.Runtime.dll.so
 obj\Release\net8.0-android\android-x86\aot\Mono.Android.dll.so

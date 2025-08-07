@@ -359,3 +359,9 @@ D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-ios\iossimulator-x64\refint\ES
 D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-ios\iossimulator-x64\ESP32pH.pdb
 D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-ios\iossimulator-x64\ESP32pH.genruntimeconfig.cache
 D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-ios\iossimulator-x64\ref\ESP32pH.dll
+D:\aduino\ProjectLixil\ESP32pH\bin\Release\net8.0-ios\iossimulator-x64\Firebase.dll
+D:\aduino\ProjectLixil\ESP32pH\bin\Release\net8.0-ios\iossimulator-x64\LiteDB.dll
+D:\aduino\ProjectLixil\ESP32pH\bin\Release\net8.0-ios\iossimulator-x64\System.Reactive.dll
+D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-ios\iossimulator-x64\resizetizer\sp\splashnew_B15D25EB78FD16FCAEE52DACF8C69072DB4973AABCA558BEA69482928B02A83A.png
+D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-ios\iossimulator-x64\resizetizer\sp\splashnew_B15D25EB78FD16FCAEE52DACF8C69072DB4973AABCA558BEA69482928B02A83A@2x.png
+D:\aduino\ProjectLixil\ESP32pH\obj\Release\net8.0-ios\iossimulator-x64\resizetizer\sp\splashnew_B15D25EB78FD16FCAEE52DACF8C69072DB4973AABCA558BEA69482928B02A83A@3x.png
