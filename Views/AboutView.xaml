@@ -4,9 +4,6 @@
              x:Class="ESP32pH.Views.AboutView"
              Title="About">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+       
     </VerticalStackLayout>
 </ContentPage>

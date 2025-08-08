@@ -31,16 +31,22 @@ namespace ESP32pH.DTOs
             firebase = new FireBase(Global.FirebaseBaseUrl, Global.FirebaseAuthToken);
             LoginModels = new ObservableCollection<LoginModel>();
             ESP32Control = new ESP32ControlModel();
-            
+            pHReadingModel = new ESP32pHModel();
         }
 
         private void InitFirebaseListeners()
         {          
+
             firebase.ListenToNodeChanges<ESP32ControlModel>($"{Global.pathESP32Control}", FireBaseToken, data =>
             {          
                 ESP32Control = data.Object; // Update the ESP32Control property
                 NotifyDataChanged(Global.pathESP32Control); // Notify listeners about the change
-            });           
+            });
+            firebase.ListenToNodeChanges<ESP32pHModel>($"{Global.pathESP32pH}", FireBaseToken, data =>
+            {
+                pHReadingModel = data.Object;                        // Update the ESP32Control property
+                NotifyDataChanged(Global.pathESP32pH); // Notify listeners about the change
+            });
         }
 
         public string FireBaseToken { get; set; }
@@ -62,25 +68,42 @@ namespace ESP32pH.DTOs
         }
 
         public ESP32ControlModel ESP32Control { get; internal set; }
+        public ESP32pHModel pHReadingModel { get; set; }
         public SettingViewModel SettingViewModel { get; set; }
         public MainViewModel MainViewModel { get; set; }
 
         public bool IsAuthenticated => throw new NotImplementedException();
 
-        public event Action<string> EP32DataChanged;
-
+        public event Action<string> EP32DataChanged;       
         public void NotifyDataChanged(string key)
         {
             EP32DataChanged?.Invoke(key);
         }
 
 
+
         public async Task<int> Initialize()
         {
             FireBaseToken = await GetCurrentTokenAsync();
             CreateSettingComponents();
+            CreateMainComponents();
             InitFirebaseListeners();
             return DefSystem.Success;
+        }
+
+        private async Task CreateMainComponents()
+        {
+            DateTime now = DateTime.Now;
+            string link = $"{Global.pathESP32pH}{"/"}{now.Day}{"_"}{now.Month}{"_"}{now.Year}{"/"}{now.Hour}";
+            var value = await GetDataAsync<Object>(link);
+            if (value != null)
+            {
+                //
+            }
+            else
+            {
+                //
+            }
         }
 
         private async Task CreateSettingComponents()

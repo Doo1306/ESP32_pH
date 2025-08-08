@@ -20,6 +20,10 @@ namespace ESP32pH.DTOs
 
         public static readonly string pathESP32Control = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/Control";
         public static readonly string pathESP32ControlReadOne = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/Control/Transfer";
+        public static readonly string pathESP32pH = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/ESP32";
+        public static readonly string pathESP32pHReadOne = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/ESP32/";
+
+
         public static readonly string pathESP32ControlTest = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Control/Buzze";
     }
 }
