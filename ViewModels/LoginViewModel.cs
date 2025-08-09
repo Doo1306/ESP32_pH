@@ -74,23 +74,6 @@ namespace ESP32pH.ViewModels
 
             try
             {               
-                //var data = await firebase.GetDataAsync<Dictionary<string, object>>(Global.pathLogin, token);
-
-                //// Chuyển object → JObject → LoginModel
-                //var loginDict = data.ToDictionary(
-                //    x => x.Key,
-                //    x => ((JObject)x.Value).ToObject<LoginModel>()
-                //);
-
-                //StreamDataTranfer.Instance.LoginModels = new ObservableCollection<LoginModel>(loginDict.Values);
-
-                ////Check đăng nhập
-                //var user = StreamDataTranfer.Instance.LoginModels
-                //    .FirstOrDefault(x =>
-                //        string.Equals(x.UserName, UserName, StringComparison.OrdinalIgnoreCase) &&
-                //        x.Password == Password
-                //        );
-
                var user = await StreamDataTranfer.Instance.LoginAsync(UserName, Password);
                 
                 if (user != null)

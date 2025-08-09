@@ -22,9 +22,9 @@ namespace ESP32pH.ViewModels
         public ViewModelLocation()
         {
             LoginViewModel = new LoginViewModel();
-            MainViewModel = new MainViewModel();
-            AppShellViewModel = new AppShellViewModel();
-            SettingViewModel = new SettingViewModel();
+            //MainViewModel = new MainViewModel();
+            //AppShellViewModel = new AppShellViewModel();
+            //SettingViewModel = new SettingViewModel();
         }
         public LoginViewModel LoginViewModel { get; set; }
         public MainViewModel MainViewModel { get; set; }

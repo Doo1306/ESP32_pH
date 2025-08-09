@@ -31,21 +31,21 @@ namespace ESP32pH.DTOs
             firebase = new FireBase(Global.FirebaseBaseUrl, Global.FirebaseAuthToken);
             LoginModels = new ObservableCollection<LoginModel>();
             ESP32Control = new ESP32ControlModel();
-            pHReadingModel = new ESP32pHModel();
+            ESP32pHReadingModel = new ESP32pHModel();
+            ObCollectionESP32pHReadingModel = new ObservableCollection<ESP32pHModel>();
         }
 
         private void InitFirebaseListeners()
         {          
-
             firebase.ListenToNodeChanges<ESP32ControlModel>($"{Global.pathESP32Control}", FireBaseToken, data =>
             {          
                 ESP32Control = data.Object; // Update the ESP32Control property
                 NotifyDataChanged(Global.pathESP32Control); // Notify listeners about the change
             });
-            firebase.ListenToNodeChanges<ESP32pHModel>($"{Global.pathESP32pH}", FireBaseToken, data =>
+            firebase.ListenToNodeChanges<ESP32pHModel>($"{Global.pathESP32LiveDatapH}", FireBaseToken, data =>
             {
-                pHReadingModel = data.Object;                        // Update the ESP32Control property
-                NotifyDataChanged(Global.pathESP32pH); // Notify listeners about the change
+                ESP32pHReadingModel = data.Object;                        // Update the ESP32Control property
+                NotifyDataChanged(Global.pathESP32LiveDatapH); // Notify listeners about the change
             });
         }
 
@@ -68,10 +68,10 @@ namespace ESP32pH.DTOs
         }
 
         public ESP32ControlModel ESP32Control { get; internal set; }
-        public ESP32pHModel pHReadingModel { get; set; }
+        public ESP32pHModel ESP32pHReadingModel { get; set; }
         public SettingViewModel SettingViewModel { get; set; }
         public MainViewModel MainViewModel { get; set; }
-
+        public ObservableCollection<ESP32pHModel> ObCollectionESP32pHReadingModel { get; set; }
         public bool IsAuthenticated => throw new NotImplementedException();
 
         public event Action<string> EP32DataChanged;       
@@ -79,8 +79,6 @@ namespace ESP32pH.DTOs
         {
             EP32DataChanged?.Invoke(key);
         }
-
-
 
         public async Task<int> Initialize()
         {
@@ -91,14 +89,23 @@ namespace ESP32pH.DTOs
             return DefSystem.Success;
         }
 
-        private async Task CreateMainComponents()
+        public async Task CreateMainComponents()
         {
-            DateTime now = DateTime.Now;
-            string link = $"{Global.pathESP32pH}{"/"}{now.Day}{"_"}{now.Month}{"_"}{now.Year}{"/"}{now.Hour}";
-            var value = await GetDataAsync<Object>(link);
+            DateTime timenow = DateTime.Now;
+            string timeDDMMYYYY = timenow.ToString("dd_MM_yyyy");
+            string timeHour = timenow.ToString("HH");
+            string link = $"{Global.pathESP32pH}{"/"}{timeDDMMYYYY}{"/"}{timeHour}";
+            var value = await GetDataAsync<PhDataResponse>(link);
             if (value != null)
             {
-                //
+                foreach (var item in value)
+                {
+                    ESP32pHModel eSP32PH = new ESP32pHModel();
+                    eSP32PH.SamplingTime = TimeSpan.Parse(item.Value.TimeLine);
+                    eSP32PH.pH = item.Value.pH_Value;
+                    ObCollectionESP32pHReadingModel.Add(eSP32PH);
+                }
+                NotifyDataChanged(Global.pathESP32pHUpdatebByHour);
             }
             else
             {
@@ -106,6 +113,40 @@ namespace ESP32pH.DTOs
             }
         }
 
+        // read data by hour
+        public async Task ReadDataByHour(int number)
+        {
+            ObCollectionESP32pHReadingModel.Clear();
+
+            DateTime now = DateTime.Now;
+
+            // Lặp từ giờ lùi về number tiếng trước
+            for (int i = number; i >= 0; i--)
+            {
+                DateTime targetTime = now.AddHours(-i);
+
+                string timeDDMMYYYY = targetTime.ToString("dd_MM_yyyy");
+                string timeHour = targetTime.ToString("HH");
+
+                string link = $"{Global.pathESP32pH}/{timeDDMMYYYY}/{timeHour}";
+                var value = await GetDataAsync<PhDataResponse>(link);
+
+                if (value != null)
+                {
+                    foreach (var item in value)
+                    {
+                        ESP32pHModel eSP32PH = new ESP32pHModel
+                        {
+                            SamplingTime = TimeSpan.Parse(item.Value.TimeLine),
+                            pH = item.Value.pH_Value
+                        };
+                        ObCollectionESP32pHReadingModel.Add(eSP32PH);
+                    }
+                }
+            }
+
+            NotifyDataChanged(Global.pathESP32pHUpdatebByHour);
+        }
         private async Task CreateSettingComponents()
         {                   
             // Load Data FireBase bằng cách gọi đến Helper FireBase          

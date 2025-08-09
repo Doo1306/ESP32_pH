@@ -5,6 +5,7 @@ using ESP32pH.Helpers;
 using ESP32pH.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,13 @@ namespace ESP32pH.ViewModels
 
             //Initialize CurrentLoginModel
             CurrentLoginModel = StreamDataTranfer.Instance.CurrentLoginModel;
-            if(StreamDataTranfer.Instance.ESP32Control != null)
+            var stream = StreamDataTranfer.Instance;
+            CurrentLoginModel = stream.CurrentLoginModel;
+            stream.LoginChanged += (s, e) =>
+            {
+                CurrentLoginModel = stream.CurrentLoginModel;
+            };
+            if (StreamDataTranfer.Instance.ESP32Control != null)
             {
                 ESP32Control = StreamDataTranfer.Instance.ESP32Control;
                 LoadParameters();

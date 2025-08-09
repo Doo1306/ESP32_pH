@@ -29,12 +29,7 @@ namespace ESP32pH.ViewModels
 
         public MainViewModel()
         {
-            DoorRequestChangeCommand = new RelayCommand(DoorRequestChangeCommandAct);
-            _timer = new System.Timers.Timer(2000); // Update every 1 seconds
-            _timer.Elapsed += async (s, e) => await FetchPHAsync();
-            _timer.Start();
-
-            InitializeData();
+            DoorRequestChangeCommand = new AsyncRelayCommand(DoorRequestChangeCommandAct);                 
 
             // Commands
             ChangeTimeRangeCommand = new Command<string>(ChangeTimeRange);
@@ -42,7 +37,8 @@ namespace ESP32pH.ViewModels
             ManualRequestChangeCommand = new RelayCommand(ManualRequestChangeCommandAct);
             //RemoteRequestChangeCommand = new RelayCommand(() => ChangeMode(eMode.Remote));
             BuzzeRequestChangeCommand = new RelayCommand(BuzzeRequestChangeCommandAct);
-
+            pHReadings = new ObservableCollection<pHReadingModel>();
+            
             // Zoom commands
             ZoomInCommand = new RelayCommand(ZoomIn);
             ZoomOutCommand = new RelayCommand(ZoomOut);
@@ -50,8 +46,12 @@ namespace ESP32pH.ViewModels
             ToggleAutoScaleCommand = new RelayCommand(ToggleAutoScale);
             StreamDataTranfer.Instance.EP32DataChanged += Instance_EP32DataChanged;
             LoadParameters();
+            StreamDataTranfer.Instance.ReadDataByHour(2);
         }
-
+        public MainViewModel(ESP32ControlModel controlData) : base()
+        {
+            LoadParameters();
+        }
         private void ManualRequestChangeCommandAct()
         {
             IsAutoMode = false;
@@ -87,17 +87,44 @@ namespace ESP32pH.ViewModels
                 ESP32Control = StreamDataTranfer.Instance.ESP32Control;
                 LoadParameters();
             }
-            if(key == Global.pathESP32pH)
+            if(key == Global.pathESP32LiveDatapH)
             {
-                ESP32pH = StreamDataTranfer.Instance.pHReadingModel;
-
+                ESP32pH = StreamDataTranfer.Instance.ESP32pHReadingModel;   
+                
+                var pH = new pHReadingModel()
+                {
+                    pH = ESP32pH.pH,
+                    Timestamp = DateTime.Now,
+                    pHMin = ESP32Control.PH_Min,
+                    pHMax = ESP32Control.PH_Max
+                };
+                CurrentReading = pH;
+                pHReadings?.Add(CurrentReading);
+                // Cập nhật chart
+                UpdateChart();
+            }
+            if(key == Global.pathESP32pHUpdatebByHour)
+            {
+                pHReadings?.Clear();
+                foreach (var item in StreamDataTranfer.Instance.ObCollectionESP32pHReadingModel)
+                {                  
+                    pHReadings?.Add(new pHReadingModel
+                    {
+                        pH = item.pH,                      
+                        Timestamp = DateTime.Today + item.SamplingTime,
+                        pHMin = ESP32Control.PH_Min,
+                        pHMax = ESP32Control.PH_Max
+                    });
+                }
+                foreach (var item in pHReadings)
+                {
+                    // Cập nhật chart
+                    UpdateChart();
+                }                
             }
         }
 
-        public MainViewModel(ESP32ControlModel controlData)
-        {
-            LoadParameters();
-        }
+        
 
         private void LoadParameters()
         {
@@ -220,97 +247,23 @@ namespace ESP32pH.ViewModels
                 }
             }
         }
+      
+       
 
-        private async Task FetchPHAsync()
-        {
-            await Task.Delay(10);
-            var pH = new pHReadingModel()
-            {
-                pH = GenerateRealisticpH(_random.Next(0, 120), _random),
-                Timestamp = DateTime.Now,
-                pHMin = ESP32Control.PH_Min,
-                pHMax = ESP32Control.PH_Max
-            };
-            CurrentReading = pH;
-
-            // Thêm dữ liệu mới và quản lý kích thước collection
-            AddNewReading(pH);
-
-            // Cập nhật chart
-            UpdateChart();
-        }
-
-        private void AddNewReading(pHReadingModel newReading)
-        {
-            if (pHReadings == null)
-                pHReadings = new ObservableCollection<pHReadingModel>();
-
-            // Thêm dữ liệu mới
-            pHReadings.Add(newReading);
-
-            // Xóa dữ liệu cũ dựa trên TimeRange để duy trì hiệu suất
-            var maxReadings = GetMaxReadingsForTimeRange();
-
-            // Nếu vượt quá số lượng tối đa, xóa dữ liệu cũ nhất
-            while (pHReadings.Count > maxReadings)
-            {
-                pHReadings.RemoveAt(0);
-            }
-
-            // Hoặc xóa dữ liệu quá cũ dựa trên thời gian
-            CleanupOldReadings();
-        }
-
-        private int GetMaxReadingsForTimeRange()
-        {
-            // Tính số lượng readings tối đa dựa trên TimeRange
-            // Giả sử mỗi giây có 1 reading
-            return TimeRange switch
-            {
-                "Live" => 900,    // 15 phút × 60 giây
-                "15M" => 900,     // 15 phút × 60 giây  
-                "30M" => 1800,    // 30 phút × 60 giây
-                "1H" => 3600,     // 1 giờ × 60 giây × 60 phút
-                "2H" => 7200,     // 2 giờ × 60 giây × 60 phút
-                "6H" => 21600,    // 6 giờ × 60 giây × 60 phút
-                _ => 3600         // Default 1 giờ
-            };
-        }
-
-        private void CleanupOldReadings()
-        {
-            if (pHReadings == null || !pHReadings.Any())
-                return;
-
-            // Xác định thời gian cắt dựa trên TimeRange + buffer
-            var bufferHours = 2; // Giữ thêm 1 giờ dữ liệu để tránh mất dữ liệu khi chuyển TimeRange
-
-            DateTime cutoffTime = TimeRange switch
-            {
-                "Live" => DateTime.Now.AddMinutes(-15 - (bufferHours * 60)),
-                "15M" => DateTime.Now.AddMinutes(-15 - (bufferHours * 60)),
-                "30M" => DateTime.Now.AddMinutes(-30 - (bufferHours * 60)),
-                "1H" => DateTime.Now.AddHours(-1 - bufferHours),
-                "2H" => DateTime.Now.AddHours(-2 - bufferHours),
-                "6H" => DateTime.Now.AddHours(-6 - bufferHours),
-                _ => DateTime.Now.AddHours(-1 - bufferHours)
-            };
-
-            // Xóa dữ liệu cũ
-            var itemsToRemove = pHReadings.Where(r => r.Timestamp < cutoffTime).ToList();
-            foreach (var item in itemsToRemove)
-            {
-                pHReadings.Remove(item);
-            }
-        }
-
-        private void DoorRequestChangeCommandAct()
-        {
-            //IsDoorOpen = !IsDoorOpen;
-        }
-    
         #region Door Control
-
+        private bool _doorButtonEnable = true;
+        public bool DoorButtonEnable
+        {
+            get => _doorButtonEnable;
+            set
+            {
+                if (_doorButtonEnable != value)
+                {
+                    _doorButtonEnable = value;
+                    OnPropertyChanged(nameof(DoorButtonEnable));
+                }
+            }
+        }
         private bool _isDoorOpenReq = false;
         public bool IsDoorOpenReq
         {
@@ -443,6 +396,16 @@ namespace ESP32pH.ViewModels
             }
         }
         public Brush BorderAlarmBackground => IsAlarm ? Brush.Red : Brush.White;
+        private async Task DoorRequestChangeCommandAct()
+        {
+            if (!DoorButtonEnable)
+                return;
+            // Khóa nút 5 giây
+            DoorButtonEnable = false;
+            await Task.Delay(5000);
+            DoorButtonEnable = true;
+            //IsDoorOpen = !IsDoorOpen;
+        }
         #endregion
 
         #region Mode Control 1: Auto 2: Manual
@@ -523,9 +486,9 @@ namespace ESP32pH.ViewModels
                 if (!IsAutoScale) UpdateChart();
             }
         }
-
+        
         // Commands
-        public ICommand DoorRequestChangeCommand { get; set; }
+        public IAsyncRelayCommand DoorRequestChangeCommand { get; set; }
         public ICommand AutoRequestChangeCommnad { get; set; }
         public ICommand ManualRequestChangeCommand { get; set; }
         public ICommand RemoteRequestChangeCommand { get; set; }
@@ -561,7 +524,7 @@ namespace ESP32pH.ViewModels
             }
         }
 
-        private string _timeRange = "Live";
+        private string _timeRange = "2H";
         public string TimeRange
         {
             get => _timeRange;
@@ -643,57 +606,20 @@ namespace ESP32pH.ViewModels
 
             return new ObservableCollection<pHReadingModel>(filtered);
         }
-
-        private void InitializeData()
-        {
-            var readings = new ObservableCollection<pHReadingModel>();
-            var baseTime = DateTime.Now.AddHours(-2);
-
-            // Generate initial readings for the last 2 hours
-            for (int i = 0; i < 120; i++) // 120 readings = 1 per minute for 2 hours
-            {
-                var timestamp = baseTime.AddMinutes(i);
-                var pH = GenerateRealisticpH(i, _random);
-
-                readings.Add(new pHReadingModel
-                {
-                    Timestamp = timestamp,
-                    pH = pH,
-                    pHMin = 4,
-                    pHMax = 10,
-                });
-            }
-
-            pHReadings = readings;
-        }
-
-        // Generate realistic pH values with some continuity and occasional spikes
-        private double GenerateRealisticpH(int index, Random random)
-        {
-            // Base pH around 7.0 with realistic variations
-            double basepH = 7.0;
-            double variation = (random.NextDouble() - 0.1) * 0.9; // ±0.4 variation
-
-            // Add some trending over time
-            double trend = Math.Sin(index * 0.5) * 0.3;
-
-            // Occasional spikes (simulate feeding, cleaning, etc.)
-            if (random.NextDouble() < 0.5) // 5% chance
-            {
-                variation += (random.NextDouble() - 0.1) * 9.0; // Bigger spike
-            }
-
-            double pH = basepH + variation + trend;
-            return Math.Max(0, Math.Min(14, Math.Round(pH, 2))); // Clamp to 0-14 range
-        }
-
         private void ChangeTimeRange(string range)
         {
             TimeRange = range;
-
-            // Dọn dẹp dữ liệu cũ khi thay đổi TimeRange
-           CleanupOldReadings();
-
+            int count = range switch
+            {
+                "Live" => 1,
+                "15M" => 1,
+                "30M" => 1,
+                "1H" => 1,
+                "2H" => 2,
+                "6H" => 6,
+                _ => 1
+            };
+            StreamDataTranfer.Instance.ReadDataByHour(count);
             // Cập nhật chart với TimeRange mới
             UpdateChart();
         }

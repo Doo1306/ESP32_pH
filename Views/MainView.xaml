@@ -170,7 +170,7 @@
                                   HeightRequest="450"
                                   BackgroundColor="White"/>
 
-                             <!--Legend--> 
+                             <!--Legend--><!-- 
                             <Grid ColumnDefinitions="*,*,*" Margin="0,10,0,0">
                                 <StackLayout Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Center">
                                     <Ellipse Fill="Red" WidthRequest="12" HeightRequest="12" VerticalOptions="Center"/>
@@ -187,7 +187,7 @@
                                     <Label Text="Base > 8" 
                                                     FontSize="12" Margin="5,0,0,0" VerticalOptions="Center"/>
                                 </StackLayout>
-                            </Grid>
+                            </Grid>-->
                         </StackLayout>
                     </Border>
                     
@@ -366,14 +366,16 @@
                         <Border Style="{StaticResource InputFieldStyle}">
                             <StackLayout Orientation="Horizontal">
                                 <controls:CustomToggleSwitch IsToggled="{Binding IsDoorOpenReq}"
-                                               HeightCustom="50"
-                                               WidthCustom="100"
-                                               OnColor="Green"
-                                               OffColor="LightGray"
-                                               OnText="OPEN"
-                                               OffText="CLOSE"
-                                               FontSize="12"
-                                               Margin="0,0,10,0"/>
+                                                             IsEnabled="{Binding DoorButtonEnable}"
+                                                             Command="{Binding DoorRequestChangeCommand}"
+                                                             HeightCustom="50"
+                                                             WidthCustom="100"
+                                                             OnColor="Green"
+                                                             OffColor="LightGray"
+                                                             OnText="OPEN"
+                                                             OffText="CLOSE"
+                                                             FontSize="12"
+                                                             Margin="0,0,10,0"/>
                                 <Label Text="Door Request Change" VerticalOptions="Center" />
                             </StackLayout>
                         </Border>
