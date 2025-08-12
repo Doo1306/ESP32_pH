@@ -27,44 +27,44 @@
             </StackLayout.Background>
 
             <!-- Time Span -->
-            <Border Style="{StaticResource WhiteCardStyle}" IsVisible="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Maker}">
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding IsTimeIntervalEnable}">
                 <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                    <Label Text="Time Interval" WidthRequest="180" VerticalOptions="Center" />
-                    <Entry x:Name="TimeSpanEntry" Text="{Binding TimeInterval,Mode=TwoWay}" Keyboard="Numeric"/>
-                    <Label Text="ms" VerticalOptions="Center"/>
+                    <Label Text="Time Interval" TextColor="Black" WidthRequest="180" VerticalOptions="Center" />
+                    <Entry x:Name="TimeSpanEntry" TextColor="Black" Text="{Binding TimeInterval,Mode=TwoWay}" Keyboard="Numeric"/>
+                    <Label Text="ms" TextColor="Black" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Border>
 
             <!-- Door Delay -->
-            <Border Style="{StaticResource WhiteCardStyle}" IsVisible="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Admin}">
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding IsTimeDelayEnable}">
                 <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                    <Label Text="Time Delay request Door change" WidthRequest="250" VerticalOptions="Center" />
-                    <Entry x:Name="DoorDelayEntry" Text="{Binding TimeDelay,Mode=TwoWay}" Keyboard="Numeric" />
-                    <Label Text="ms" VerticalOptions="Center"/>
+                    <Label Text="Time Delay request Door change" TextColor="Black" WidthRequest="250" VerticalOptions="Center" />
+                    <Entry x:Name="DoorDelayEntry" TextColor="Black" Text="{Binding TimeDelay,Mode=TwoWay}" Keyboard="Numeric" />
+                    <Label Text="ms" TextColor="Black" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Border>
 
            
            
             <!-- pH Min/Max -->
-            <Border Style="{StaticResource WhiteCardStyle}" IsVisible="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Admin}">
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding IsPHEndable}">
                 <VerticalStackLayout Spacing="10">
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="pH Min" WidthRequest="150" VerticalOptions="Center" />
-                        <Entry x:Name="PhMinEntry" Text="{Binding pHMin}" Keyboard="Numeric"  />
-                        <Label Text="pH" VerticalOptions="Center"/>
+                        <Label Text="pH Min" WidthRequest="150" TextColor="Black" VerticalOptions="Center" />
+                        <Entry x:Name="PhMinEntry" TextColor="Black" Text="{Binding pHMin}" Keyboard="Numeric"  />
+                        <Label Text="pH" TextColor="Black" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="pH Max" WidthRequest="150" VerticalOptions="Center" />
-                        <Entry x:Name="PhMaxEntry" Text="{Binding pHMax}" Keyboard="Numeric"  />
-                        <Label Text="pH" VerticalOptions="Center"/>
+                        <Label Text="pH Max" WidthRequest="150" TextColor="Black" VerticalOptions="Center" />
+                        <Entry x:Name="PhMaxEntry" TextColor="Black" Text="{Binding pHMax}" Keyboard="Numeric"  />
+                        <Label Text="pH" TextColor="Black" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Border>
 
             <!-- Test mode -->
-            <Border Style="{StaticResource WhiteCardStyle}" IsVisible="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Maker}">
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding IsTestModeEnable}">
                 <StackLayout Orientation="Horizontal">
                     <controls:CustomToggleSwitch IsToggled="{Binding TestMode}"
                        HeightCustom="50"
@@ -80,59 +80,59 @@
             </Border>
 
             <!-- Analog Offsets -->
-            <Border Style="{StaticResource WhiteCardStyle}" IsVisible="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Maker}">
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding IsOffsetEnable}">
                 <VerticalStackLayout Spacing="10">
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Analog offset X0" WidthRequest="150" VerticalOptions="Center" />
-                        <Entry x:Name="OffsetX0Entry" Text="{Binding OffsetX0}" Keyboard="Numeric"  />
-                        <Label Text="AnalogValue" VerticalOptions="Center"/>
+                        <Label Text="Analog offset X0" TextColor="Black" WidthRequest="150" VerticalOptions="Center" />
+                        <Entry x:Name="OffsetX0Entry" TextColor="Black" Text="{Binding OffsetX0}" Keyboard="Numeric"  />
+                        <Label Text="AnalogValue" TextColor="Black" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Analog offset Y0" WidthRequest="150" VerticalOptions="Center" />
-                        <Entry x:Name="OffsetY0Entry" Text="{Binding OffsetY0}" Keyboard="Numeric"  />
-                        <Label Text="V" VerticalOptions="Center"/>
+                        <Label Text="Analog offset Y0" TextColor="Black" WidthRequest="150" VerticalOptions="Center" />
+                        <Entry x:Name="OffsetY0Entry" TextColor="Black" Text="{Binding OffsetY0}" Keyboard="Numeric"  />
+                        <Label Text="V" TextColor="Black" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Analog offset X1" WidthRequest="150" VerticalOptions="Center" />
-                        <Entry x:Name="OffsetX1Entry" Text="{Binding OffsetX1}"  Keyboard="Numeric"  />
-                        <Label Text="AnalogValue" VerticalOptions="Center"/>
+                        <Label Text="Analog offset X1" TextColor="Black" WidthRequest="150" VerticalOptions="Center" />
+                        <Entry x:Name="OffsetX1Entry" TextColor="Black" Text="{Binding OffsetX1}"  Keyboard="Numeric"  />
+                        <Label Text="AnalogValue" TextColor="Black" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Analog offset Y1" WidthRequest="150" VerticalOptions="Center" />
-                        <Entry x:Name="OffsetY1Entry" Text="{Binding OffsetY1}" Keyboard="Numeric" />
-                        <Label Text="V" VerticalOptions="Center"/>
+                        <Label Text="Analog offset Y1" TextColor="Black" WidthRequest="150" VerticalOptions="Center" />
+                        <Entry x:Name="OffsetY1Entry" TextColor="Black" Text="{Binding OffsetY1}" Keyboard="Numeric" />
+                        <Label Text="V" TextColor="Black" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Analog offset X2" WidthRequest="150" VerticalOptions="Center" />
-                        <Entry x:Name="OffsetX2Entry" Text="{Binding OffsetX2}" Keyboard="Numeric"  />
-                        <Label Text="AnalogValue" VerticalOptions="Center"/>
+                        <Label Text="Analog offset X2" TextColor="Black" WidthRequest="150" VerticalOptions="Center" />
+                        <Entry x:Name="OffsetX2Entry" TextColor="Black" Text="{Binding OffsetX2}" Keyboard="Numeric"  />
+                        <Label Text="AnalogValue" TextColor="Black" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Analog offset Y2" WidthRequest="150" VerticalOptions="Center" />
-                        <Entry x:Name="OffsetY2Entry" Text="{Binding OffsetY1}" Keyboard="Numeric" />
-                        <Label Text="V" VerticalOptions="Center"/>
+                        <Label Text="Analog offset Y2" TextColor="Black" WidthRequest="150" VerticalOptions="Center" />
+                        <Entry x:Name="OffsetY2Entry" TextColor="Black" Text="{Binding OffsetY1}" Keyboard="Numeric" />
+                        <Label Text="V" TextColor="Black" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
                 </VerticalStackLayout>
             </Border>
 
             <!-- Buttons -->
-            <Border Style="{StaticResource WhiteCardStyle}" IsVisible="{Binding CurrentLoginModel.Permission,Converter={StaticResource PermissionToVisibilityConverter},ConverterParameter=Admin}">
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding IsButtonEnable}">
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="30" Margin="0,20,0,0">
                     <Button Text="Accept"
                         Style="{StaticResource ButtonRemain}"
-                        TextColor="White"
+                        TextColor="Black"
                         WidthRequest="120"
                         Command="{Binding  SaveSettingCommand}" />
                     <Button Text="Cancel"
                         Style="{StaticResource ButtonRemain}"                       
-                        TextColor="White"
+                        TextColor="Black"
                         WidthRequest="120"
                         Command="{Binding CancelSettingCommand}" />
                 </HorizontalStackLayout>

@@ -49,5 +49,60 @@ namespace ESP32pH.Models
         public int TimeInterval { get; set; }
         [JsonProperty("TestMode")]
         public bool TestMode { get; set; }
+        [JsonProperty("IsAuto")]
+        public bool IsAuto { get; set; }
+    }
+    public class ESP32ControlESP32ToFirebaseModel
+    {
+        [JsonProperty("EMS")]
+        public bool EMS { get; set; }
+
+        [JsonProperty("Control_Mode")]
+        public int ControlMode { get; set; }
+
+        [JsonProperty("IsDoor_Close")]
+        public bool IsDoorClose { get; set; }
+
+        [JsonProperty("IsDoor_Open")]
+        public bool IsDoorOpen { get; set; }
+
+        [JsonProperty("IsAlarm")]
+        public bool IsAlarm { get; set; }
+    }
+    public class ESP32ControlFirebaseToESP32Model
+    {
+        [JsonProperty("IsAuto")]
+        public bool IsAuto { get; set; }
+
+        [JsonProperty("Buzze")]
+        public bool Buzze { get; set; }
+
+        [JsonProperty("Door_Close_Req")]
+        public bool DoorCloseReq { get; set; }
+
+        [JsonProperty("Door_Open_Req")]
+        public bool DoorOpenReq { get; set; }
+
+        [JsonProperty("PH_Max")]
+        public float PH_Max { get; set; }
+
+        [JsonProperty("PH_Min")]
+        public float PH_Min { get; set; }       
+
+        [JsonProperty("TimeDelay")]
+        public int TimeDelay { get; set; }
+
+        [JsonProperty("TimeInterval")]
+        public int TimeInterval { get; set; }
+
+        [JsonProperty("TestMode")]
+        public bool TestMode { get; set; }
+
+        [JsonProperty("OffsetX0")]
+        public float OffsetX0 { get; set; }
+
+        [JsonProperty("OffsetY0")]
+        public float OffsetY0 { get; set; }
+
     }
 }

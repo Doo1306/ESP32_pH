@@ -30,17 +30,29 @@ namespace ESP32pH.DTOs
         {
             firebase = new FireBase(Global.FirebaseBaseUrl, Global.FirebaseAuthToken);
             LoginModels = new ObservableCollection<LoginModel>();
-            ESP32Control = new ESP32ControlModel();
+            ESP32ControlFirebaseToESP32 = new ESP32ControlFirebaseToESP32Model();
+            ESP32ControlESP32ToFirebase = new ESP32ControlESP32ToFirebaseModel();
             ESP32pHReadingModel = new ESP32pHModel();
             ObCollectionESP32pHReadingModel = new ObservableCollection<ESP32pHModel>();
         }
 
         private void InitFirebaseListeners()
-        {          
-            firebase.ListenToNodeChanges<ESP32ControlModel>($"{Global.pathESP32Control}", FireBaseToken, data =>
-            {          
-                ESP32Control = data.Object; // Update the ESP32Control property
-                NotifyDataChanged(Global.pathESP32Control); // Notify listeners about the change
+        {
+            firebase.ListenToNodeChanges<ESP32ControlFirebaseToESP32Model>($"{Global.pathESP32Control}", FireBaseToken, data =>
+            {
+                if (data.Key == "FirebaseToESP32")
+                {
+                    ESP32ControlFirebaseToESP32 = data.Object; // Update the ESP32Control property
+                    NotifyDataChanged(Global.pathESP32ControlFirebaseToESP32); // Notify listeners about the change
+                }                  
+            });
+            firebase.ListenToNodeChanges<ESP32ControlESP32ToFirebaseModel>($"{Global.pathESP32Control}", FireBaseToken, data =>
+            {
+                if(data.Key == "ESP32ToFirebase")
+                {
+                    ESP32ControlESP32ToFirebase = data.Object; // Update the ESP32Control property
+                    NotifyDataChanged(Global.pathESP32ControlESP32ToFirebas); // Notify listeners about the change
+                }              
             });
             firebase.ListenToNodeChanges<ESP32pHModel>($"{Global.pathESP32LiveDatapH}", FireBaseToken, data =>
             {
@@ -67,7 +79,8 @@ namespace ESP32pH.DTOs
             }
         }
 
-        public ESP32ControlModel ESP32Control { get; internal set; }
+        public ESP32ControlFirebaseToESP32Model ESP32ControlFirebaseToESP32 { get; set; }
+        public ESP32ControlESP32ToFirebaseModel ESP32ControlESP32ToFirebase { get; set; }
         public ESP32pHModel ESP32pHReadingModel { get; set; }
         public SettingViewModel SettingViewModel { get; set; }
         public MainViewModel MainViewModel { get; set; }
@@ -147,13 +160,69 @@ namespace ESP32pH.DTOs
 
             NotifyDataChanged(Global.pathESP32pHUpdatebByHour);
         }
+        public async Task ReadDataByHourLogCheck(DateTime timeStart,DateTime timeEnd)
+        {
+
+            ObCollectionESP32pHReadingModel.Clear();
+
+            // Bảo đảm timeStart <= timeEnd
+            if (timeStart > timeEnd)
+            {
+                var temp = timeStart;
+                timeStart = timeEnd;
+                timeEnd = temp;
+            }
+
+            // Lặp qua từng giờ từ timeStart tới timeEnd
+            DateTime current = timeStart;
+            while (current <= timeEnd)
+            {
+                string timeDDMMYYYY = current.ToString("dd_MM_yyyy");
+                string timeHour = current.ToString("HH");
+
+                string link = $"{Global.pathESP32pH}/{timeDDMMYYYY}/{timeHour}";
+                var value = await GetDataAsync<PhDataResponse>(link);
+
+                if (value != null && value.Any())
+                {
+                    foreach (var item in value)
+                    {
+                        try
+                        {
+                            ESP32pHModel eSP32PH = new ESP32pHModel
+                            {
+                                SamplingTime = TimeSpan.Parse(item.Value.TimeLine),
+                                pH = item.Value.pH_Value
+                            };
+                            ObCollectionESP32pHReadingModel.Add(eSP32PH);
+                        }
+                        catch
+                        {
+                            // Log nếu TimeLine không parse được
+                        }
+                    }
+                }
+                else
+                {
+                    // Ghi log nếu giờ này không có dữ liệu
+                    System.Diagnostics.Debug.WriteLine($"Không có dữ liệu tại: {timeDDMMYYYY} - {timeHour}h");
+                }
+
+                // Luôn tăng giờ lên để tiếp tục vòng lặp
+                current = current.AddHours(1);
+            }
+                NotifyDataChanged(Global.pathESP32pHUpdatebByHourLogCheck);
+        
+        }
         private async Task CreateSettingComponents()
         {                   
             // Load Data FireBase bằng cách gọi đến Helper FireBase          
-            var value = await GetDataAsync<ESP32ControlModel>(Global.pathESP32ControlReadOne);
-            ESP32Control = value;
-            SettingViewModel = new SettingViewModel(ESP32Control);
-            MainViewModel = new MainViewModel(ESP32Control);
+            var value = await GetDataAsync<ESP32ControlFirebaseToESP32Model>(Global.pathESP32ControlReadOne);
+            ESP32ControlFirebaseToESP32 = value;
+            var value1 = await GetDataAsync<ESP32ControlESP32ToFirebaseModel>(Global.pathESP32ControlWriteOne);
+            ESP32ControlESP32ToFirebase = value1;
+            SettingViewModel = new SettingViewModel(ESP32ControlFirebaseToESP32);
+            MainViewModel = new MainViewModel(ESP32ControlESP32ToFirebase,ESP32ControlFirebaseToESP32);
         }
         // CRUD operations for Firebase
         public async Task<T> GetDataAsync<T>(string path)

@@ -46,9 +46,9 @@ namespace ESP32pH.ViewModels
             ToggleAutoScaleCommand = new RelayCommand(ToggleAutoScale);
             StreamDataTranfer.Instance.EP32DataChanged += Instance_EP32DataChanged;
             LoadParameters();
-            StreamDataTranfer.Instance.ReadDataByHour(2);
+            StreamDataTranfer.Instance.ReadDataByHour(1);
         }
-        public MainViewModel(ESP32ControlModel controlData) : base()
+        public MainViewModel(ESP32ControlESP32ToFirebaseModel controlESP32ToFirebaselData, ESP32ControlFirebaseToESP32Model controlFirebaseToESP32Data) : base()
         {
             LoadParameters();
         }
@@ -56,11 +56,13 @@ namespace ESP32pH.ViewModels
         {
             IsAutoMode = false;
             IsManualMode = true;
-        }  
+            UpdatedataSync();
+        }
         private void AutoRequestChangeCommnadAct()
         {
             IsAutoMode = true;
-            IsManualMode = false;        
+            IsManualMode = false;         
+            UpdatedataSync();
         }
 
         private void BuzzeRequestChangeCommandAct()
@@ -71,23 +73,29 @@ namespace ESP32pH.ViewModels
 
         private void UpdatedataSync()
         {
-            StreamDataTranfer.Instance.ESP32Control.Buzze = IsBuzze;
+            StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.Buzze = IsBuzze;
             if (IsRemote && IsManualMode)
             {
-                StreamDataTranfer.Instance.ESP32Control.DoorOpenReq = IsDoorOpenReq;
-                StreamDataTranfer.Instance.ESP32Control.DoorCloseReq = !IsDoorOpenReq;
+                StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.DoorOpenReq = IsDoorOpenReq;
+                StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.DoorCloseReq = !IsDoorOpenReq;
             }
-            StreamDataTranfer.Instance.UpdateDataAsync(Global.pathESP32ControlReadOne, StreamDataTranfer.Instance.ESP32Control);
+            StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.IsAuto = IsAutoMode;
+            StreamDataTranfer.Instance.UpdateDataAsync(Global.pathESP32ControlReadOne, StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32);
         }
 
         private void Instance_EP32DataChanged(string key)
         {
-            if (key == Global.pathESP32Control)
+            if (key == Global.pathESP32ControlFirebaseToESP32)
             {
-                ESP32Control = StreamDataTranfer.Instance.ESP32Control;
+                ESP32ControlFirebaseToESP32 = StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32;
                 LoadParameters();
             }
-            if(key == Global.pathESP32LiveDatapH)
+            if(key == Global.pathESP32ControlESP32ToFirebas)
+            {
+                ESP32ControlESP32ToFirebase = StreamDataTranfer.Instance.ESP32ControlESP32ToFirebase;
+                LoadParameters();
+            }
+            if (key == Global.pathESP32LiveDatapH)
             {
                 ESP32pH = StreamDataTranfer.Instance.ESP32pHReadingModel;   
                 
@@ -95,8 +103,8 @@ namespace ESP32pH.ViewModels
                 {
                     pH = ESP32pH.pH,
                     Timestamp = DateTime.Now,
-                    pHMin = ESP32Control.PH_Min,
-                    pHMax = ESP32Control.PH_Max
+                    pHMin = ESP32ControlFirebaseToESP32.PH_Min,
+                    pHMax = ESP32ControlFirebaseToESP32.PH_Max
                 };
                 CurrentReading = pH;
                 pHReadings?.Add(CurrentReading);
@@ -112,8 +120,8 @@ namespace ESP32pH.ViewModels
                     {
                         pH = item.pH,                      
                         Timestamp = DateTime.Today + item.SamplingTime,
-                        pHMin = ESP32Control.PH_Min,
-                        pHMax = ESP32Control.PH_Max
+                        pHMin = ESP32ControlFirebaseToESP32.PH_Min,
+                        pHMax = ESP32ControlFirebaseToESP32.PH_Max
                     });
                 }
                 foreach (var item in pHReadings)
@@ -128,8 +136,9 @@ namespace ESP32pH.ViewModels
 
         private void LoadParameters()
         {
-            ESP32Control = StreamDataTranfer.Instance.ESP32Control;
-            switch (ESP32Control.ControlMode)
+            ESP32ControlFirebaseToESP32 = StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32;
+            ESP32ControlESP32ToFirebase = StreamDataTranfer.Instance.ESP32ControlESP32ToFirebase;
+            switch (ESP32ControlESP32ToFirebase.ControlMode)
             {
                 case 3:
                     // Auto
@@ -146,15 +155,15 @@ namespace ESP32pH.ViewModels
                 default:
                     break;
             }
-            IsDoorOpen = ESP32Control.IsDoorOpen;
-            IsDoorClose = ESP32Control.IsDoorClose;
-            IsDoorOpenReq = ESP32Control.DoorOpenReq;
-            IsDoorCloseReq = ESP32Control.DoorCloseReq;
-            IsBuzze = ESP32Control.Buzze;
-            IsAlarm = ESP32Control.IsAlarm;
+            IsDoorOpen = ESP32ControlESP32ToFirebase.IsDoorOpen;
+            IsDoorClose = ESP32ControlESP32ToFirebase.IsDoorClose;
+            IsDoorOpenReq = ESP32ControlFirebaseToESP32.DoorOpenReq;
+            IsDoorCloseReq = ESP32ControlFirebaseToESP32.DoorCloseReq;
+            IsBuzze = ESP32ControlFirebaseToESP32.Buzze;
+            IsAlarm = ESP32ControlESP32ToFirebase.IsAlarm;
             if (CurrentReading == null) return;
-            CurrentReading.pHMin = ESP32Control.PH_Min;
-            CurrentReading.pHMax = ESP32Control.PH_Max;
+            CurrentReading.pHMin = ESP32ControlFirebaseToESP32.PH_Min;
+            CurrentReading.pHMax = ESP32ControlFirebaseToESP32.PH_Max;
         }
 
         #region Notify Mode
@@ -221,19 +230,35 @@ namespace ESP32pH.ViewModels
         #endregion
 
         //Control ESP32
-        private ESP32ControlModel _ESP32Control;
-        public ESP32ControlModel ESP32Control
+        private ESP32ControlFirebaseToESP32Model _ESP32ControlFirebaseToESP32;
+        public ESP32ControlFirebaseToESP32Model ESP32ControlFirebaseToESP32
         {
-            get { return _ESP32Control; }
+            get { return _ESP32ControlFirebaseToESP32; }
             set
             {
-                if (_ESP32Control != value)
+                if (_ESP32ControlFirebaseToESP32 != value)
                 {
-                    _ESP32Control = value;
-                    OnPropertyChanged(nameof(ESP32Control));
+                    _ESP32ControlFirebaseToESP32 = value;
+                    OnPropertyChanged(nameof(ESP32ControlFirebaseToESP32));
                 }
             }
         }
+
+        //Control ESP32
+        private ESP32ControlESP32ToFirebaseModel _ESP32ControlESP32ToFirebase;
+        public ESP32ControlESP32ToFirebaseModel ESP32ControlESP32ToFirebase
+        {
+            get { return _ESP32ControlESP32ToFirebase; }
+            set
+            {
+                if (_ESP32ControlESP32ToFirebase != value)
+                {
+                    _ESP32ControlESP32ToFirebase = value;
+                    OnPropertyChanged(nameof(ESP32ControlESP32ToFirebase));
+                }
+            }
+        }
+
         private ESP32pHModel _ESP32pH;
         public ESP32pHModel ESP32pH
         {
@@ -524,7 +549,7 @@ namespace ESP32pH.ViewModels
             }
         }
 
-        private string _timeRange = "2H";
+        private string _timeRange = "Live";
         public string TimeRange
         {
             get => _timeRange;
@@ -628,7 +653,7 @@ namespace ESP32pH.ViewModels
     public class pHChartDrawable : IDrawable
     {
         private readonly ObservableCollection<pHReadingModel> _readings;
-        private readonly float _margin = 40f;
+        private readonly float _margin = 30f;
         private readonly float _topMargin = 10f;
 
         // Auto scale and zoom properties

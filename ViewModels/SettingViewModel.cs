@@ -29,9 +29,9 @@ namespace ESP32pH.ViewModels
             {
                 CurrentLoginModel = stream.CurrentLoginModel;
             };
-            if (StreamDataTranfer.Instance.ESP32Control != null)
+            if (StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32 != null)
             {
-                ESP32Control = StreamDataTranfer.Instance.ESP32Control;
+                ESP32ControlFirebaseP32ToFirebase = StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32;
                 LoadParameters();
             }else
             {
@@ -42,14 +42,14 @@ namespace ESP32pH.ViewModels
 
         private void Instance_EP32DataChanged(string key)
         {
-            if (key == Global.pathESP32Control)
-            {             
-                ESP32Control = StreamDataTranfer.Instance.ESP32Control;
+            if (key == Global.pathESP32ControlFirebaseToESP32)
+            {
+                ESP32ControlFirebaseP32ToFirebase = StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32;
                 LoadParameters();
             }
         }
 
-        public SettingViewModel(ESP32ControlModel data):base()  // Call the default constructor to initialize common properties
+        public SettingViewModel(ESP32ControlFirebaseToESP32Model data):base()  // Call the default constructor to initialize common properties
         {         
             var stream = StreamDataTranfer.Instance;
             CurrentLoginModel = stream.CurrentLoginModel;
@@ -59,24 +59,24 @@ namespace ESP32pH.ViewModels
             };
             if(data != null)
             {
-                ESP32Control = data;
+                ESP32ControlFirebaseP32ToFirebase = data;
             }          
             LoadParameters();
         }
 
         private void LoadParameters()
         {
-            this.TimeInterval = ESP32Control.TimeInterval;
-            this.TimeDelay = ESP32Control.TimeDelay;
-            this.pHMin = ESP32Control.PH_Min;
-            this.pHMax = ESP32Control.PH_Max;
-            this.OffsetX0 = ESP32Control.OffsetX0;
-            this.OffsetY0 = ESP32Control.OffsetY0;
+            this.TimeInterval = ESP32ControlFirebaseP32ToFirebase.TimeInterval;
+            this.TimeDelay = ESP32ControlFirebaseP32ToFirebase.TimeDelay;
+            this.pHMin = ESP32ControlFirebaseP32ToFirebase.PH_Min;
+            this.pHMax = ESP32ControlFirebaseP32ToFirebase.PH_Max;
+            this.OffsetX0 = ESP32ControlFirebaseP32ToFirebase.OffsetX0;
+            this.OffsetY0 = ESP32ControlFirebaseP32ToFirebase.OffsetY0;
             this.OffsetX1 = 0;
             this.OffsetY1 = 0;
             this.OffsetX2 = 0;
             this.OffsetY2 = 0;
-            this.TestMode = ESP32Control.TestMode;
+            this.TestMode = ESP32ControlFirebaseP32ToFirebase.TestMode;          
             // Load other parameters as needed
         }
 
@@ -89,23 +89,57 @@ namespace ESP32pH.ViewModels
                 if (_currentLoginModel != value)
                 {
                     _currentLoginModel = value;
+                    CheckEnablePermission();
                     OnPropertyChanged(nameof(CurrentLoginModel));
                 }
             }
         }
-        private ESP32ControlModel _ESP32Control;
-        public ESP32ControlModel ESP32Control
+
+        private void CheckEnablePermission()
         {
-            get { return _ESP32Control; }
+            if (CurrentLoginModel.Permission == ePermission.Maker)
+            {
+                IsTimeDelayEnable = true;
+                IsTimeIntervalEnable = true;
+                IsPHEndable = true;
+                IsOffsetEnable = true;
+                IsTestModeEnable = true;
+                IsButtonEnable = true;
+            }
+            else if (CurrentLoginModel.Permission == ePermission.Admin)
+            {
+                IsTimeDelayEnable = true;
+                IsTimeIntervalEnable = false;
+                IsPHEndable = true;
+                IsOffsetEnable = true;
+                IsTestModeEnable = false;
+                IsButtonEnable = true;
+            }
+            else if (CurrentLoginModel.Permission == ePermission.User)
+            {
+                IsTimeDelayEnable = false;
+                IsTimeIntervalEnable = false;
+                IsPHEndable = false;
+                IsOffsetEnable = false;
+                IsTestModeEnable = false;
+                IsButtonEnable = false;
+            }
+        }
+
+        private ESP32ControlFirebaseToESP32Model _ESP32ControlFirebaseP32ToFirebase;
+        public ESP32ControlFirebaseToESP32Model ESP32ControlFirebaseP32ToFirebase
+        {
+            get { return _ESP32ControlFirebaseP32ToFirebase; }
             set
             {
-                if (_ESP32Control != value)
+                if (_ESP32ControlFirebaseP32ToFirebase != value)
                 {
-                    _ESP32Control = value;
-                    OnPropertyChanged(nameof(ESP32Control));
+                    _ESP32ControlFirebaseP32ToFirebase = value;
+                    OnPropertyChanged(nameof(ESP32ControlFirebaseP32ToFirebase));
                 }
             }
         }
+        
         private int _timeInterval;
         public int TimeInterval
         {
@@ -251,6 +285,89 @@ namespace ESP32pH.ViewModels
                 }
             }
         }
+
+        // permision hidden
+        private bool _isTimeIntervalEnable  = false;
+        public bool IsTimeIntervalEnable
+        {
+            get { return _isTimeIntervalEnable; }
+            set
+            {
+                if (_isTimeIntervalEnable != value)
+                {
+                    _isTimeIntervalEnable = value;
+                    OnPropertyChanged(nameof(IsTimeIntervalEnable));
+                }
+            }
+        }
+        private bool _isTimeDelayEnable = false;
+        public bool IsTimeDelayEnable
+        {
+            get { return _isTimeDelayEnable; }
+            set
+            {
+                if (_isTimeDelayEnable != value)
+                {
+                    _isTimeDelayEnable = value;
+                    OnPropertyChanged(nameof(IsTimeDelayEnable));
+                }
+            }
+        }
+        private bool _isPHEndable = false;
+        public bool IsPHEndable
+        {
+            get { return _isPHEndable; }    
+            set
+            {
+                if (_isPHEndable != value)
+                {
+                    _isPHEndable = value;
+                    OnPropertyChanged(nameof(IsPHEndable));
+                }
+            }
+        }
+        private bool _isOffsetEnable = false;
+        public bool IsOffsetEnable
+        {
+            get { return _isOffsetEnable; }
+            set
+            {
+                if (_isOffsetEnable != value)
+                {
+                    _isOffsetEnable = value;
+                    OnPropertyChanged(nameof(IsOffsetEnable));
+                }
+            }
+        }
+        private bool _isTestModeEnable = false;
+        public bool IsTestModeEnable
+        {
+            get { return _isTestModeEnable; }
+            set
+            {
+                if (_isTestModeEnable != value)
+                {
+                    _isTestModeEnable = value;
+                    OnPropertyChanged(nameof(IsTestModeEnable));
+                }
+            }
+        }
+        private bool _isButtonEnable = false;
+        public bool IsButtonEnable
+        {
+            get { return _isButtonEnable; }
+            set
+            {
+                if (_isButtonEnable != value)
+                {
+                    _isButtonEnable = value;
+                    OnPropertyChanged(nameof(IsButtonEnable));
+                }
+            }
+        }
+        //create a ICommnand to accepted to save setting
+
+
         private void CancelSettingAct()
         {
             LoadParameters();
@@ -262,14 +379,14 @@ namespace ESP32pH.ViewModels
 
         private void UpdateDataSync()
         {
-            StreamDataTranfer.Instance.ESP32Control.TimeInterval = TimeInterval;
-            StreamDataTranfer.Instance.ESP32Control.TimeDelay = TimeDelay;
-            StreamDataTranfer.Instance.ESP32Control.OffsetX0 = OffsetX0;
-            StreamDataTranfer.Instance.ESP32Control.OffsetY0 = OffsetY0;
-            StreamDataTranfer.Instance.ESP32Control.PH_Max = pHMax;
-            StreamDataTranfer.Instance.ESP32Control.PH_Min = pHMin;
-            StreamDataTranfer.Instance.ESP32Control.TestMode = TestMode;
-            StreamDataTranfer.Instance.UpdateDataAsync($"{Global.pathESP32Control}{"/Transfer"}", StreamDataTranfer.Instance.ESP32Control);
+            StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.TimeInterval = TimeInterval;
+            StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.TimeDelay = TimeDelay;
+            StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.OffsetX0 = OffsetX0;
+            StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.OffsetY0 = OffsetY0;
+            StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.PH_Max = pHMax;
+            StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.PH_Min = pHMin;
+            StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.TestMode = TestMode;
+            StreamDataTranfer.Instance.UpdateDataAsync($"{Global.pathESP32ControlFirebaseToESP32}", StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32);
         }
         //create a ICommnand to accepted to save setting
         public ICommand SaveSettingCommand { get; set; }

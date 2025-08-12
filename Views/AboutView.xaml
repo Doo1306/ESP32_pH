@@ -3,7 +3,42 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ESP32pH.Views.AboutView"
              Title="About">
-    <VerticalStackLayout>
-       
-    </VerticalStackLayout>
+   
+
+
+        <VerticalStackLayout Padding="30" Spacing="20" HorizontalOptions="Center" VerticalOptions="Center">
+
+            <!-- Icon -->
+            <Image Source="appiconmem.png"
+               WidthRequest="100"
+               HeightRequest="100"/>
+
+            <!-- Tên App -->
+            <Label Text="PH Monitoring"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"/>
+
+            <!-- Version -->
+            <Label Text="Version 1.0.0_20251208"
+               FontSize="18"
+               HorizontalOptions="Center"/>
+
+            <!-- Copyright -->
+            <Label Text="Copyright © 2025 by haonguyen.35"
+               FontSize="16"
+               HorizontalOptions="Center"/>
+
+            <!-- Email -->
+            <Label Text="Email: nguyenvanhao.hus@gmail.com"
+               FontSize="16"
+               HorizontalOptions="Center"/>
+
+            <!-- Phone -->
+            <Label Text="Phone: 0357772596"
+               FontSize="16"
+               HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+
 </ContentPage>

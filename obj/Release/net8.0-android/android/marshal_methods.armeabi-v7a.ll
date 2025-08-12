@@ -13,12 +13,12 @@ target triple = "armv7-unknown-linux-android21"
 	ptr ; MonoClass klass
 }
 
-@assembly_image_cache = dso_local local_unnamed_addr global [142 x ptr] zeroinitializer, align 4
+@assembly_image_cache = dso_local local_unnamed_addr global [143 x ptr] zeroinitializer, align 4
 
 ; Each entry maps hash of an assembly name to an index into the `assembly_image_cache` array
-@assembly_image_cache_hashes = dso_local local_unnamed_addr constant [284 x i32] [
+@assembly_image_cache_hashes = dso_local local_unnamed_addr constant [286 x i32] [
 	i32 39109920, ; 0: Newtonsoft.Json.dll => 0x254c520 => 53
-	i32 42639949, ; 1: System.Threading.Thread => 0x28aa24d => 130
+	i32 42639949, ; 1: System.Threading.Thread => 0x28aa24d => 131
 	i32 67008169, ; 2: zh-Hant\Microsoft.Maui.Controls.resources => 0x3fe76a9 => 33
 	i32 72070932, ; 3: Microsoft.Maui.Graphics.dll => 0x44bb714 => 51
 	i32 117431740, ; 4: System.Runtime.InteropServices => 0x6ffddbc => 119
@@ -36,7 +36,7 @@ target triple = "armv7-unknown-linux-android21"
 	i32 336156722, ; 16: ja/Microsoft.Maui.Controls.resources.dll => 0x14095832 => 15
 	i32 342366114, ; 17: Xamarin.AndroidX.Lifecycle.Common => 0x146817a2 => 67
 	i32 356389973, ; 18: it/Microsoft.Maui.Controls.resources.dll => 0x153e1455 => 14
-	i32 379916513, ; 19: System.Threading.Thread.dll => 0x16a510e1 => 130
+	i32 379916513, ; 19: System.Threading.Thread.dll => 0x16a510e1 => 131
 	i32 385762202, ; 20: System.Memory.dll => 0x16fe439a => 104
 	i32 393699800, ; 21: Firebase => 0x177761d8 => 37
 	i32 395744057, ; 22: _Microsoft.Android.Resource.Designer => 0x17969339 => 34
@@ -44,8 +44,8 @@ target triple = "armv7-unknown-linux-android21"
 	i32 442565967, ; 24: System.Collections => 0x1a61054f => 90
 	i32 450948140, ; 25: Xamarin.AndroidX.Fragment.dll => 0x1ae0ec2c => 66
 	i32 459347974, ; 26: System.Runtime.Serialization.Primitives.dll => 0x1b611806 => 123
-	i32 465846621, ; 27: mscorlib => 0x1bc4415d => 136
-	i32 469710990, ; 28: System.dll => 0x1bff388e => 135
+	i32 465846621, ; 27: mscorlib => 0x1bc4415d => 137
+	i32 469710990, ; 28: System.dll => 0x1bff388e => 136
 	i32 498788369, ; 29: System.ObjectModel => 0x1dbae811 => 109
 	i32 500358224, ; 30: id/Microsoft.Maui.Controls.resources.dll => 0x1dd2dc50 => 13
 	i32 503918385, ; 31: fi/Microsoft.Maui.Controls.resources.dll => 0x1e092f31 => 7
@@ -58,7 +58,7 @@ target triple = "armv7-unknown-linux-android21"
 	i32 627931235, ; 38: nl\Microsoft.Maui.Controls.resources => 0x256d7863 => 19
 	i32 672442732, ; 39: System.Collections.Concurrent => 0x2814a96c => 87
 	i32 688181140, ; 40: ca/Microsoft.Maui.Controls.resources.dll => 0x2904cf94 => 1
-	i32 690569205, ; 41: System.Xml.Linq.dll => 0x29293ff5 => 132
+	i32 690569205, ; 41: System.Xml.Linq.dll => 0x29293ff5 => 133
 	i32 706645707, ; 42: ko/Microsoft.Maui.Controls.resources.dll => 0x2a1e8ecb => 16
 	i32 709557578, ; 43: de/Microsoft.Maui.Controls.resources.dll => 0x2a4afd4a => 4
 	i32 722857257, ; 44: System.Runtime.Loader.dll => 0x2b15ed29 => 120
@@ -73,7 +73,7 @@ target triple = "armv7-unknown-linux-android21"
 	i32 926902833, ; 53: tr/Microsoft.Maui.Controls.resources.dll => 0x373f6a31 => 28
 	i32 955402788, ; 54: Newtonsoft.Json => 0x38f24a24 => 53
 	i32 967690846, ; 55: Xamarin.AndroidX.Lifecycle.Common.dll => 0x39adca5e => 67
-	i32 975874589, ; 56: System.Xml.XDocument => 0x3a2aaa1d => 134
+	i32 975874589, ; 56: System.Xml.XDocument => 0x3a2aaa1d => 135
 	i32 992768348, ; 57: System.Collections.dll => 0x3b2c715c => 90
 	i32 1012816738, ; 58: Xamarin.AndroidX.SavedState.dll => 0x3c5e5b62 => 77
 	i32 1019214401, ; 59: System.Drawing => 0x3cbffa41 => 99
@@ -85,7 +85,7 @@ target triple = "armv7-unknown-linux-android21"
 	i32 1052210849, ; 65: Xamarin.AndroidX.Lifecycle.ViewModel.dll => 0x3eb776a1 => 69
 	i32 1082857460, ; 66: System.ComponentModel.TypeConverter => 0x408b17f4 => 92
 	i32 1084122840, ; 67: Xamarin.Kotlin.StdLib => 0x409e66d8 => 83
-	i32 1098259244, ; 68: System => 0x41761b2c => 135
+	i32 1098259244, ; 68: System => 0x41761b2c => 136
 	i32 1118262833, ; 69: ko\Microsoft.Maui.Controls.resources => 0x42a75631 => 16
 	i32 1168523401, ; 70: pt\Microsoft.Maui.Controls.resources => 0x45a64089 => 22
 	i32 1178241025, ; 71: Xamarin.AndroidX.Navigation.Runtime.dll => 0x463a8801 => 74
@@ -108,14 +108,14 @@ target triple = "armv7-unknown-linux-android21"
 	i32 1480492111, ; 88: System.IO.Compression.Brotli.dll => 0x583e844f => 100
 	i32 1493001747, ; 89: hi/Microsoft.Maui.Controls.resources.dll => 0x58fd6613 => 10
 	i32 1514721132, ; 90: el/Microsoft.Maui.Controls.resources.dll => 0x5a48cf6c => 5
-	i32 1543031311, ; 91: System.Text.RegularExpressions.dll => 0x5bf8ca0f => 128
+	i32 1543031311, ; 91: System.Text.RegularExpressions.dll => 0x5bf8ca0f => 129
 	i32 1550322496, ; 92: System.Reflection.Extensions.dll => 0x5c680b40 => 115
 	i32 1551623176, ; 93: sk/Microsoft.Maui.Controls.resources.dll => 0x5c7be408 => 25
 	i32 1622152042, ; 94: Xamarin.AndroidX.Loader.dll => 0x60b0136a => 71
 	i32 1624863272, ; 95: Xamarin.AndroidX.ViewPager2 => 0x60d97228 => 81
 	i32 1636350590, ; 96: Xamarin.AndroidX.CursorAdapter => 0x6188ba7e => 63
 	i32 1639515021, ; 97: System.Net.Http.dll => 0x61b9038d => 105
-	i32 1639986890, ; 98: System.Text.RegularExpressions => 0x61c036ca => 128
+	i32 1639986890, ; 98: System.Text.RegularExpressions => 0x61c036ca => 129
 	i32 1657153582, ; 99: System.Runtime => 0x62c6282e => 124
 	i32 1658251792, ; 100: Xamarin.Google.Android.Material.dll => 0x62d6ea10 => 82
 	i32 1677501392, ; 101: System.Net.Primitives.dll => 0x63fca3d0 => 106
@@ -129,7 +129,7 @@ target triple = "armv7-unknown-linux-android21"
 	i32 1765942094, ; 109: System.Reflection.Extensions => 0x6942234e => 115
 	i32 1766324549, ; 110: Xamarin.AndroidX.SwipeRefreshLayout => 0x6947f945 => 79
 	i32 1770582343, ; 111: Microsoft.Extensions.Logging.dll => 0x6988f147 => 43
-	i32 1780572499, ; 112: Mono.Android.Runtime.dll => 0x6a216153 => 140
+	i32 1780572499, ; 112: Mono.Android.Runtime.dll => 0x6a216153 => 141
 	i32 1782862114, ; 113: ms\Microsoft.Maui.Controls.resources => 0x6a445122 => 17
 	i32 1788241197, ; 114: Xamarin.AndroidX.Fragment => 0x6a96652d => 66
 	i32 1793755602, ; 115: he\Microsoft.Maui.Controls.resources => 0x6aea89d2 => 9
@@ -175,17 +175,17 @@ target triple = "armv7-unknown-linux-android21"
 	i32 2270573516, ; 155: fr/Microsoft.Maui.Controls.resources.dll => 0x875633cc => 8
 	i32 2279755925, ; 156: Xamarin.AndroidX.RecyclerView.dll => 0x87e25095 => 76
 	i32 2303942373, ; 157: nb\Microsoft.Maui.Controls.resources => 0x89535ee5 => 18
-	i32 2305521784, ; 158: System.Private.CoreLib.dll => 0x896b7878 => 138
+	i32 2305521784, ; 158: System.Private.CoreLib.dll => 0x896b7878 => 139
 	i32 2353062107, ; 159: System.Net.Primitives => 0x8c40e0db => 106
-	i32 2368005991, ; 160: System.Xml.ReaderWriter.dll => 0x8d24e767 => 133
+	i32 2368005991, ; 160: System.Xml.ReaderWriter.dll => 0x8d24e767 => 134
 	i32 2371007202, ; 161: Microsoft.Extensions.Configuration => 0x8d52b2e2 => 39
 	i32 2395872292, ; 162: id\Microsoft.Maui.Controls.resources => 0x8ece1c24 => 13
 	i32 2427813419, ; 163: hi\Microsoft.Maui.Controls.resources => 0x90b57e2b => 10
 	i32 2428407029, ; 164: ESP32pH.dll => 0x90be8cf5 => 85
 	i32 2435356389, ; 165: System.Console.dll => 0x912896e5 => 94
 	i32 2454642406, ; 166: System.Text.Encoding.dll => 0x924edee6 => 127
-	i32 2471841756, ; 167: netstandard.dll => 0x93554fdc => 137
-	i32 2475788418, ; 168: Java.Interop.dll => 0x93918882 => 139
+	i32 2471841756, ; 167: netstandard.dll => 0x93554fdc => 138
+	i32 2475788418, ; 168: Java.Interop.dll => 0x93918882 => 140
 	i32 2480646305, ; 169: Microsoft.Maui.Controls => 0x93dba8a1 => 47
 	i32 2538310050, ; 170: System.Reflection.Emit.Lightweight.dll => 0x974b89a2 => 114
 	i32 2550873716, ; 171: hr\Microsoft.Maui.Controls.resources => 0x980b3e74 => 11
@@ -197,10 +197,10 @@ target triple = "armv7-unknown-linux-android21"
 	i32 2620871830, ; 177: Xamarin.AndroidX.CursorAdapter.dll => 0x9c375496 => 63
 	i32 2626831493, ; 178: ja\Microsoft.Maui.Controls.resources => 0x9c924485 => 15
 	i32 2663698177, ; 179: System.Runtime.Loader => 0x9ec4cf01 => 120
-	i32 2664396074, ; 180: System.Xml.XDocument.dll => 0x9ecf752a => 134
+	i32 2664396074, ; 180: System.Xml.XDocument.dll => 0x9ecf752a => 135
 	i32 2665622720, ; 181: System.Drawing.Primitives => 0x9ee22cc0 => 98
 	i32 2676780864, ; 182: System.Data.Common.dll => 0x9f8c6f40 => 95
-	i32 2715334215, ; 183: System.Threading.Tasks.dll => 0xa1d8b647 => 129
+	i32 2715334215, ; 183: System.Threading.Tasks.dll => 0xa1d8b647 => 130
 	i32 2724373263, ; 184: System.Runtime.Numerics.dll => 0xa262a30f => 121
 	i32 2732626843, ; 185: Xamarin.AndroidX.Activity => 0xa2e0939b => 56
 	i32 2737747696, ; 186: Xamarin.AndroidX.AppCompat.AppCompatResources.dll => 0xa32eb6f0 => 58
@@ -216,8 +216,8 @@ target triple = "armv7-unknown-linux-android21"
 	i32 2853208004, ; 196: Xamarin.AndroidX.ViewPager => 0xaa107fc4 => 80
 	i32 2861189240, ; 197: Microsoft.Maui.Essentials => 0xaa8a4878 => 50
 	i32 2901442782, ; 198: System.Reflection => 0xacf080de => 117
-	i32 2905242038, ; 199: mscorlib.dll => 0xad2a79b6 => 136
-	i32 2909740682, ; 200: System.Private.CoreLib => 0xad6f1e8a => 138
+	i32 2905242038, ; 199: mscorlib.dll => 0xad2a79b6 => 137
+	i32 2909740682, ; 200: System.Private.CoreLib => 0xad6f1e8a => 139
 	i32 2916838712, ; 201: Xamarin.AndroidX.ViewPager2.dll => 0xaddb6d38 => 81
 	i32 2919462931, ; 202: System.Numerics.Vectors.dll => 0xae037813 => 108
 	i32 2959614098, ; 203: System.ComponentModel.dll => 0xb0682092 => 93
@@ -225,14 +225,14 @@ target triple = "armv7-unknown-linux-android21"
 	i32 2987532451, ; 205: Xamarin.AndroidX.Security.SecurityCrypto => 0xb21220a3 => 78
 	i32 3038032645, ; 206: _Microsoft.Android.Resource.Designer.dll => 0xb514b305 => 34
 	i32 3057625584, ; 207: Xamarin.AndroidX.Navigation.Common => 0xb63fa9f0 => 72
-	i32 3059408633, ; 208: Mono.Android.Runtime => 0xb65adef9 => 140
+	i32 3059408633, ; 208: Mono.Android.Runtime => 0xb65adef9 => 141
 	i32 3059793426, ; 209: System.ComponentModel.Primitives => 0xb660be12 => 91
-	i32 3075834255, ; 210: System.Threading.Tasks => 0xb755818f => 129
+	i32 3075834255, ; 210: System.Threading.Tasks => 0xb755818f => 130
 	i32 3077302341, ; 211: hu/Microsoft.Maui.Controls.resources.dll => 0xb76be845 => 12
 	i32 3115364679, ; 212: ESP32pH => 0xb9b0b147 => 85
 	i32 3159123045, ; 213: System.Reflection.Primitives.dll => 0xbc4c6465 => 116
 	i32 3178803400, ; 214: Xamarin.AndroidX.Navigation.Fragment.dll => 0xbd78b0c8 => 73
-	i32 3220365878, ; 215: System.Threading => 0xbff2e236 => 131
+	i32 3220365878, ; 215: System.Threading => 0xbff2e236 => 132
 	i32 3258312781, ; 216: Xamarin.AndroidX.CardView => 0xc235e84d => 59
 	i32 3299363146, ; 217: System.Text.Encoding => 0xc4a8494a => 127
 	i32 3305363605, ; 218: fi\Microsoft.Maui.Controls.resources => 0xc503d895 => 7
@@ -241,71 +241,73 @@ target triple = "armv7-unknown-linux-android21"
 	i32 3322403133, ; 221: Firebase.dll => 0xc607d93d => 37
 	i32 3346324047, ; 222: Xamarin.AndroidX.Navigation.Runtime => 0xc774da4f => 74
 	i32 3357674450, ; 223: ru\Microsoft.Maui.Controls.resources => 0xc8220bd2 => 24
-	i32 3362522851, ; 224: Xamarin.AndroidX.Core => 0xc86c06e3 => 62
-	i32 3366347497, ; 225: Java.Interop => 0xc8a662e9 => 139
-	i32 3374999561, ; 226: Xamarin.AndroidX.RecyclerView => 0xc92a6809 => 76
-	i32 3381016424, ; 227: da\Microsoft.Maui.Controls.resources => 0xc9863768 => 3
-	i32 3428513518, ; 228: Microsoft.Extensions.DependencyInjection.dll => 0xcc5af6ee => 41
-	i32 3430777524, ; 229: netstandard => 0xcc7d82b4 => 137
-	i32 3463511458, ; 230: hr/Microsoft.Maui.Controls.resources.dll => 0xce70fda2 => 11
-	i32 3471940407, ; 231: System.ComponentModel.TypeConverter.dll => 0xcef19b37 => 92
-	i32 3476120550, ; 232: Mono.Android => 0xcf3163e6 => 141
-	i32 3479583265, ; 233: ru/Microsoft.Maui.Controls.resources.dll => 0xcf663a21 => 24
-	i32 3484440000, ; 234: ro\Microsoft.Maui.Controls.resources => 0xcfb055c0 => 23
-	i32 3509114376, ; 235: System.Xml.Linq => 0xd128d608 => 132
-	i32 3580758918, ; 236: zh-HK\Microsoft.Maui.Controls.resources => 0xd56e0b86 => 31
-	i32 3596207933, ; 237: LiteDB.dll => 0xd659c73d => 38
-	i32 3608519521, ; 238: System.Linq.dll => 0xd715a361 => 103
-	i32 3629588173, ; 239: LiteDB => 0xd8571ecd => 38
-	i32 3641597786, ; 240: Xamarin.AndroidX.Lifecycle.LiveData.Core => 0xd90e5f5a => 68
-	i32 3643446276, ; 241: tr\Microsoft.Maui.Controls.resources => 0xd92a9404 => 28
-	i32 3643854240, ; 242: Xamarin.AndroidX.Navigation.Fragment => 0xd930cda0 => 73
-	i32 3657292374, ; 243: Microsoft.Extensions.Configuration.Abstractions.dll => 0xd9fdda56 => 40
-	i32 3672681054, ; 244: Mono.Android.dll => 0xdae8aa5e => 141
-	i32 3697841164, ; 245: zh-Hant/Microsoft.Maui.Controls.resources.dll => 0xdc68940c => 33
-	i32 3724971120, ; 246: Xamarin.AndroidX.Navigation.Common.dll => 0xde068c70 => 72
-	i32 3731644420, ; 247: System.Reactive => 0xde6c6004 => 55
-	i32 3748608112, ; 248: System.Diagnostics.DiagnosticSource => 0xdf6f3870 => 54
-	i32 3786282454, ; 249: Xamarin.AndroidX.Collection => 0xe1ae15d6 => 60
-	i32 3792276235, ; 250: System.Collections.NonGeneric => 0xe2098b0b => 88
-	i32 3802395368, ; 251: System.Collections.Specialized.dll => 0xe2a3f2e8 => 89
-	i32 3823082795, ; 252: System.Security.Cryptography.dll => 0xe3df9d2b => 125
-	i32 3841636137, ; 253: Microsoft.Extensions.DependencyInjection.Abstractions.dll => 0xe4fab729 => 42
-	i32 3849253459, ; 254: System.Runtime.InteropServices.dll => 0xe56ef253 => 119
-	i32 3889960447, ; 255: zh-Hans/Microsoft.Maui.Controls.resources.dll => 0xe7dc15ff => 32
-	i32 3896106733, ; 256: System.Collections.Concurrent.dll => 0xe839deed => 87
-	i32 3896760992, ; 257: Xamarin.AndroidX.Core.dll => 0xe843daa0 => 62
-	i32 3928044579, ; 258: System.Xml.ReaderWriter => 0xea213423 => 133
-	i32 3931092270, ; 259: Xamarin.AndroidX.Navigation.UI => 0xea4fb52e => 75
-	i32 3955647286, ; 260: Xamarin.AndroidX.AppCompat.dll => 0xebc66336 => 57
-	i32 3980434154, ; 261: th/Microsoft.Maui.Controls.resources.dll => 0xed409aea => 27
-	i32 3987592930, ; 262: he/Microsoft.Maui.Controls.resources.dll => 0xedadd6e2 => 9
-	i32 4024013275, ; 263: Firebase.Auth => 0xefd991db => 36
-	i32 4025784931, ; 264: System.Memory => 0xeff49a63 => 104
-	i32 4046471985, ; 265: Microsoft.Maui.Controls.Xaml.dll => 0xf1304331 => 48
-	i32 4054681211, ; 266: System.Reflection.Emit.ILGeneration => 0xf1ad867b => 113
-	i32 4068434129, ; 267: System.Private.Xml.Linq.dll => 0xf27f60d1 => 111
-	i32 4073602200, ; 268: System.Threading.dll => 0xf2ce3c98 => 131
-	i32 4094352644, ; 269: Microsoft.Maui.Essentials.dll => 0xf40add04 => 50
-	i32 4099507663, ; 270: System.Drawing.dll => 0xf45985cf => 99
-	i32 4100113165, ; 271: System.Private.Uri => 0xf462c30d => 110
-	i32 4102112229, ; 272: pt/Microsoft.Maui.Controls.resources.dll => 0xf48143e5 => 22
-	i32 4125707920, ; 273: ms/Microsoft.Maui.Controls.resources.dll => 0xf5e94e90 => 17
-	i32 4126470640, ; 274: Microsoft.Extensions.DependencyInjection => 0xf5f4f1f0 => 41
-	i32 4147896353, ; 275: System.Reflection.Emit.ILGeneration.dll => 0xf73be021 => 113
-	i32 4150914736, ; 276: uk\Microsoft.Maui.Controls.resources => 0xf769eeb0 => 29
-	i32 4181436372, ; 277: System.Runtime.Serialization.Primitives => 0xf93ba7d4 => 123
-	i32 4182413190, ; 278: Xamarin.AndroidX.Lifecycle.ViewModelSavedState.dll => 0xf94a8f86 => 70
-	i32 4213026141, ; 279: System.Diagnostics.DiagnosticSource.dll => 0xfb1dad5d => 54
-	i32 4271975918, ; 280: Microsoft.Maui.Controls.dll => 0xfea12dee => 47
-	i32 4274623895, ; 281: CommunityToolkit.Mvvm.dll => 0xfec99597 => 35
-	i32 4274976490, ; 282: System.Runtime.Numerics => 0xfecef6ea => 121
-	i32 4292120959 ; 283: Xamarin.AndroidX.Lifecycle.ViewModelSavedState => 0xffd4917f => 70
+	i32 3358260929, ; 224: System.Text.Json => 0xc82afec1 => 128
+	i32 3362522851, ; 225: Xamarin.AndroidX.Core => 0xc86c06e3 => 62
+	i32 3366347497, ; 226: Java.Interop => 0xc8a662e9 => 140
+	i32 3374999561, ; 227: Xamarin.AndroidX.RecyclerView => 0xc92a6809 => 76
+	i32 3381016424, ; 228: da\Microsoft.Maui.Controls.resources => 0xc9863768 => 3
+	i32 3428513518, ; 229: Microsoft.Extensions.DependencyInjection.dll => 0xcc5af6ee => 41
+	i32 3430777524, ; 230: netstandard => 0xcc7d82b4 => 138
+	i32 3463511458, ; 231: hr/Microsoft.Maui.Controls.resources.dll => 0xce70fda2 => 11
+	i32 3471940407, ; 232: System.ComponentModel.TypeConverter.dll => 0xcef19b37 => 92
+	i32 3476120550, ; 233: Mono.Android => 0xcf3163e6 => 142
+	i32 3479583265, ; 234: ru/Microsoft.Maui.Controls.resources.dll => 0xcf663a21 => 24
+	i32 3484440000, ; 235: ro\Microsoft.Maui.Controls.resources => 0xcfb055c0 => 23
+	i32 3485117614, ; 236: System.Text.Json.dll => 0xcfbaacae => 128
+	i32 3509114376, ; 237: System.Xml.Linq => 0xd128d608 => 133
+	i32 3580758918, ; 238: zh-HK\Microsoft.Maui.Controls.resources => 0xd56e0b86 => 31
+	i32 3596207933, ; 239: LiteDB.dll => 0xd659c73d => 38
+	i32 3608519521, ; 240: System.Linq.dll => 0xd715a361 => 103
+	i32 3629588173, ; 241: LiteDB => 0xd8571ecd => 38
+	i32 3641597786, ; 242: Xamarin.AndroidX.Lifecycle.LiveData.Core => 0xd90e5f5a => 68
+	i32 3643446276, ; 243: tr\Microsoft.Maui.Controls.resources => 0xd92a9404 => 28
+	i32 3643854240, ; 244: Xamarin.AndroidX.Navigation.Fragment => 0xd930cda0 => 73
+	i32 3657292374, ; 245: Microsoft.Extensions.Configuration.Abstractions.dll => 0xd9fdda56 => 40
+	i32 3672681054, ; 246: Mono.Android.dll => 0xdae8aa5e => 142
+	i32 3697841164, ; 247: zh-Hant/Microsoft.Maui.Controls.resources.dll => 0xdc68940c => 33
+	i32 3724971120, ; 248: Xamarin.AndroidX.Navigation.Common.dll => 0xde068c70 => 72
+	i32 3731644420, ; 249: System.Reactive => 0xde6c6004 => 55
+	i32 3748608112, ; 250: System.Diagnostics.DiagnosticSource => 0xdf6f3870 => 54
+	i32 3786282454, ; 251: Xamarin.AndroidX.Collection => 0xe1ae15d6 => 60
+	i32 3792276235, ; 252: System.Collections.NonGeneric => 0xe2098b0b => 88
+	i32 3802395368, ; 253: System.Collections.Specialized.dll => 0xe2a3f2e8 => 89
+	i32 3823082795, ; 254: System.Security.Cryptography.dll => 0xe3df9d2b => 125
+	i32 3841636137, ; 255: Microsoft.Extensions.DependencyInjection.Abstractions.dll => 0xe4fab729 => 42
+	i32 3849253459, ; 256: System.Runtime.InteropServices.dll => 0xe56ef253 => 119
+	i32 3889960447, ; 257: zh-Hans/Microsoft.Maui.Controls.resources.dll => 0xe7dc15ff => 32
+	i32 3896106733, ; 258: System.Collections.Concurrent.dll => 0xe839deed => 87
+	i32 3896760992, ; 259: Xamarin.AndroidX.Core.dll => 0xe843daa0 => 62
+	i32 3928044579, ; 260: System.Xml.ReaderWriter => 0xea213423 => 134
+	i32 3931092270, ; 261: Xamarin.AndroidX.Navigation.UI => 0xea4fb52e => 75
+	i32 3955647286, ; 262: Xamarin.AndroidX.AppCompat.dll => 0xebc66336 => 57
+	i32 3980434154, ; 263: th/Microsoft.Maui.Controls.resources.dll => 0xed409aea => 27
+	i32 3987592930, ; 264: he/Microsoft.Maui.Controls.resources.dll => 0xedadd6e2 => 9
+	i32 4024013275, ; 265: Firebase.Auth => 0xefd991db => 36
+	i32 4025784931, ; 266: System.Memory => 0xeff49a63 => 104
+	i32 4046471985, ; 267: Microsoft.Maui.Controls.Xaml.dll => 0xf1304331 => 48
+	i32 4054681211, ; 268: System.Reflection.Emit.ILGeneration => 0xf1ad867b => 113
+	i32 4068434129, ; 269: System.Private.Xml.Linq.dll => 0xf27f60d1 => 111
+	i32 4073602200, ; 270: System.Threading.dll => 0xf2ce3c98 => 132
+	i32 4094352644, ; 271: Microsoft.Maui.Essentials.dll => 0xf40add04 => 50
+	i32 4099507663, ; 272: System.Drawing.dll => 0xf45985cf => 99
+	i32 4100113165, ; 273: System.Private.Uri => 0xf462c30d => 110
+	i32 4102112229, ; 274: pt/Microsoft.Maui.Controls.resources.dll => 0xf48143e5 => 22
+	i32 4125707920, ; 275: ms/Microsoft.Maui.Controls.resources.dll => 0xf5e94e90 => 17
+	i32 4126470640, ; 276: Microsoft.Extensions.DependencyInjection => 0xf5f4f1f0 => 41
+	i32 4147896353, ; 277: System.Reflection.Emit.ILGeneration.dll => 0xf73be021 => 113
+	i32 4150914736, ; 278: uk\Microsoft.Maui.Controls.resources => 0xf769eeb0 => 29
+	i32 4181436372, ; 279: System.Runtime.Serialization.Primitives => 0xf93ba7d4 => 123
+	i32 4182413190, ; 280: Xamarin.AndroidX.Lifecycle.ViewModelSavedState.dll => 0xf94a8f86 => 70
+	i32 4213026141, ; 281: System.Diagnostics.DiagnosticSource.dll => 0xfb1dad5d => 54
+	i32 4271975918, ; 282: Microsoft.Maui.Controls.dll => 0xfea12dee => 47
+	i32 4274623895, ; 283: CommunityToolkit.Mvvm.dll => 0xfec99597 => 35
+	i32 4274976490, ; 284: System.Runtime.Numerics => 0xfecef6ea => 121
+	i32 4292120959 ; 285: Xamarin.AndroidX.Lifecycle.ViewModelSavedState => 0xffd4917f => 70
 ], align 4
 
-@assembly_image_cache_indices = dso_local local_unnamed_addr constant [284 x i32] [
+@assembly_image_cache_indices = dso_local local_unnamed_addr constant [286 x i32] [
 	i32 53, ; 0
-	i32 130, ; 1
+	i32 131, ; 1
 	i32 33, ; 2
 	i32 51, ; 3
 	i32 119, ; 4
@@ -323,7 +325,7 @@ target triple = "armv7-unknown-linux-android21"
 	i32 15, ; 16
 	i32 67, ; 17
 	i32 14, ; 18
-	i32 130, ; 19
+	i32 131, ; 19
 	i32 104, ; 20
 	i32 37, ; 21
 	i32 34, ; 22
@@ -331,8 +333,8 @@ target triple = "armv7-unknown-linux-android21"
 	i32 90, ; 24
 	i32 66, ; 25
 	i32 123, ; 26
-	i32 136, ; 27
-	i32 135, ; 28
+	i32 137, ; 27
+	i32 136, ; 28
 	i32 109, ; 29
 	i32 13, ; 30
 	i32 7, ; 31
@@ -345,7 +347,7 @@ target triple = "armv7-unknown-linux-android21"
 	i32 19, ; 38
 	i32 87, ; 39
 	i32 1, ; 40
-	i32 132, ; 41
+	i32 133, ; 41
 	i32 16, ; 42
 	i32 4, ; 43
 	i32 120, ; 44
@@ -360,7 +362,7 @@ target triple = "armv7-unknown-linux-android21"
 	i32 28, ; 53
 	i32 53, ; 54
 	i32 67, ; 55
-	i32 134, ; 56
+	i32 135, ; 56
 	i32 90, ; 57
 	i32 77, ; 58
 	i32 99, ; 59
@@ -372,7 +374,7 @@ target triple = "armv7-unknown-linux-android21"
 	i32 69, ; 65
 	i32 92, ; 66
 	i32 83, ; 67
-	i32 135, ; 68
+	i32 136, ; 68
 	i32 16, ; 69
 	i32 22, ; 70
 	i32 74, ; 71
@@ -395,14 +397,14 @@ target triple = "armv7-unknown-linux-android21"
 	i32 100, ; 88
 	i32 10, ; 89
 	i32 5, ; 90
-	i32 128, ; 91
+	i32 129, ; 91
 	i32 115, ; 92
 	i32 25, ; 93
 	i32 71, ; 94
 	i32 81, ; 95
 	i32 63, ; 96
 	i32 105, ; 97
-	i32 128, ; 98
+	i32 129, ; 98
 	i32 124, ; 99
 	i32 82, ; 100
 	i32 106, ; 101
@@ -416,7 +418,7 @@ target triple = "armv7-unknown-linux-android21"
 	i32 115, ; 109
 	i32 79, ; 110
 	i32 43, ; 111
-	i32 140, ; 112
+	i32 141, ; 112
 	i32 17, ; 113
 	i32 66, ; 114
 	i32 9, ; 115
@@ -462,17 +464,17 @@ target triple = "armv7-unknown-linux-android21"
 	i32 8, ; 155
 	i32 76, ; 156
 	i32 18, ; 157
-	i32 138, ; 158
+	i32 139, ; 158
 	i32 106, ; 159
-	i32 133, ; 160
+	i32 134, ; 160
 	i32 39, ; 161
 	i32 13, ; 162
 	i32 10, ; 163
 	i32 85, ; 164
 	i32 94, ; 165
 	i32 127, ; 166
-	i32 137, ; 167
-	i32 139, ; 168
+	i32 138, ; 167
+	i32 140, ; 168
 	i32 47, ; 169
 	i32 114, ; 170
 	i32 11, ; 171
@@ -484,10 +486,10 @@ target triple = "armv7-unknown-linux-android21"
 	i32 63, ; 177
 	i32 15, ; 178
 	i32 120, ; 179
-	i32 134, ; 180
+	i32 135, ; 180
 	i32 98, ; 181
 	i32 95, ; 182
-	i32 129, ; 183
+	i32 130, ; 183
 	i32 121, ; 184
 	i32 56, ; 185
 	i32 58, ; 186
@@ -503,8 +505,8 @@ target triple = "armv7-unknown-linux-android21"
 	i32 80, ; 196
 	i32 50, ; 197
 	i32 117, ; 198
-	i32 136, ; 199
-	i32 138, ; 200
+	i32 137, ; 199
+	i32 139, ; 200
 	i32 81, ; 201
 	i32 108, ; 202
 	i32 93, ; 203
@@ -512,14 +514,14 @@ target triple = "armv7-unknown-linux-android21"
 	i32 78, ; 205
 	i32 34, ; 206
 	i32 72, ; 207
-	i32 140, ; 208
+	i32 141, ; 208
 	i32 91, ; 209
-	i32 129, ; 210
+	i32 130, ; 210
 	i32 12, ; 211
 	i32 85, ; 212
 	i32 116, ; 213
 	i32 73, ; 214
-	i32 131, ; 215
+	i32 132, ; 215
 	i32 59, ; 216
 	i32 127, ; 217
 	i32 7, ; 218
@@ -528,66 +530,68 @@ target triple = "armv7-unknown-linux-android21"
 	i32 37, ; 221
 	i32 74, ; 222
 	i32 24, ; 223
-	i32 62, ; 224
-	i32 139, ; 225
-	i32 76, ; 226
-	i32 3, ; 227
-	i32 41, ; 228
-	i32 137, ; 229
-	i32 11, ; 230
-	i32 92, ; 231
-	i32 141, ; 232
-	i32 24, ; 233
-	i32 23, ; 234
-	i32 132, ; 235
-	i32 31, ; 236
-	i32 38, ; 237
-	i32 103, ; 238
+	i32 128, ; 224
+	i32 62, ; 225
+	i32 140, ; 226
+	i32 76, ; 227
+	i32 3, ; 228
+	i32 41, ; 229
+	i32 138, ; 230
+	i32 11, ; 231
+	i32 92, ; 232
+	i32 142, ; 233
+	i32 24, ; 234
+	i32 23, ; 235
+	i32 128, ; 236
+	i32 133, ; 237
+	i32 31, ; 238
 	i32 38, ; 239
-	i32 68, ; 240
-	i32 28, ; 241
-	i32 73, ; 242
-	i32 40, ; 243
-	i32 141, ; 244
-	i32 33, ; 245
-	i32 72, ; 246
-	i32 55, ; 247
-	i32 54, ; 248
-	i32 60, ; 249
-	i32 88, ; 250
-	i32 89, ; 251
-	i32 125, ; 252
-	i32 42, ; 253
-	i32 119, ; 254
-	i32 32, ; 255
-	i32 87, ; 256
-	i32 62, ; 257
-	i32 133, ; 258
-	i32 75, ; 259
-	i32 57, ; 260
-	i32 27, ; 261
-	i32 9, ; 262
-	i32 36, ; 263
-	i32 104, ; 264
-	i32 48, ; 265
-	i32 113, ; 266
-	i32 111, ; 267
-	i32 131, ; 268
-	i32 50, ; 269
-	i32 99, ; 270
-	i32 110, ; 271
-	i32 22, ; 272
-	i32 17, ; 273
-	i32 41, ; 274
-	i32 113, ; 275
-	i32 29, ; 276
-	i32 123, ; 277
-	i32 70, ; 278
-	i32 54, ; 279
-	i32 47, ; 280
-	i32 35, ; 281
-	i32 121, ; 282
-	i32 70 ; 283
+	i32 103, ; 240
+	i32 38, ; 241
+	i32 68, ; 242
+	i32 28, ; 243
+	i32 73, ; 244
+	i32 40, ; 245
+	i32 142, ; 246
+	i32 33, ; 247
+	i32 72, ; 248
+	i32 55, ; 249
+	i32 54, ; 250
+	i32 60, ; 251
+	i32 88, ; 252
+	i32 89, ; 253
+	i32 125, ; 254
+	i32 42, ; 255
+	i32 119, ; 256
+	i32 32, ; 257
+	i32 87, ; 258
+	i32 62, ; 259
+	i32 134, ; 260
+	i32 75, ; 261
+	i32 57, ; 262
+	i32 27, ; 263
+	i32 9, ; 264
+	i32 36, ; 265
+	i32 104, ; 266
+	i32 48, ; 267
+	i32 113, ; 268
+	i32 111, ; 269
+	i32 132, ; 270
+	i32 50, ; 271
+	i32 99, ; 272
+	i32 110, ; 273
+	i32 22, ; 274
+	i32 17, ; 275
+	i32 41, ; 276
+	i32 113, ; 277
+	i32 29, ; 278
+	i32 123, ; 279
+	i32 70, ; 280
+	i32 54, ; 281
+	i32 47, ; 282
+	i32 35, ; 283
+	i32 121, ; 284
+	i32 70 ; 285
 ], align 4
 
 @marshal_methods_number_of_classes = dso_local local_unnamed_addr constant i32 0, align 4

@@ -2,8 +2,78 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ESP32pH.Views.LogView"
+             xmlns:viewmodel="clr-namespace:ESP32pH.ViewModels"
              Title="Log history">
+
+    <ContentPage.BindingContext>
+        <viewmodel:LogviewModel/>
+    </ContentPage.BindingContext>
+
     <VerticalStackLayout>
-       
+        <!-- Grid chứa DatePicker và TimePicker -->
+        <Border Style="{StaticResource WhiteCardStyle1}">
+            <VerticalStackLayout Spacing="10">
+
+                <!-- Hàng chọn giờ A (hôm qua) -->
+                <HorizontalStackLayout Spacing="10">
+                    <Border Style="{StaticResource InputFieldStyle}">
+                        <DatePicker 
+                    Date="{Binding TimesDayStart, Mode=TwoWay}"
+                    Format="dd/MM/yyyy"
+                    TextColor="Black"
+                    BackgroundColor="Transparent"/>
+                    </Border>
+
+                    <Border Style="{StaticResource InputFieldStyle}">
+                        <TimePicker 
+                    Time="{Binding TimeHourStart, Mode=TwoWay}"
+                    Format="HH"
+                    TextColor="Black"
+                    BackgroundColor="Transparent"/>
+                    </Border>
+                </HorizontalStackLayout>
+
+                <!-- Hàng chọn giờ B (hôm nay) -->
+                <HorizontalStackLayout Spacing="10">
+                    <Border Style="{StaticResource InputFieldStyle}">
+                        <DatePicker 
+                    Date="{Binding TimesDayEnd, Mode=TwoWay}"
+                    Format="dd/MM/yyyy"
+                    TextColor="Black"
+                    BackgroundColor="Transparent"/>
+                    </Border>
+
+                    <Border Style="{StaticResource InputFieldStyle}">
+                        <TimePicker 
+                    Time="{Binding TimeHourEnd, Mode=TwoWay}"
+                    Format="HH"
+                    TextColor="Black"
+                    BackgroundColor="Transparent"/>
+                    </Border>
+                </HorizontalStackLayout>
+
+                <!-- Nút Check Log -->
+                <Button Text="Check Log"
+                Style="{StaticResource ButtonRemain}"
+                Command="{Binding LogCheckCommand}"/>
+            </VerticalStackLayout>
+        </Border>
+
+        <Border>
+            <StackLayout>
+                <!--pH Chart-->
+                <Border Style="{StaticResource WhiteCardStyle1}">
+                    <StackLayout>
+                        <Label Text="pH Trend Chart" FontSize="16" FontAttributes="Bold" Margin="0,0,0,10"/>
+
+                        <!--Chart Container-->
+                        <GraphicsView Drawable="{Binding ChartDrawableLogCheck,Mode=TwoWay}" 
+                      HeightRequest="450"
+                      BackgroundColor="White"/>
+
+                    </StackLayout>
+                </Border>
+            </StackLayout>
+        </Border>
     </VerticalStackLayout>
 </ContentPage>
