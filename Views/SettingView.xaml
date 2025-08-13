@@ -28,11 +28,18 @@
 
             <!-- Time Span -->
             <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding IsTimeIntervalEnable}">
-                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                    <Label Text="Time Interval" TextColor="Black" WidthRequest="180" VerticalOptions="Center" />
-                    <Entry x:Name="TimeSpanEntry" TextColor="Black" Text="{Binding TimeInterval,Mode=TwoWay}" Keyboard="Numeric"/>
-                    <Label Text="ms" TextColor="Black" VerticalOptions="Center"/>
-                </HorizontalStackLayout>
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <Label Text="Time Interval" TextColor="Black" WidthRequest="180" VerticalOptions="Center" />
+                        <Entry x:Name="TimeSpanEntry" TextColor="Black" Text="{Binding TimeInterval,Mode=TwoWay}" Keyboard="Numeric"/>
+                        <Label Text="ms" TextColor="Black" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <Label Text="Log Keep Day" TextColor="Black" WidthRequest="180" VerticalOptions="Center" />
+                        <Entry x:Name="LogKeepDay" TextColor="Black" Text="{Binding ESP32LogKeepDay.LogKeepDay,Mode=TwoWay}" Keyboard="Numeric"/>
+                        <Label Text="Day" TextColor="Black" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
             </Border>
 
             <!-- Door Delay -->

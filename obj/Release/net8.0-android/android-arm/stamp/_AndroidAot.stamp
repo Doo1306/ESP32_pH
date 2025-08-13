@@ -92,6 +92,7 @@ obj\Release\net8.0-android\android-arm\aot\System.Runtime.dll.so
 obj\Release\net8.0-android\android-arm\aot\System.Security.Cryptography.dll.so
 obj\Release\net8.0-android\android-arm\aot\System.Text.Encoding.Extensions.dll.so
 obj\Release\net8.0-android\android-arm\aot\System.Text.Encoding.dll.so
+obj\Release\net8.0-android\android-arm\aot\System.Text.Encodings.Web.dll.so
 obj\Release\net8.0-android\android-arm\aot\System.Text.Json.dll.so
 obj\Release\net8.0-android\android-arm\aot\System.Text.RegularExpressions.dll.so
 obj\Release\net8.0-android\android-arm\aot\System.Threading.Tasks.dll.so

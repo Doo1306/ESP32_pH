@@ -32,12 +32,15 @@ namespace ESP32pH.DTOs
             LoginModels = new ObservableCollection<LoginModel>();
             ESP32ControlFirebaseToESP32 = new ESP32ControlFirebaseToESP32Model();
             ESP32ControlESP32ToFirebase = new ESP32ControlESP32ToFirebaseModel();
+            ESP32LogKeepDay = new ESP32LogKeepDay();
             ESP32pHReadingModel = new ESP32pHModel();
             ObCollectionESP32pHReadingModel = new ObservableCollection<ESP32pHModel>();
         }
 
         private void InitFirebaseListeners()
         {
+
+            
             firebase.ListenToNodeChanges<ESP32ControlFirebaseToESP32Model>($"{Global.pathESP32Control}", FireBaseToken, data =>
             {
                 if (data.Key == "FirebaseToESP32")
@@ -59,6 +62,15 @@ namespace ESP32pH.DTOs
                 ESP32pHReadingModel = data.Object;                        // Update the ESP32Control property
                 NotifyDataChanged(Global.pathESP32LiveDatapH); // Notify listeners about the change
             });
+            firebase.ListenToNodeChanges<ESP32LogKeepDay>($"{Global.pathESP32Control}", FireBaseToken, data =>
+            {
+                if (data.Key == "Log")
+                {
+                    ESP32LogKeepDay = data.Object;                        // Update the ESP32Control property
+                    NotifyDataChanged(Global.pathESP32LogKeepDay); // Notify listeners about the change
+                }
+            });
+
         }
 
         public string FireBaseToken { get; set; }
@@ -81,6 +93,7 @@ namespace ESP32pH.DTOs
 
         public ESP32ControlFirebaseToESP32Model ESP32ControlFirebaseToESP32 { get; set; }
         public ESP32ControlESP32ToFirebaseModel ESP32ControlESP32ToFirebase { get; set; }
+        public ESP32LogKeepDay ESP32LogKeepDay { get; set; } 
         public ESP32pHModel ESP32pHReadingModel { get; set; }
         public SettingViewModel SettingViewModel { get; set; }
         public MainViewModel MainViewModel { get; set; }
@@ -221,7 +234,9 @@ namespace ESP32pH.DTOs
             ESP32ControlFirebaseToESP32 = value;
             var value1 = await GetDataAsync<ESP32ControlESP32ToFirebaseModel>(Global.pathESP32ControlWriteOne);
             ESP32ControlESP32ToFirebase = value1;
-            SettingViewModel = new SettingViewModel(ESP32ControlFirebaseToESP32);
+            var value2 = await GetDataAsync<ESP32LogKeepDay>(Global.pathESP32LogKeepDay);
+            ESP32LogKeepDay = value2;
+            SettingViewModel = new SettingViewModel(ESP32ControlFirebaseToESP32,ESP32LogKeepDay);
             MainViewModel = new MainViewModel(ESP32ControlESP32ToFirebase,ESP32ControlFirebaseToESP32);
         }
         // CRUD operations for Firebase
@@ -250,9 +265,9 @@ namespace ESP32pH.DTOs
             return await firebase.UpdateDataAsync(path, data, FireBaseToken);
         }
 
-        public Task<bool> DeleteDataAsync(string path)
+        public async Task<bool> DeleteDataAsync(string path)
         {
-            throw new NotImplementedException();
+            return await firebase.DeleteDataAsync(path, FireBaseToken);
         }
         // Authentication and User Management
         public Task<bool> CheckConnectionAsync()

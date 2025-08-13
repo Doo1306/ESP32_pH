@@ -376,7 +376,7 @@
                                                              OffText="CLOSE"
                                                              FontSize="12"
                                                              Margin="0,0,10,0"/>
-                                <Label Text="Door Request Change" VerticalOptions="Center" />
+                                <Label Text="Door Request Change" TextColor="Black" VerticalOptions="Center" />
                             </StackLayout>
                         </Border>
                     </HorizontalStackLayout>
@@ -406,8 +406,8 @@
                         </ProgressBar.Style>
                         
                     </ProgressBar>
-                    <Label Grid.Column="1"  Margin="40,0,0,0" Text="Door Close" VerticalTextAlignment="Center"/>
-                    <Label Grid.Column="1"  Margin="0,0,40,0" HorizontalTextAlignment="End" Text="Door Open" VerticalTextAlignment="Center"/>
+                    <Label Grid.Column="1"  Margin="40,0,0,0" TextColor="Black" Text="Door Close" VerticalTextAlignment="Center"/>
+                    <Label Grid.Column="1"  Margin="0,0,40,0" TextColor="Black" HorizontalTextAlignment="End" Text="Door Open" VerticalTextAlignment="Center"/>
                 </Grid>
             </Border>
         </StackLayout>

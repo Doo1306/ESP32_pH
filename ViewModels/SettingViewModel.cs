@@ -20,7 +20,7 @@ namespace ESP32pH.ViewModels
         {
             SaveSettingCommand = new RelayCommand(SaveSettingAct);
             CancelSettingCommand = new RelayCommand(CancelSettingAct);
-
+            ESP32LogKeepDay = new ESP32LogKeepDay();
             //Initialize CurrentLoginModel
             CurrentLoginModel = StreamDataTranfer.Instance.CurrentLoginModel;
             var stream = StreamDataTranfer.Instance;
@@ -33,9 +33,10 @@ namespace ESP32pH.ViewModels
             {
                 ESP32ControlFirebaseP32ToFirebase = StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32;
                 LoadParameters();
-            }else
+            }
+            else
             {
-                
+
             }
             StreamDataTranfer.Instance.EP32DataChanged += Instance_EP32DataChanged;
         }
@@ -47,20 +48,30 @@ namespace ESP32pH.ViewModels
                 ESP32ControlFirebaseP32ToFirebase = StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32;
                 LoadParameters();
             }
+            if (key == Global.pathESP32LogKeepDay)
+            {
+                ESP32LogKeepDay = StreamDataTranfer.Instance.ESP32LogKeepDay;
+                StreamDataTranfer.Instance.UpdateDataAsync($"{Global.pathESP32LogKeepDay}", StreamDataTranfer.Instance.ESP32LogKeepDay);
+                // xóa data 3 ngày gần nhất theo logkeepday
+                DeleteOldDayAsync(ESP32LogKeepDay.LogKeepDay);
+                
+            }
         }
 
-        public SettingViewModel(ESP32ControlFirebaseToESP32Model data):base()  // Call the default constructor to initialize common properties
-        {         
+        public SettingViewModel(ESP32ControlFirebaseToESP32Model data,ESP32LogKeepDay logKeepDay) : base()  // Call the default constructor to initialize common properties
+        {
+            ESP32LogKeepDay = new ESP32LogKeepDay();
             var stream = StreamDataTranfer.Instance;
             CurrentLoginModel = stream.CurrentLoginModel;
             stream.LoginChanged += (s, e) =>
             {
                 CurrentLoginModel = stream.CurrentLoginModel;
             };
-            if(data != null)
+            if (data != null)
             {
                 ESP32ControlFirebaseP32ToFirebase = data;
-            }          
+            }
+            ESP32LogKeepDay = logKeepDay;
             LoadParameters();
         }
 
@@ -76,8 +87,38 @@ namespace ESP32pH.ViewModels
             this.OffsetY1 = 0;
             this.OffsetX2 = 0;
             this.OffsetY2 = 0;
-            this.TestMode = ESP32ControlFirebaseP32ToFirebase.TestMode;          
+            this.TestMode = ESP32ControlFirebaseP32ToFirebase.TestMode;
+            ESP32LogKeepDay = StreamDataTranfer.Instance.ESP32LogKeepDay;
+            
             // Load other parameters as needed
+        }
+
+
+        public async Task DeleteOldDayAsync(int logKeepDay)
+        {
+            string basePath = Global.pathESP32pHReadOne; // bỏ FirebaseBaseUrl ở đây
+
+            using var client = new HttpClient();
+            var json = await client.GetStringAsync($"{Global.FirebaseBaseUrl}/{basePath}.json");
+
+            if (string.IsNullOrWhiteSpace(json) || json == "null")
+                return;
+
+            var daysDict = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(json);
+            if (daysDict == null || daysDict.Count == 0)
+                return;
+
+            DateTime today = DateTime.Now.Date;
+            DateTime targetDelete = today.AddDays(-(logKeepDay + 1));
+
+            string dateKey = targetDelete.ToString("dd_MM_yyyy");
+
+            if (daysDict.ContainsKey(dateKey))
+            {
+                await StreamDataTranfer.Instance.DeleteDataAsync($"{basePath}/{dateKey}");
+               
+            }
+
         }
 
         private LoginModel _currentLoginModel;
@@ -139,7 +180,20 @@ namespace ESP32pH.ViewModels
                 }
             }
         }
-        
+        private ESP32LogKeepDay eSP32LogKeepDay;
+        public ESP32LogKeepDay ESP32LogKeepDay
+        {
+            get => eSP32LogKeepDay;
+            set
+            {
+                if (eSP32LogKeepDay != value)
+                {
+                    eSP32LogKeepDay = value;
+                    DeleteOldDayAsync(ESP32LogKeepDay.LogKeepDay);
+                    OnPropertyChanged(nameof(ESP32LogKeepDay));
+                }
+            }
+        }
         private int _timeInterval;
         public int TimeInterval
         {
@@ -150,6 +204,20 @@ namespace ESP32pH.ViewModels
                 {
                     _timeInterval = value;
                     OnPropertyChanged(nameof(TimeInterval));
+                }
+            }
+        }
+
+        private int _logKeepDay;
+        public int LogkeepDay
+        {
+            get => _logKeepDay;
+            set
+            {
+                if (_logKeepDay != value)
+                {
+                    _logKeepDay = value;
+                    OnPropertyChanged(nameof(LogkeepDay));
                 }
             }
         }
@@ -287,7 +355,7 @@ namespace ESP32pH.ViewModels
         }
 
         // permision hidden
-        private bool _isTimeIntervalEnable  = false;
+        private bool _isTimeIntervalEnable = false;
         public bool IsTimeIntervalEnable
         {
             get { return _isTimeIntervalEnable; }
@@ -316,7 +384,7 @@ namespace ESP32pH.ViewModels
         private bool _isPHEndable = false;
         public bool IsPHEndable
         {
-            get { return _isPHEndable; }    
+            get { return _isPHEndable; }
             set
             {
                 if (_isPHEndable != value)
@@ -386,7 +454,10 @@ namespace ESP32pH.ViewModels
             StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.PH_Max = pHMax;
             StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.PH_Min = pHMin;
             StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.TestMode = TestMode;
+            StreamDataTranfer.Instance.ESP32LogKeepDay = ESP32LogKeepDay;
+            
             StreamDataTranfer.Instance.UpdateDataAsync($"{Global.pathESP32ControlFirebaseToESP32}", StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32);
+            
         }
         //create a ICommnand to accepted to save setting
         public ICommand SaveSettingCommand { get; set; }

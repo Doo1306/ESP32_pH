@@ -653,8 +653,12 @@ namespace ESP32pH.ViewModels
     public class pHChartDrawable : IDrawable
     {
         private readonly ObservableCollection<pHReadingModel> _readings;
-        private readonly float _margin = 30f;
-        private readonly float _topMargin = 10f;
+
+        // Margin riêng cho từng cạnh
+        private readonly float _marginLeft = 40f;
+        private readonly float _marginTop = 40f;
+        private readonly float _marginRight = 10f;
+        private readonly float _marginBottom = 20f;
 
         // Auto scale and zoom properties
         public double ZoomLevel { get; set; } = 1.0;
@@ -685,14 +689,14 @@ namespace ESP32pH.ViewModels
                 var minpH = _readings.Min(r => r.pH);
                 var maxpH = _readings.Max(r => r.pH);
 
-                // Add padding (10% of range, minimum 0.5)
+                // Add padding (30% of range, minimum 0.5)
                 var range = maxpH - minpH;
                 var padding = Math.Max(range * 0.3, 0.5);
 
                 _effectiveMinpH = Math.Max(0, minpH - padding);
                 _effectiveMaxpH = Math.Min(14, maxpH + padding);
 
-                // Ensure minimum range of 2 pH units for better visibility
+                // Ensure minimum range of 2 pH units
                 if (_effectiveMaxpH - _effectiveMinpH < 2)
                 {
                     var center = (_effectiveMinpH + _effectiveMaxpH) / 2;
@@ -727,19 +731,18 @@ namespace ESP32pH.ViewModels
                 return;
             }
 
-            // Clear background with a subtle gradient
+            // Clear background
             canvas.FillColor = Color.FromArgb("#F8F9FA");
             canvas.FillRectangle(dirtyRect);
 
-            // Calculate chart area
+            // Chart area with new margins
             var chartRect = new RectF(
-                dirtyRect.X + _margin,
-                dirtyRect.Y + _topMargin,
-                dirtyRect.Width - 2 * _margin,
-                dirtyRect.Height - _margin - _topMargin
+                dirtyRect.X + _marginLeft,
+                dirtyRect.Y + _marginTop,
+                dirtyRect.Width - (_marginLeft + _marginRight),
+                dirtyRect.Height - (_marginTop + _marginBottom)
             );
 
-            // Draw chart components in order
             DrawTitle(canvas, dirtyRect);
             DrawpHZones(canvas, chartRect);
             DrawGrid(canvas, chartRect);
@@ -756,7 +759,7 @@ namespace ESP32pH.ViewModels
         {
             canvas.FontSize = 18;
             canvas.FontColor = Colors.DarkSlateGray;
-            var title = IsAutoScale ? "pH Monitoring Chart" : "pH Monitoring Chart";
+            var title = "pH Monitoring Chart";
             canvas.DrawString(title, dirtyRect.Width / 2, 20, HorizontalAlignment.Center);
         }
 
@@ -764,9 +767,8 @@ namespace ESP32pH.ViewModels
         {
             canvas.FontSize = 10;
             canvas.FontColor = Colors.Gray;
-
             var zoomText = $"Zoom: {ZoomLevel:F1}x | Range: {_effectiveMinpH:F1} - {_effectiveMaxpH:F1} pH";
-            canvas.DrawString(zoomText, dirtyRect.Width - 10, 35, HorizontalAlignment.Right);
+            canvas.DrawString(zoomText, dirtyRect.Width - _marginRight, 35, HorizontalAlignment.Right);
         }
 
         private void DrawStatistics(ICanvas canvas, RectF dirtyRect, RectF chartRect)
@@ -784,70 +786,25 @@ namespace ESP32pH.ViewModels
 
             var statsY = chartRect.Bottom - 40;
             var statsSpacing = dirtyRect.Width / 5;
-
             float boxWidth = statsSpacing * 0.9f;
             float boxHeight = 35;
 
-            void DrawBox(string title, string value,  Color borderColor, Color textColor, float x)
+            void DrawBox(string title, string value, Color borderColor, Color textColor, float x)
             {
                 var rect = new RectF(x, statsY, boxWidth, boxHeight);
-
-                // Không fill màu để nền trong suốt
-                // canvas.FillColor = Colors.Transparent; // Có thể dùng nếu muốn đảm bảo
-
-                // Vẽ viền
                 canvas.StrokeColor = borderColor;
                 canvas.StrokeSize = 2;
                 canvas.DrawRoundedRectangle(rect, 5);
-
-                // Vẽ chữ
                 canvas.FontColor = Colors.DarkSlateGray;
                 canvas.DrawString(title, rect.Center.X, rect.Top + 10, HorizontalAlignment.Center);
-
                 canvas.FontColor = textColor;
                 canvas.DrawString(value, rect.Center.X, rect.Top + 25, HorizontalAlignment.Center);
             }
 
-            // Draw all boxes in row
             DrawBox("Current", $"{current:F2}", Color.FromArgb("#E3F2FD"), Colors.Blue, statsSpacing * 0.5f);
             DrawBox("Min", $"{min:F2}", Color.FromArgb("#FFF3E0"), Colors.Orange, statsSpacing * 1.6f);
             DrawBox("Max", $"{max:F2}", Color.FromArgb("#E8F5E8"), Colors.Green, statsSpacing * 2.7f);
             DrawBox("Avg", $"{avg:F2}", Color.FromArgb("#F3E5F5"), Colors.Purple, statsSpacing * 3.8f);
-
-            //// Current
-            //canvas.FillColor = Color.FromArgb("#E3F2FD");
-            //var currentRect = new RectF(statsSpacing * 0.5f, statsY - 10, statsSpacing * 0.8f, 30);
-            //canvas.FillRoundedRectangle(currentRect, 5);
-            //canvas.DrawString("Current", currentRect.Center.X, statsY, HorizontalAlignment.Center);
-            //canvas.FontColor = Colors.Blue;
-            //canvas.DrawString($"{current:F2}", currentRect.Center.X, statsY + 15, HorizontalAlignment.Center);
-
-            //// Min
-            //canvas.FontColor = Colors.DarkSlateGray;
-            //canvas.FillColor = Color.FromArgb("#FFF3E0");
-            //var minRect = new RectF(statsSpacing * 1.5f, statsY + 50, statsSpacing * 0.8f, 30);
-            //canvas.FillRoundedRectangle(minRect, 5);
-            //canvas.DrawString("Min", minRect.Center.X, statsY, HorizontalAlignment.Center);
-            //canvas.FontColor = Colors.Orange;
-            //canvas.DrawString($"{min:F2}", minRect.Center.X, statsY + 55, HorizontalAlignment.Center);
-
-            //// Max
-            //canvas.FontColor = Colors.DarkSlateGray;
-            //canvas.FillColor = Color.FromArgb("#E8F5E8");
-            //var maxRect = new RectF(statsSpacing * 2.5f, statsY - 10, statsSpacing * 0.8f, 30);
-            //canvas.FillRoundedRectangle(maxRect, 5);
-            //canvas.DrawString("Max", maxRect.Center.X, statsY, HorizontalAlignment.Center);
-            //canvas.FontColor = Colors.Green;
-            //canvas.DrawString($"{max:F2}", maxRect.Center.X, statsY + 15, HorizontalAlignment.Center);
-
-            //// Average
-            //canvas.FontColor = Colors.DarkSlateGray;
-            //canvas.FillColor = Color.FromArgb("#F3E5F5");
-            //var avgRect = new RectF(statsSpacing * 3.5f, statsY - 10, statsSpacing * 0.8f, 30);
-            //canvas.FillRoundedRectangle(avgRect, 5);
-            //canvas.DrawString("Avg", avgRect.Center.X, statsY, HorizontalAlignment.Center);
-            //canvas.FontColor = Colors.Purple;
-            //canvas.DrawString($"{avg:F2}", avgRect.Center.X, statsY + 15, HorizontalAlignment.Center);
         }
 
         private void DrawGrid(ICanvas canvas, RectF chartRect)
@@ -855,7 +812,6 @@ namespace ESP32pH.ViewModels
             canvas.StrokeColor = Color.FromArgb("#E0E0E0");
             canvas.StrokeSize = 0.5f;
 
-            // Calculate grid interval based on effective range
             var pHRange = _effectiveMaxpH - _effectiveMinpH;
             var gridInterval = pHRange switch
             {
@@ -865,7 +821,6 @@ namespace ESP32pH.ViewModels
                 _ => 2.0
             };
 
-            // Horizontal grid lines (pH levels)
             var startpH = Math.Ceiling(_effectiveMinpH / gridInterval) * gridInterval;
             for (var pH = startpH; pH <= _effectiveMaxpH; pH += gridInterval)
             {
@@ -873,12 +828,11 @@ namespace ESP32pH.ViewModels
                 canvas.DrawLine(chartRect.Left, y, chartRect.Right, y);
             }
 
-            // Vertical grid lines (time intervals)
             int timeIntervals = 6;
             for (int i = 0; i <= timeIntervals; i++)
             {
                 var x = chartRect.Left + (i * chartRect.Width / timeIntervals);
-                canvas.DrawLine(x, chartRect.Top, x, chartRect.Bottom + 10);
+                canvas.DrawLine(x, chartRect.Top, x, chartRect.Bottom + _marginBottom);
             }
         }
 
@@ -891,9 +845,9 @@ namespace ESP32pH.ViewModels
             canvas.DrawLine(chartRect.Left, chartRect.Top, chartRect.Left, chartRect.Bottom);
 
             // X-axis  
-            canvas.DrawLine(chartRect.Left, chartRect.Bottom , chartRect.Right, chartRect.Bottom);
+            canvas.DrawLine(chartRect.Left, chartRect.Bottom, chartRect.Right, chartRect.Bottom);
 
-            // Y-axis labels (pH values)
+            // Y-axis labels
             canvas.FontColor = Colors.Black;
             canvas.FontSize = 10;
 
@@ -913,7 +867,6 @@ namespace ESP32pH.ViewModels
                 canvas.DrawString(pH.ToString("F1"), chartRect.Left - 25, y + 3, HorizontalAlignment.Center);
             }
 
-            // X-axis labels (time)
             if (_readings.Any())
             {
                 var minTime = _readings.Min(r => r.Timestamp);
@@ -929,16 +882,6 @@ namespace ESP32pH.ViewModels
                     canvas.DrawString(timeLabel, x, chartRect.Bottom + 15, HorizontalAlignment.Center);
                 }
             }
-
-            // Axis titles
-            canvas.FontSize = 12;
-            canvas.FontColor = Colors.DarkSlateGray;
-
-            //// Y-axis title (rotated)
-            //canvas.DrawString("pH", 15, 25, HorizontalAlignment.Center);
-
-            //// X-axis title
-            //canvas.DrawString("Time", dirtyRect.Width - 20, dirtyRect.Height - 15, HorizontalAlignment.Center);
         }
 
         private void DrawpHZones(ICanvas canvas, RectF chartRect)

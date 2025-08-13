@@ -42,6 +42,7 @@ namespace ESP32pH.DTOs
         public static readonly string pathESP32ControlReadOne = "Data/xv3pmNhF50ZhF3konH9FZATbbe63/Login/Control/FirebaseToESP32";
         public static readonly string pathESP32ControlWriteOne = "Data/xv3pmNhF50ZhF3konH9FZATbbe63/Login/Control/ESP32ToFirebase";
         public static readonly string pathESP32pH = "Data/xv3pmNhF50ZhF3konH9FZATbbe63/Login/ESP32";
+        public static readonly string pathESP32LogKeepDay = "Data/xv3pmNhF50ZhF3konH9FZATbbe63/Login/Control/Log";
         public static readonly string pathESP32LiveDatapH = "Data/xv3pmNhF50ZhF3konH9FZATbbe63/Login/ESP32/LiveValue";
         public static readonly string pathESP32pHReadOne = "Data/xv3pmNhF50ZhF3konH9FZATbbe63/Login/ESP32/";
         public static readonly string pathESP32pHUpdatebByHour = "Data/xv3pmNhF50ZhF3konH9FZATbbe63/Login/ESP32/ddMMMyyy/HH";
