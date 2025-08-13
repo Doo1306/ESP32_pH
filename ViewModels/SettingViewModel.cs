@@ -19,8 +19,7 @@ namespace ESP32pH.ViewModels
         public SettingViewModel()
         {
             SaveSettingCommand = new RelayCommand(SaveSettingAct);
-            CancelSettingCommand = new RelayCommand(CancelSettingAct);
-            ESP32LogKeepDay = new ESP32LogKeepDay();
+            CancelSettingCommand = new RelayCommand(CancelSettingAct);            
             //Initialize CurrentLoginModel
             CurrentLoginModel = StreamDataTranfer.Instance.CurrentLoginModel;
             var stream = StreamDataTranfer.Instance;
@@ -72,6 +71,8 @@ namespace ESP32pH.ViewModels
                 ESP32ControlFirebaseP32ToFirebase = data;
             }
             ESP32LogKeepDay = logKeepDay;
+            StreamDataTranfer.Instance.ESP32LogKeepDay = ESP32LogKeepDay;
+            DeleteOldDayAsync(ESP32LogKeepDay.LogKeepDay);
             LoadParameters();
         }
 
@@ -87,9 +88,8 @@ namespace ESP32pH.ViewModels
             this.OffsetY1 = 0;
             this.OffsetX2 = 0;
             this.OffsetY2 = 0;
-            this.TestMode = ESP32ControlFirebaseP32ToFirebase.TestMode;
+            this.TestMode = ESP32ControlFirebaseP32ToFirebase.TestMode;           
             ESP32LogKeepDay = StreamDataTranfer.Instance.ESP32LogKeepDay;
-            
             // Load other parameters as needed
         }
 
@@ -453,9 +453,7 @@ namespace ESP32pH.ViewModels
             StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.OffsetY0 = OffsetY0;
             StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.PH_Max = pHMax;
             StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.PH_Min = pHMin;
-            StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.TestMode = TestMode;
-            StreamDataTranfer.Instance.ESP32LogKeepDay = ESP32LogKeepDay;
-            
+            StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32.TestMode = TestMode;                     
             StreamDataTranfer.Instance.UpdateDataAsync($"{Global.pathESP32ControlFirebaseToESP32}", StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32);
             
         }
