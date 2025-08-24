@@ -68,6 +68,8 @@ namespace ESP32pH.Models
 
         [JsonProperty("IsAlarm")]
         public bool IsAlarm { get; set; }
+        [JsonProperty("IsTempTrip")]
+        public bool IsTempTrip { get; set; }
     }
     public class ESP32ControlFirebaseToESP32Model
     {

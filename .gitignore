@@ -1,2 +1,14 @@
+﻿# Build outputs
+bin/
+obj/
+
+# Visual Studio / VS Code
 .vs/
-.DTOs/Global.cs/
+.vscode/
+
+# User specific
+*.user
+*.suo
+
+# Ignore file Global.cs trong DTOs (nếu bạn muốn ẩn file này)
+DTOs/Global.cs

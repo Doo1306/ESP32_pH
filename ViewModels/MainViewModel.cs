@@ -38,7 +38,15 @@ namespace ESP32pH.ViewModels
             //RemoteRequestChangeCommand = new RelayCommand(() => ChangeMode(eMode.Remote));
             BuzzeRequestChangeCommand = new RelayCommand(BuzzeRequestChangeCommandAct);
             pHReadings = new ObservableCollection<pHReadingModel>();
-            
+            DoorStatusReading = new DoorStatusModel();
+            CurrentLoginModel = StreamDataTranfer.Instance.CurrentLoginModel;
+            var stream = StreamDataTranfer.Instance;
+            CurrentLoginModel = stream.CurrentLoginModel;
+            stream.LoginChanged += (s, e) =>
+            {
+                CurrentLoginModel = stream.CurrentLoginModel;
+            };
+
             // Zoom commands
             ZoomInCommand = new RelayCommand(ZoomIn);
             ZoomOutCommand = new RelayCommand(ZoomOut);
@@ -50,6 +58,14 @@ namespace ESP32pH.ViewModels
         }
         public MainViewModel(ESP32ControlESP32ToFirebaseModel controlESP32ToFirebaselData, ESP32ControlFirebaseToESP32Model controlFirebaseToESP32Data) : base()
         {
+            //DoorStatusReading = new DoorStatusModel();
+            var stream = StreamDataTranfer.Instance;
+            CurrentLoginModel = stream.CurrentLoginModel;
+            stream.LoginChanged += (s, e) =>
+            {
+                CurrentLoginModel = stream.CurrentLoginModel;
+            };
+
             LoadParameters();
         }
         private void ManualRequestChangeCommandAct()
@@ -87,7 +103,7 @@ namespace ESP32pH.ViewModels
         {
             if (key == Global.pathESP32ControlFirebaseToESP32)
             {
-                ESP32ControlFirebaseToESP32 = StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32;
+                ESP32ControlFirebaseToESP32 = StreamDataTranfer.Instance.ESP32ControlFirebaseToESP32;               
                 LoadParameters();
             }
             if(key == Global.pathESP32ControlESP32ToFirebas)
@@ -161,9 +177,13 @@ namespace ESP32pH.ViewModels
             IsDoorCloseReq = ESP32ControlFirebaseToESP32.DoorCloseReq;
             IsBuzze = ESP32ControlFirebaseToESP32.Buzze;
             IsAlarm = ESP32ControlESP32ToFirebase.IsAlarm;
+            IsTemperatureTrip = ESP32ControlESP32ToFirebase.IsTempTrip;
+            UpdateDoorStatus(ESP32ControlESP32ToFirebase, ESP32ControlFirebaseToESP32);
             if (CurrentReading == null) return;
             CurrentReading.pHMin = ESP32ControlFirebaseToESP32.PH_Min;
             CurrentReading.pHMax = ESP32ControlFirebaseToESP32.PH_Max;
+          
+            UpdateDoorProcessBar();
         }
 
         #region Notify Mode
@@ -229,6 +249,67 @@ namespace ESP32pH.ViewModels
 
         #endregion
 
+        // Check enable permission
+        private LoginModel _currentLoginModel;
+        public LoginModel CurrentLoginModel
+        {
+            get { return _currentLoginModel; }
+            set
+            {
+                if (_currentLoginModel != value)
+                {
+                    _currentLoginModel = value;
+                    CheckEnablePermission();
+                    OnPropertyChanged(nameof(CurrentLoginModel));
+                }
+            }
+        }
+        private void CheckEnablePermission()
+        {
+            if (CurrentLoginModel.Permission == ePermission.Maker)
+            {
+                IsControlEnable = true;
+            }
+            else if (CurrentLoginModel.Permission == ePermission.Admin)
+            {
+                IsControlEnable = true;
+            }
+            else if (CurrentLoginModel.Permission == ePermission.User)
+            {
+                IsControlEnable = false;
+            }
+        }
+        private bool _isControlEnable = false;
+        public bool IsControlEnable
+        {
+            get => _isControlEnable;
+            set
+            {
+                if (_isControlEnable != value)
+                {
+                    _isControlEnable = value;
+                    OnPropertyChanged(nameof(IsControlEnable));
+                }
+            }
+        }
+
+        private bool _isTemperatureTrip = false;
+        public bool IsTemperatureTrip
+        {
+            get => _isTemperatureTrip;
+            set
+            {
+                if (_isTemperatureTrip != value)
+                {
+                    _isTemperatureTrip = value;
+                    OnPropertyChanged(nameof(IsTemperatureTrip));
+                    OnPropertyChanged(nameof(TempratureButtonBackground));
+                }
+            }
+        }
+        public Brush TempratureButtonBackground => IsTemperatureTrip ? Color.FromArgb("#FF0000") : Brush.Gray;
+
+
         //Control ESP32
         private ESP32ControlFirebaseToESP32Model _ESP32ControlFirebaseToESP32;
         public ESP32ControlFirebaseToESP32Model ESP32ControlFirebaseToESP32
@@ -290,6 +371,7 @@ namespace ESP32pH.ViewModels
             }
         }
         private bool _isDoorOpenReq = false;
+
         public bool IsDoorOpenReq
         {
             get => _isDoorOpenReq;
@@ -320,6 +402,7 @@ namespace ESP32pH.ViewModels
             }
         }
         private bool _isDoorOpen = false;
+
         public bool IsDoorOpen
         {
             get => _isDoorOpen;
@@ -361,32 +444,37 @@ namespace ESP32pH.ViewModels
                 }
             }
         }
+        private void UpdateDoorStatus(ESP32ControlESP32ToFirebaseModel eSP32ControlESP32ToFirebase,ESP32ControlFirebaseToESP32Model eSP32ControlFirebaseToESP32)
+        {
+            if (DoorStatusReading == null)
+                return;   
+            DoorStatusReading.ESP32ToFirebaseModel = eSP32ControlESP32ToFirebase;
+            DoorStatusReading.FirebaseToESP32Model = eSP32ControlFirebaseToESP32;
+            // Force notify để UI update
+            OnPropertyChanged(nameof(DoorStatusReading));
+        }
         private void UpdateDoorProcessBar()
         {
-            DoorProcessBar = 0.5;
-            if (IsDoorOpen)
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                DoorProcessBar = 1.0; // Cửa đang mở
-            }
-            else if (IsDoorClose)
-            {
-                DoorProcessBar = 0.0; // Cửa đang đóng
-            }
-            else if(!IsDoorOpen && !IsDoorClose)
-            {
-                if (IsDoorOpenReq)
+                if (IsDoorOpen)
+                    DoorProcessBar = 1.0;
+                else if (IsDoorClose)
+                    DoorProcessBar = 0.0;
+                else if (!IsDoorOpen && !IsDoorClose)
                 {
-                    DoorProcessBar = 0.75; // Chỉ yêu cầu mở cửa
+                    if (IsDoorOpenReq)
+                        DoorProcessBar = 0.75;
+                    else if (IsDoorCloseReq)
+                        DoorProcessBar = 0.25;
+                    else
+                        DoorProcessBar = 0.5;
                 }
-                else if (IsDoorCloseReq)
+                else
                 {
-                    DoorProcessBar = 0.25; // Chỉ yêu cầu đóng cửa
+                    DoorProcessBar = 0.5;
                 }
-            }
-            else
-            {
-                DoorProcessBar = 0.5; // Trạng thái không xác định
-            }
+            });
         }   
         private bool _isBuzze;
         public bool IsBuzze
@@ -548,7 +636,19 @@ namespace ESP32pH.ViewModels
                 OnPropertyChanged(nameof(CurrentReading));
             }
         }
-
+        private DoorStatusModel _doorStatusReading;
+        public DoorStatusModel DoorStatusReading
+        {
+            get => _doorStatusReading;
+            set
+            {
+                if (_doorStatusReading != value)
+                {
+                    _doorStatusReading = value;
+                    OnPropertyChanged(nameof(DoorStatusReading));
+                }               
+            }
+        }
         private string _timeRange = "Live";
         public string TimeRange
         {

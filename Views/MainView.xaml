@@ -315,7 +315,7 @@
             <!-- Control Status -->
             <Label Text="Control Status" Style="{StaticResource SubHeadline}" FontAttributes="Bold" HorizontalOptions="Start" />
 
-            <Border Style="{StaticResource WhiteCardStyle}" IsVisible="{Binding IsRemote,Converter={StaticResource ConverterBoolToIsVisible}}">
+            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding IsControlEnable}" IsVisible="{Binding IsRemote,Converter={StaticResource ConverterBoolToIsVisible}}">
                 <Grid ColumnDefinitions="*,*,*" HeightRequest="60">
 
                     <!-- AUTO -->
@@ -382,20 +382,12 @@
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Border>
-            <Border Style="{StaticResource WhiteCardStyle}" Background="{Binding BorderAlarmBackground }">
-                <Grid ColumnDefinitions="100,*" BackgroundColor="White">
-                    <Button Grid.Column="0"
-                                        Text="Buzzer" 
-                                        Command="{Binding BuzzeRequestChangeCommand}"  
-                                        Background="{Binding BuzzeButtonBackground}"  
-                                        Style="{StaticResource PrimaryButtonStyle}"
-                                        HeightRequest="80"
-                                        WidthRequest="80"
-                            />
-                    <ProgressBar Grid.Column="1"                                  
-                                           Progress="{Binding DoorProcessBar}"
+            <Border Style="{StaticResource WhiteCardStyle}" >
+                <Grid HeightRequest="40" BackgroundColor="White">
+                    <ProgressBar                                
+                                           Progress="{Binding DoorStatusReading.DoorProgress}"
                                            BackgroundColor="LightGray"
-                                           ProgressColor="Yellow"
+                                           ProgressColor="{Binding DoorStatusReading.DoorStatusColor}"
                                            HeightRequest="0"
                                            >
                         <ProgressBar.Style>
@@ -404,12 +396,37 @@
                                 <!-- Tăng scale để fill height -->
                             </Style>
                         </ProgressBar.Style>
-                        
                     </ProgressBar>
-                    <Label Grid.Column="1"  Margin="40,0,0,0" TextColor="Black" Text="Door Close" VerticalTextAlignment="Center"/>
-                    <Label Grid.Column="1"  Margin="0,0,40,0" TextColor="Black" HorizontalTextAlignment="End" Text="Door Open" VerticalTextAlignment="Center"/>
+                    <Label Text="{Binding DoorStatusReading.DoorStatus}" VerticalTextAlignment="Center" TextColor="Black"/>
                 </Grid>
             </Border>
+            <!--<Label Grid.Column="0"  Margin="40,0,0,0" TextColor="Black" Text="Door Close" VerticalTextAlignment="Center"/>
+            <Label Grid.Column="2"  Margin="0,0,40,0" TextColor="Black" HorizontalTextAlignment="End" Text="Door Open" VerticalTextAlignment="Center"/>-->
+           
+
+            <Border Style="{StaticResource WhiteCardStyle}" Background="{Binding BorderAlarmBackground }">
+                <Grid ColumnDefinitions="100,200,*" BackgroundColor="White">
+                    <Button Grid.Column="0"
+                    Text="Buzzer" 
+                    Command="{Binding BuzzeRequestChangeCommand}"  
+                    Background="{Binding BuzzeButtonBackground}"  
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    HeightRequest="80"
+                    WidthRequest="80"
+                    TextColor="Black"
+                        />
+                    <Button Grid.Column="1"
+                    Text="Temperature Trip" 
+                    Background="{Binding TempratureButtonBackground}"  
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    HeightRequest="80"
+                    WidthRequest="180"
+                    TextColor="Black"
+                     HorizontalOptions="Start"
+                    />
+                </Grid>
+            </Border>
+
         </StackLayout>
     </ScrollView>
 </ContentPage>
