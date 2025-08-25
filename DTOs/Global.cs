@@ -19,11 +19,16 @@ namespace ESP32pH.DTOs
         //public static readonly string pathLogin = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/Account";
 
         //public static readonly string pathESP32Control = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/Control";
-        //public static readonly string pathESP32ControlReadOne = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/Control/Transfer";
+        //public static readonly string pathESP32ControlFirebaseToESP32 = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/Control/FirebaseToESP32";
+        //public static readonly string pathESP32ControlESP32ToFirebas = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/Control/ESP32ToFirebase";
+        //public static readonly string pathESP32ControlReadOne = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/Control/FirebaseToESP32";
+        //public static readonly string pathESP32ControlWriteOne = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/Control/ESP32ToFirebase";
         //public static readonly string pathESP32pH = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/ESP32";
+        //public static readonly string pathESP32LogKeepDay = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/Control/Log";
         //public static readonly string pathESP32LiveDatapH = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/ESP32/LiveValue";
         //public static readonly string pathESP32pHReadOne = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/ESP32/";
         //public static readonly string pathESP32pHUpdatebByHour = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/ESP32/ddMMMyyy/HH";
+        //public static readonly string pathESP32pHUpdatebByHourLogCheck = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Login/ESP32/LogCheck";
 
         //public static readonly string pathESP32ControlTest = "Data/8Xd57DhumEMAJbtobZnciPT6eYj1/Control/Buzze";
 
@@ -49,6 +54,9 @@ namespace ESP32pH.DTOs
         public static readonly string pathESP32pHUpdatebByHourLogCheck = "Data/xv3pmNhF50ZhF3konH9FZATbbe63/Login/ESP32/LogCheck";
 
         public static readonly string pathESP32ControlTest = "Data/xv3pmNhF50ZhF3konH9FZATbbe63/Control/Buzze";
+
+
+
     }
 }
 

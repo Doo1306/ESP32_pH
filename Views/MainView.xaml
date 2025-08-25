@@ -360,10 +360,12 @@
 
 
                     <!--Door request change-->
-            <Border Style="{StaticResource WhiteCardStyle}" IsEnabled="{Binding IsManualMode,Converter={StaticResource ConverterBoolToIsVisible}}">
+            <Border Style="{StaticResource WhiteCardStyle}"          
+                    IsVisible="{Binding IsRemote,Converter={StaticResource ConverterBoolToIsVisible}}"
+                    IsEnabled="{Binding IsManualMode,Converter={StaticResource ConverterBoolToIsVisible}}">
                 <VerticalStackLayout>
                     <HorizontalStackLayout Spacing="10">
-                        <Border Style="{StaticResource InputFieldStyle}">
+                        <Border Style="{StaticResource InputFieldStyle}" >
                             <StackLayout Orientation="Horizontal">
                                 <controls:CustomToggleSwitch IsToggled="{Binding IsDoorOpenReq}"
                                                              IsEnabled="{Binding DoorButtonEnable}"

@@ -11,4 +11,4 @@ obj/
 *.suo
 
 # Ignore file Global.cs trong DTOs (nếu bạn muốn ẩn file này)
-DTOs/Global.cs
+#DTOs/Global.cs
