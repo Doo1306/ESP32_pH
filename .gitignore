@@ -12,3 +12,15 @@ obj/
 
 # Ignore file Global.cs trong DTOs (nếu bạn muốn ẩn file này)
 #DTOs/Global.cs
+# OS
+.DS_Store
+Thumbs.db
+
+# MAUI specific
+*.apk
+*.aab
+*.app
+*.ipa
+
+# Logs
+*.log
