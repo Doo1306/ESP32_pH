@@ -1,4 +1,4 @@
-name: Build MAUI iOS IPA
+name: Build & Upload MAUI iOS IPA
 
 on:
   workflow_dispatch: # chạy thủ công từ GitHub
@@ -8,26 +8,63 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      # 1. Lấy code
       - name: Check out repository
         uses: actions/checkout@v3
 
+      # 2. Setup .NET 8
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
+      # 3. Cài đặt MAUI workload
       - name: Install MAUI workload
         run: dotnet workload install maui
 
+      # 4. Giải mã certificate & provisioning profile từ secrets
+      - name: Decode Certificate & Provisioning
+        run: |
+          echo "${{ secrets.APPLE_CERTIFICATE_P12 }}" | base64 --decode > ios_distribution.p12
+          echo "${{ secrets.APPLE_PROVISIONING_PROFILE }}" | base64 --decode > app.mobileprovision
+
+      # 5. Import certificate vào keychain
+      - name: Install Certificate
+        run: |
+          security create-keychain -p "" build.keychain
+          security import ios_distribution.p12 -k ~/Library/Keychains/build.keychain -P ${{ secrets.APPLE_CERTIFICATE_PASSWORD }} -A
+          security list-keychain -s build.keychain
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp app.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+
+      # 6. Restore dependencies
       - name: Restore dependencies
         run: dotnet restore ESP32pH.csproj
 
-      - name: Build iOS
-        run: dotnet publish ESP32pH.csproj -f net8.0-ios -c Release -o ./output /p:BuildIpa=true
+      # 7. Build IPA (đã có ký code)
+      - name: Build iOS IPA
+        run: dotnet publish ESP32pH.csproj -f net8.0-ios -c Release -o ./output /p:BuildIpa=true /p:ArchiveOnBuild=true
 
+      # 8. Upload IPA như artifact (tải từ GitHub Actions)
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
           name: ios-ipa
           path: ./output/**/*.ipa
 
+      # 9. Cài đặt Fastlane
+      - name: Install Fastlane
+        run: sudo gem install fastlane -NV
+
+      # 10. Upload lên TestFlight
+      - name: Upload to TestFlight
+        run: |
+          fastlane deliver \
+            --username ${{ secrets.APPLE_ID }} \
+            --app_identifier "com.haonguyen.PHMonitorApp" \
+            --ipa "./output/**/*.ipa" \
+            --skip_metadata \
+            --skip_screenshots \
+            --force
+        env:
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
