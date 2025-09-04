@@ -32,8 +32,8 @@ jobs:
       - name: Install Certificate & Provisioning
         run: |
     # Tạo keychain tạm cho build
-      security create-keychain -p "" build.keychain
-      security import ios_distribution.p12 -k ~/Library/Keychains/build.keychain -P "${{ secrets.APPLE_CERTIFICATE_PASSWORD }}" -T /usr/bin/codesign -T /usr/bin/security -A
+        security create-keychain -p "" build.keychain
+        security import ios_distribution.p12 -k ~/Library/Keychains/build.keychain -P "${{ secrets.APPLE_CERTIFICATE_PASSWORD }}" -T /usr/bin/codesign -T /usr/bin/security -A
     
     # Thêm keychain này vào danh sách
       security list-keychains -s ~/Library/Keychains/build.keychain
