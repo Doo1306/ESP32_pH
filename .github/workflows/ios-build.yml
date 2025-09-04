@@ -39,6 +39,9 @@ jobs:
           security unlock-keychain -p "" ~/Library/Keychains/build.keychain
           security set-keychain-settings -lut 21600 ~/Library/Keychains/build.keychain
 
+          # Hiển thị certificate trong keychain (debug)
+          security find-identity -v -p codesigning
+
           # Copy provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp app.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
